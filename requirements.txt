@@ -1,0 +1,3 @@
+appium-python-client
+pytest
+allure-pytest
