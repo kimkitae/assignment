@@ -1,0 +1,67 @@
+from selenium.common.exceptions import NoSuchElementException
+from time import sleep
+from page.element_visibility_checker import ElementVisibilityChecker
+from page.element_interaction_handle import ElementInteractionHandler
+from page.element_gesture_control import ElementGestureControl
+from page.execute_method import ExecuteMethod
+from page.element_attribute_converter import ElementAttributeConverter, ElementType, PropertyType, StringType
+from appium.webdriver.common.appiumby import AppiumBy
+
+
+class CommonPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.visibility_checker = ElementVisibilityChecker(driver)
+        self.interaction_handler = ElementInteractionHandler(driver)
+        self.gesture_control = ElementGestureControl()
+        self.attribute_converter = ElementAttributeConverter()
+        self.execute_method = ExecuteMethod(driver)
+        self.execute_method.launch_app()
+
+    def find_element(self, *args):
+        locator = self.get_locator(*args)
+        return self.driver.find_element(*locator)
+
+    def click_element(self, *args):
+        element = self.get_locator(*args)
+        # element = self.find_element(*args)
+        self.interaction_handler.click_on(element)
+
+    def wait_for_element(self, *args, timeout=10):
+        locator = self.get_locator(*args)
+        return self.visibility_checker.wait_for(locator, timeout)
+
+    def swipe(self, direction, percentage=50):
+        self.gesture_control.swipe_from_center_to(percentage, direction)
+
+    def set_text(self, *args, text):
+        element = self.find_element(*args)
+        self.interaction_handler.set_text(text, element)
+
+    def get_text(self, *args):
+        element = self.find_element(*args)
+        return self.interaction_handler.get_text(element)
+
+    def wait_for_seconds(self, seconds):
+        sleep(seconds)
+        print(f"{seconds}초 동안 대기합니다.")
+
+    def is_visible(self, *args, timeout=3):
+        locator = self.get_locator(*args)
+        return self.visibility_checker.is_visible(locator, timeout)
+
+    def scroll_to_text(self, text):
+        return self.gesture_control.scroll_to_text(text)
+
+    def get_locator(self, *args):
+        if isinstance(args[0], ElementType):
+            return self.attribute_converter.ios_predicate_object(*args)
+        elif isinstance(args[0], str):
+            if args[0].startswith("//"):
+                return (AppiumBy.XPATH, args[0])
+            else:
+                return (AppiumBy.ID, args[0])
+        raise ValueError(f"Invalid locator format: {args}")
+
+    def create_ios_predicate(self, element_type, property_type, value):
+        return self.attribute_converter.ios_predicate_object(element_type, property_type, value)

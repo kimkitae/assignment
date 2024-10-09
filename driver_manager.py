@@ -44,6 +44,7 @@ class DriverManager:
 
         # Appium 서버에 연결하여 세션 시작
         self.driver = webdriver.Remote(command_executor=f"http://127.0.0.1:{self.port}", options=options)
+        return self.driver
 
     def quit_driver(self):
         if self.driver:
