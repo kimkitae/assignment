@@ -2,7 +2,6 @@ from enum import Enum
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from conftest import driver
 
 
 class StringType(Enum):
@@ -138,4 +137,3 @@ class ElementAttributeConverter:
     @staticmethod
     def list_test_objects(predicate, element_type, index, property_value):
         return AppiumBy.IOS_PREDICATE, predicate
-

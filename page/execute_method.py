@@ -40,7 +40,7 @@ class ExecuteMethod:
         return self.driver.execute_script("mobile: getContexts", {"waitForWebviewMs": wait_for_webview_ms})
 
     def get_page_source_in_json(self):
-        return self.driver.execute_script("mobile: source", {"format": "json"})
+        return self.driver.execute_script("mobile: source", {"format": "json", "recursive": True})
 
     def hide_keyboard(self):
         self.driver.execute_script("mobile: hideKeyboard", {"keys": ["done", "완료"]})

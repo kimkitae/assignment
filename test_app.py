@@ -22,36 +22,32 @@ class TestApp:
         # OK 노출 확인 (강제 실패 유도)
         assert self.common_page.is_visible("OK"), "OK 노출"
         
-    def test_scroll_and_swipe(self, driver):
-        assert self.common_page.is_visible(ElementType.BUTTON, PropertyType.LABEL, "Verify", timeout=10), "Verify 노출"
-        self.common_page.swipe("up")
+    def scroll_and_swipe(self, driver):
+        assert self.common_page.is_visible(ElementType.STATIC_TEXT, PropertyType.LABEL, "Verify identity now", timeout=10), "앱 실행 시 Verify identity now 노출"
+        time.sleep(5)
+        self.common_page.swipe("down")
+        self.common_page.swipe("down")
+        
+        assert self.common_page.is_visible(ElementType.STATIC_TEXT, PropertyType.LABEL, "Trending categories", timeout=10), "Trending catgories 노출"
 
-        self.common_page.scroll_to_text("Trending catgories")
-        assert self.common_page.is_visible(ElementType.STATIC_TEXT, PropertyType.LABEL, "Trending catgories", timeout=10), "Trending catgories 노출"
-
-        # 앱 실행
-
+    def scroll_and_swipe2(self, driver):
+        self.common_page.scroll_to_text("Trending categories")
+        assert self.common_page.is_visible(ElementType.STATIC_TEXT, PropertyType.LABEL, "Trending categories", timeout=10), "Trending catgories 노출"
 
     def element_interactions(self, driver):
-        # 앱 실행
-
-        # 요소 클릭
-        menu_button = self.common_page.create_ios_predicate(ElementType.BUTTON, PropertyType.NAME, "메뉴")
-        self.common_page.click_element("ios_predicate", menu_button)
-
-        # 텍스트 입력
-        search_field = self.common_page.create_ios_predicate(ElementType.SEARCH_FIELD, PropertyType.NAME, "검색")
-        self.common_page.set_text("ios_predicate", search_field, "테스트 검색어")
-
-        # 텍스트 가져오기
-        result_text = self.common_page.create_ios_predicate(ElementType.STATIC_TEXT, PropertyType.NAME, "검색 결과")
-        text = self.common_page.get_text("ios_predicate", result_text)
-        print(f"검색 결과: {text}")
-
-        # 요소 대기
-        loading_indicator = self.common_page.create_ios_predicate(ElementType.OTHER, PropertyType.NAME, "로딩 중")
-        self.common_page.wait_for_element("ios_predicate", loading_indicator, timeout=10)
-
-        # 요소 가시성 확인
-        no_results = self.common_page.create_ios_predicate(ElementType.STATIC_TEXT, PropertyType.NAME, "결과 없음")
-        assert not self.common_page.is_element_visible("ios_predicate", no_results), "검색 결과가 없습니다."
+        reward_hub_text = self.common_page.get_text("tab_market_reward_hub")
+        assert reward_hub_text == "Complete tasks and earn up to 150 USDT from reward hub", "Reward Hub 노출"
+        self.common_page.click_element("search_icon")
+        self.common_page.set_text("btc", ElementType.TEXT_FIELD)
+        self.common_page.press_key("search")
+        
+        assert self.common_page.is_visible(ElementType.STATIC_TEXT, PropertyType.LABEL, "BTC", timeout=10), "BTC 노출"
+        
+    def test_regex_utility(self, driver):
+        # reward_hub_text = self.common_page.get_text("tab_market_reward_hub")
+        # assert reward_hub_text == "Complete tasks and earn up to 150 USDT from reward hub", "Reward Hub 노출"
+        
+        print(self.common_page.get_text_by_keyword("리워드문구"))
+        assert self.common_page.get_text_by_keyword("리워드문구") == "Verify identity now", "리워드문구 노출"
+        assert self.common_page.is_visible(ElementType.STATIC_TEXT, PropertyType.LABEL, self.common_page.get_text_by_keyword("코인수"))
+        
