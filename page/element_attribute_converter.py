@@ -117,8 +117,6 @@ class ElementAttributeConverter:
         if visible_type == VisibleType.TRUE:
             predicate += " AND visible == true"
         
-        print(f"Generated iOS Predicate: {predicate}")  # 디버깅을 위한 출력
-        
         if element_index == 0:
             return AppiumBy.IOS_PREDICATE, predicate
         else:

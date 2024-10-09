@@ -53,7 +53,3 @@ class ElementVisibilityChecker:
             print(f"{string} isVisible : {result}")
 
         return all(results)
-
-# 사용 예시:
-# result = ElementVisibilityChecker.is_visible_concurrency(["버튼1", "버튼2", "버튼3"])
-# print(f"모든 요소가 보이는가? {result}")
