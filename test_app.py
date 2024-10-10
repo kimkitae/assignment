@@ -5,12 +5,12 @@ from page.home_page import HomePage
 from page.element_attribute_converter import ElementType, PropertyType
 
 
-@pytest.mark.usefixtures("driver")
 class TestApp:
+
     @pytest.fixture(autouse=True)
-    def setup(self, driver):
-        self.common_page = CommonPage(driver)
-        self.home_page = HomePage(driver)
+    def setup(self, driver, os_type):
+        self.common_page = CommonPage(driver, os_type)
+        self.home_page = HomePage(driver, os_type)
 
     def test_move_trade_fail_forcely(self, driver):
         # iOS predicate 사용하여 클릭

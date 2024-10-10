@@ -17,9 +17,9 @@ class ScrollSize(Enum):
 class ElementGestureControl:
     MAX_RETRIES = 10
 
-    def __init__(self, driver):
+    def __init__(self, driver, os_type):
         self.driver = driver
-        self.execute_method = ExecuteMethod(driver)
+        self.execute_method = ExecuteMethod(driver, os_type)
         self.screen_size = driver.get_window_size()
         self.screen_width = self.screen_size['width']
         self.screen_height = self.screen_size['height']
@@ -64,8 +64,9 @@ class ElementGestureControl:
         try:
             for _ in range(self.MAX_RETRIES):
                 try:
-                    WebDriverWait(self.driver, 1).until(EC.visibility_of(element))
-                    return True
+                    element = WebDriverWait(self.driver, 1).until(EC.visibility_of(element))
+                    if element.is_displayed():
+                        return True
                 except TimeoutException:
                     self.execute_method.drag_from_to(start_x, start_y, end_x, end_y, duration_time)
                     time.sleep(0.5)
@@ -123,3 +124,17 @@ class ElementGestureControl:
         else:
             raise ValueError("Invalid swipe direction")
         return end_x, end_y
+
+    def scroll_to_elements(self, element, max_scrolls=10):
+        elements = []
+        for _ in range(max_scrolls):
+            try:
+                current_elements = element
+                elements.extend(current_elements)
+                if len(elements) >= 20:
+                    break
+                self.scroll_entire_list(ScrollSize.MEDIUM.value)
+                time.sleep(1)
+            except NoSuchElementException:
+                break
+        return elements[:20]

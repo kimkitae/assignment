@@ -1,8 +1,9 @@
 from page.element_attribute_converter import ElementAttributeConverter, ElementType, PropertyType
 
 class HomePage:
-    def __init__(self, driver):
+    def __init__(self, driver, os_type):
         self.driver = driver
+        self.os_type = os_type
 
     def click_login_button(self):
         locator = ElementAttributeConverter.ios_predicate_object(ElementType.BUTTON, PropertyType.NAME, "로그인")

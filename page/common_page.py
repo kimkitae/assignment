@@ -11,25 +11,32 @@ from selenium.webdriver.common.keys import Keys
 
 
 class CommonPage:
-    def __init__(self, driver):
+    def __init__(self, driver, os_type):
         self.driver = driver
+        self.os_type = os_type
         self.visibility_checker = ElementVisibilityChecker(driver)
-        self.interaction_handler = ElementInteractionHandler(driver)
-        self.gesture_control = ElementGestureControl(driver)
-        self.attribute_converter = ElementAttributeConverter()
-        self.execute_method = ExecuteMethod(driver)
-        self.regex_utility = RegexUtility(driver)
-        self.execute_method.launch_app()
+        self.gesture_control = ElementGestureControl(driver, os_type)
+        self.attribute_converter = ElementAttributeConverter(os_type)
+        self.interaction_handler = ElementInteractionHandler(driver, os_type)
+        self.execute_method = ExecuteMethod(driver, os_type)
+        self.regex_utility = RegexUtility(driver, os_type)
+
+    def get_locator(self, *args):
+        return self.attribute_converter.create_locator(*args)
 
     def find_element(self, *args):
         locator = self.get_locator(*args)
         return self.driver.find_element(*locator)
 
-    def click_element(self, *args):
-        element = self.get_locator(*args)
-        self.interaction_handler.click_on(element)
+    def find_elements(self, *args):
+        locator = self.get_locator(*args)
+        return self.driver.find_elements(*locator)
 
-    def wait_for_element(self, *args, timeout=10):
+    def click_element(self, *args):
+        locator = self.get_locator(*args)
+        self.interaction_handler.click_on(locator)
+
+    def is_visible(self, *args, timeout=10):
         locator = self.get_locator(*args)
         return self.visibility_checker.wait_for(locator, timeout)
 
@@ -37,48 +44,37 @@ class CommonPage:
         self.gesture_control.swipe_from_center_to(percentage, direction)
 
     def set_text(self, text, *args):
-        element = self.get_locator(*args)
-        self.interaction_handler.set_text(element, text)
+        locator = self.get_locator(*args)
+        self.interaction_handler.set_text(locator, text)
 
     def get_text(self, *args):
-        element = self.get_locator(*args)
-        return self.interaction_handler.get_text(element)
-
-    def wait_for_seconds(self, seconds):
-        sleep(seconds)
-        print(f"{seconds}초 동안 대기합니다.")
-
-    def is_visible(self, *args, timeout=3):
         locator = self.get_locator(*args)
-        return self.visibility_checker.is_visible(locator, timeout)
+        return self.interaction_handler.get_text(locator)
 
     def scroll_to_text(self, text):
-        return self.gesture_control.scroll_to_text(text)
+        self.gesture_control.scroll_to_text(text)
 
-    def get_locator(self, *args):
-        if isinstance(args[0], ElementType):
-            return self.attribute_converter.ios_predicate_object(*args)
-        elif isinstance(args[0], str):
-            if args[0].startswith("//"):
-                return (AppiumBy.XPATH, args[0])
-            else:
-                return (AppiumBy.ID, args[0])
-        raise ValueError(f"Invalid locator format: {args}")
+    def swipe_to_element(self, *args):
+        locator = self.find_element(*args)
+        self.gesture_control.swipe_to_element(locator)
 
-    def create_ios_predicate(self, element_type, property_type, value):
-        return self.attribute_converter.ios_predicate_object(element_type, property_type, value)
+    def press_key(self, key):
+        self.interaction_handler.press_key(key)
 
-    def press_key(self, key: str):
-        key_event = key.lower()
-        if key_event == "search":
-            self.interaction_handler.press_key(Keys.RETURN)
-        elif key_event == "enter":
-            self.interaction_handler.press_key(Keys.ENTER)
-        else:
-            print("지원하지 않는 키입니다.")
-
-    def get_text_by_keyword(self, keyword=None, page_source=None,):
-        return self.regex_utility.get_text_by_keyword(keyword, page_source)
-
-    def get_matched_text(self, keyword=None, page_source=None):
-        return self.regex_utility.matchered_text(keyword, page_source)
+    def get_text_by_keyword(self, keyword):
+        return self.regex_utility.get_text_by_keyword(keyword)
+    
+    def is_locators(self, *locator):
+        """
+        주어진 인자가 로케이터인지 확인하는 함수입니다.
+        
+        Args:
+            *locator: 확인할 인자들
+        
+        Returns:
+            bool: 로케이터이면 True, 아니면 False
+        """
+        # 인자가 하나만 있고, 그것이 문자열인 경우 locator, 그 외 locators 
+        if isinstance(locator[0], str):
+            return False
+        return True

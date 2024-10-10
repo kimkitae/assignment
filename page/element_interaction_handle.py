@@ -11,14 +11,15 @@ from selenium.webdriver.common.actions.pointer_input import PointerInput
 
 
 class ElementInteractionHandler:
-    def __init__(self, driver):
+    def __init__(self, driver, os_type):
         self.driver = driver
+        self.os_type = os_type
 
-    def click_on(self, test_object, wait_time=1.5):
+    def click_on(self, test_object, wait_time=3):
         try:
             element = WebDriverWait(self.driver, wait_time).until(
                 EC.element_to_be_clickable(test_object)
-            )
+    )
             element.click()
         except TimeoutException:
             raise Exception(f"{test_object} 오브젝트를 찾지 못함")
@@ -47,7 +48,7 @@ class ElementInteractionHandler:
         except TimeoutException:
             raise Exception(f"{test_object} 오브젝트를 찾지 못함")
 
-    def set_text(self,test_object, text_value, wait_time=1.5):
+    def set_text(self, test_object, text_value, wait_time=1.5):
         try:
             element = WebDriverWait(self.driver, wait_time).until(
                 EC.presence_of_element_located(test_object)
@@ -68,16 +69,24 @@ class ElementInteractionHandler:
 
     def clean_text_field(self, element_type, wait_time=3):
         try:
-            if element_type == "TEXT_FIELD":
+            if self.os_type == "ios":
+                if element_type == "TEXT_FIELD":
+                    element = WebDriverWait(self.driver, wait_time).until(
+                        EC.presence_of_element_located((AppiumBy.CLASS_NAME, "XCUIElementTypeTextField"))
+                    )
+                elif element_type == "SECURE_TEXT_FIELD":
+                    element = WebDriverWait(self.driver, wait_time).until(
+                        EC.presence_of_element_located((AppiumBy.CLASS_NAME, "XCUIElementTypeSecureTextField"))
+                    )
+                else:
+                    raise ValueError("Invalid element_type")
+            elif self.os_type == "android":
+                # Android에 맞는 로직 추가
                 element = WebDriverWait(self.driver, wait_time).until(
-                    EC.presence_of_element_located((AppiumBy.CLASS_NAME, "XCUIElementTypeTextField"))
-                )
-            elif element_type == "SECURE_TEXT_FIELD":
-                element = WebDriverWait(self.driver, wait_time).until(
-                    EC.presence_of_element_located((AppiumBy.CLASS_NAME, "XCUIElementTypeSecureTextField"))
+                    EC.presence_of_element_located((AppiumBy.CLASS_NAME, "android.widget.EditText"))
                 )
             else:
-                raise ValueError("Invalid element_type")
+                raise ValueError("Invalid OS type")
             
             element.clear()
             print(f"{element_type} 클리어")
@@ -85,12 +94,18 @@ class ElementInteractionHandler:
             raise Exception(f"{element_type} 오브젝트를 찾지 못함")
 
     def press_key(self, key):
-        try:
-            actions = ActionChains(self.driver)
-            actions.send_keys(key)
-            actions.perform()
-        except TimeoutException:
-            raise Exception(f"{key} 키를 찾지 못함")
+        if self.os_type == "ios":
+            try:
+                actions = ActionChains(self.driver)
+                actions.send_keys(key)
+                actions.perform()
+            except TimeoutException:
+                raise Exception(f"{key} 키를 찾지 못함")
+        else :
+            try:
+                self.driver.press_keycode(key)
+            except TimeoutException:
+                raise Exception(f"{key} 키를 찾지 못함")
     
     def set_permission(self, permissions):
         permissions["bundleId"] = "com.rgpkorea.enp.yogiyo"
