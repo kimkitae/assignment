@@ -60,7 +60,9 @@ class RegexUtility:
                     r'^\d+(\.\d+)?[MK]$',                  # 시가총액 (202.89M)
                     r'^\d{1,3}(,\d{3})*(\.\d+)?$',         # 가격 (60,995.3)
                     r'^-?\d+(\.\d+)?%$'                    # 변동률 (1.99%)
-            ]
+                ],
+                "이벤트날짜" : r'\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2} UTC', # airdrop 내 이벤트 날짜 문구
+                "이벤트상태" : r'Closed|Opened' # airdrop 내 이벤트 상태 문구
             }
 
             if keyword and isinstance(keyword, str) and keyword in patterns:

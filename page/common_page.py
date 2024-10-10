@@ -61,8 +61,8 @@ class CommonPage:
     def press_key(self, key):
         self.interaction_handler.press_key(key)
 
-    def get_text_by_keyword(self, keyword):
-        return self.regex_utility.get_text_by_keyword(keyword)
+    def get_text_by_keyword(self, keyword, page_source=None):
+        return self.regex_utility.get_text_by_keyword(keyword, page_source)
     
     def is_locators(self, *locator):
         """
