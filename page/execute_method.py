@@ -9,6 +9,12 @@ class ExecuteMethod:
         self.driver = driver
         self.os_type = os_type
 
+    def activate_app(self):
+        if self.os_type == "ios":
+            self.driver.execute_script("mobile: activateApp", {"bundleId": "com.aqx.prex"})
+        elif self.os_type == "android":
+            self.driver.execute_script("mobile: activateApp", {"packageId": "com.aqx.prex"})
+
     def launch_app(self):
         if self.os_type == "ios":
             self.driver.execute_script("mobile: launchApp", {"bundleId": "com.aqx.prex"})

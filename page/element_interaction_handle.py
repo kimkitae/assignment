@@ -15,7 +15,7 @@ class ElementInteractionHandler:
         self.driver = driver
         self.os_type = os_type
 
-    def click_on(self, test_object, wait_time=1):
+    def click_on(self, test_object, wait_time=3):
         try:
             element = WebDriverWait(self.driver, wait_time).until(
                 EC.element_to_be_clickable(test_object)

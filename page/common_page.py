@@ -24,6 +24,11 @@ class CommonPage:
     def get_locator(self, *args):
         return self.attribute_converter.create_locator(*args)
 
+
+    def wait_for(self, *args, timeout=10):
+        locator = self.get_locator(*args)
+        return self.visibility_checker.wait_for(locator, timeout)
+
     def find_element(self, *args):
         locator = self.get_locator(*args)
         return self.driver.find_element(*locator)
@@ -63,6 +68,9 @@ class CommonPage:
 
     def get_text_by_keyword(self, keyword, page_source=None):
         return self.regex_utility.get_text_by_keyword(keyword, page_source)
+    
+    def get_pagesource(self):
+        return self.execute_method.get_page_source_in_json()
     
     def is_locators(self, *locator):
         """
