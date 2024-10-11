@@ -30,7 +30,8 @@
 - Pytest를 이용하여 테스트 수행
   - `pytest -v test_sample.py` 
   - `Root` 디렉토리 내 `appium_{port}.log` 파일 생성
-  - 터미널 내 Print 항목 확인 필요 시 명령어 뒤 `-s` 옵션 추가
+  - 터미널 내 Printe항목 확인 필요 시 명령어 뒤 `-s` 옵션 추가
+        self.driver.execute_script("mobile: setPermission", permissions)
     - `pytest -v test_sample.py -s`
 
 ---

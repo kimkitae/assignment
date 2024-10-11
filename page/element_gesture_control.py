@@ -17,9 +17,9 @@ class ScrollSize(Enum):
 class ElementGestureControl:
     MAX_RETRIES = 10
 
-    def __init__(self, driver):
+    def __init__(self, driver, os_type):
         self.driver = driver
-        self.execute_method = ExecuteMethod(driver)
+        self.execute_method = ExecuteMethod(driver, os_type)
         self.screen_size = driver.get_window_size()
         self.screen_width = self.screen_size['width']
         self.screen_height = self.screen_size['height']
@@ -52,20 +52,24 @@ class ElementGestureControl:
 
         self.execute_method.drag_from_to(start_x, start_y, end_x, end_y, 1000)
 
-    def swipe_to_element(self, element, duration_time=1000):
+    def swipe_to_element(self, locator, duration_time=1000):
         start_x = self.screen_width // 2
         end_x = self.screen_width // 2
         start_y = int(self.screen_height * 2 / 3)
         end_y = int(self.screen_height / 3)
 
-        return self.swipe_to_find_element_f(element, start_x, start_y, end_x, end_y, duration_time)
+        return self.swipe_to_find_element_f(locator, start_x, start_y, end_x, end_y, duration_time)
 
-    def swipe_to_find_element_f(self, element, start_x, start_y, end_x, end_y, duration_time):
+    def swipe_to_find_element_f(self, locator, start_x, start_y, end_x, end_y, duration_time):
+
         try:
             for _ in range(self.MAX_RETRIES):
                 try:
-                    WebDriverWait(self.driver, 1).until(EC.visibility_of(element))
-                    return True
+                    element = WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located(locator))
+
+                    if element.is_displayed():
+                        self.is_hidden_element(element)
+                        return True
                 except TimeoutException:
                     self.execute_method.drag_from_to(start_x, start_y, end_x, end_y, duration_time)
                     time.sleep(0.5)
@@ -79,8 +83,7 @@ class ElementGestureControl:
         
         for _ in range(self.MAX_RETRIES):
             try:
-                self.driver.find_element(AppiumBy.IOS_PREDICATE, predicate_string)
-                # self.driver.find_element_by_ios_predicate(predicate_string)
+                self.driver.find_element_by_ios_predicate(predicate_string)
                 return True
             except NoSuchElementException:
                 self.scroll_entire_list(scroll_size)
@@ -123,3 +126,51 @@ class ElementGestureControl:
         else:
             raise ValueError("Invalid swipe direction")
         return end_x, end_y
+
+    def scroll_to_elements(self, element, max_scrolls=10):
+        elements = []
+        for _ in range(max_scrolls):
+            try:
+                current_elements = element
+                elements.extend(current_elements)
+                if len(elements) >= 20:
+                    break
+                self.scroll_entire_list(ScrollSize.MEDIUM.value)
+                time.sleep(1)
+            except NoSuchElementException:
+                break
+        return elements[:20]
+
+    def is_hidden_element(self, element):
+        location = element.location
+        size = element.size
+
+        # 요소의 상단, 하단 좌표 계산
+        element_top = location['y']
+        element_bottom = location['y'] + size['height']
+
+        # 전체 화면 좌표 정보 가져오기
+        screen_top = 0
+        screen_bottom = self.screen_height
+
+        # 화면 중앙 좌표 계산
+        from_center_x = self.screen_width / 2
+        from_center_y = self.screen_height / 2
+
+        # 화면에서 요소의 크기가 얼마나 보이는지 계산
+        if element_bottom > screen_bottom * 0.9:
+            # 요소의 하단이 화면 높이보다 크거나 90% 이하로 가려져 있는 경우, 일부가 화면 아래로 가려진 상태
+            hidden_height = element_bottom - screen_bottom + 90
+            
+            # 숨겨진 높이만큼 화면을 스크롤, to_center_y 값 보정
+            to_center_y = max(from_center_y - hidden_height, 100)  # 최소값을 설정하여 화면 밖으로 나가는 것을 방지
+            print(f"해당 요소가 화면 아래에 가려져 있어 ({from_center_x}, {from_center_y}) to ({from_center_x}, {to_center_y}) 만큼 스크롤 합니다.")
+            self.execute_method.drag_from_to(from_center_x, from_center_y, from_center_x, to_center_y, 2500)
+        elif element_top < screen_top:
+            # 요소의 상단이 화면 상단보다 위에 있으면, 일부가 화면 위로 가려진 상태
+            hidden_height = abs(element_top) + 90
+            
+            # 숨겨진 높이만큼 화면을 스크롤, to_center_y 값 보정
+            to_center_y = min(from_center_y + hidden_height, screen_bottom - 100)  # 최대값을 설정하여 화면 밖으로 나가는 것을 방지
+            print(f"해당 요소가 화면 아래에 가려져 있어 ({from_center_x}, {from_center_y}) to ({from_center_x}, {to_center_y}) 만큼 스크롤 합니다.")
+            self.execute_method.drag_from_to(from_center_x, from_center_y, from_center_x, to_center_y, 2500)
