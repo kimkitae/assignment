@@ -94,3 +94,17 @@ class LoginPage:
         locator = self.signin_setting_button()
         self.common_page.click_element(locator)
 
+
+    def logout_test(self):
+        self.common_page.click_element(self.menu_icon())
+        assert self.common_page.is_visible(self.account_main_title()), "Account 화면 진입 확인"
+        if self.common_page.is_visible(self.account_nickname_text()):
+            self.common_page.swipe_to_element(self.account_sign_out_button())
+            # self.common_page.click_element(self.account_sign_out_button())
+            # self.common_page.wait_for(self.menu_icon(), timeout=3)
+            # assert self.common_page.is_visible(self.menu_icon()), "로그아웃 성공"
+        else:
+            print("이미 로그아웃 상태입니다.")
+            self.common_page.click_element(self.back_icon())
+            time.sleep(1)
+

@@ -27,7 +27,7 @@ class TestSenario:
         assert self.login_page.check_signed_up(), "로그인 정상 여부 확인"
 
     # Test Case 1: High volume 카테고리 코인 데이터 유효성 검사
-    def _market_trade_normal(self):
+    def test_market_trade_normal(self):
         self.market_page.click_market_button()
         self.market_page.swipe_to_title("High volume")
         self.market_page.click_see_all_button("High volume")
@@ -35,7 +35,7 @@ class TestSenario:
 
         assert self.market_page.is_valid_coin_information(), "코인 데이터 유효성 검사"
 
-    def _challenge_event(self):
+    def test_challenge_event(self):
         self.challenge_page.click_challenge_button()
         self.challenge_page.click_launch_airdrop_button()
         compare_date = self.challenge_page.get_event_info()

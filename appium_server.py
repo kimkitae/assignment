@@ -23,7 +23,7 @@ class AppiumServer:
             return sock.connect_ex(('localhost', port)) != 0
 
     def start(self):
-        print("Appium 서버 시작 시도...")
+        print("Appium 서버 실행 준비")
         try:
             appium_path = "/opt/homebrew/bin/appium"
             self.service.start(

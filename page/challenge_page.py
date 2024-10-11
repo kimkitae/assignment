@@ -65,9 +65,7 @@ class ChallengePage:
             status_element = self.event_status_element(i)
 
             is_visible = False
-            print(f"data_element: {data_element}, status_element: {status_element}")
             is_visible = self.common_page.is_visible(data_element)
-            print(f"is_visible: {is_visible}")
 
             if not is_visible:
                 break

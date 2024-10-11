@@ -49,7 +49,6 @@ class ElementAttributeConverter:
         self.os_type = os_type
 
     def create_locator(self, *args):
-        print(f"create_locator - {args}")
         if self.os_type == "ios":
             if len(args) == 1 and isinstance(args[0], str):
                 if args[0].startswith("//"):
@@ -66,7 +65,6 @@ class ElementAttributeConverter:
         return AppiumBy.XPATH, xpath
     
     def id_object(self, id, index=0):
-        print(f"id_object - {id}")
         if index == 0:
             return AppiumBy.ID, id
         else:

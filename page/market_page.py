@@ -54,12 +54,11 @@ class MarketPage:
      
     def click_market_button(self):
         locator = self.bottom_tab_market_button()
-        print(locator)
         self.common_page.click_element(locator)
 
     def swipe_to_view_all_selections(self):
         locator = self.bottom_button_view_all_selections()
-        self.common_page.click_element(locator)
+        self.common_page.swipe_to_element(locator)
 
     def click_view_all_selections(self):
         self.swipe_to_view_all_selections()

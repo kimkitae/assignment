@@ -21,12 +21,9 @@ class CommonPage:
         """
         주어진 로케이터를 처리하여 적절한 포맷으로 반환.
         """
-        print(f"handle_locator - {locator}")
         if self.is_locators(locator):
-            print("is_locators")
             return self.attribute_converter.create_locator(*locator)
         else:
-            print("not is_locators")
             # locator가 문자열일 경우, 이를 풀지 않고 그대로 전달
             if isinstance(locator, str):
                 return self.attribute_converter.create_locator(locator)
@@ -50,7 +47,6 @@ class CommonPage:
 
     def click_element(self, *args):
         locator = self.handle_locator(*args)
-        print(f"click_element - {locator}")
         self.interaction_handler.click_on(locator)
 
     def is_visible(self, *args, timeout=10):
@@ -73,7 +69,6 @@ class CommonPage:
 
     def swipe_to_element(self, *args):
         locator = self.handle_locator(*args)
-        print(f"swipe_element - {locator}")
         self.gesture_control.swipe_to_element(locator)
 
     def press_key(self, key):
