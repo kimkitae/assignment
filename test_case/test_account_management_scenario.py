@@ -22,6 +22,7 @@ class TestScenario:
 
         current_nickname = self.account_page.account_nickname_text()
         assert self.account_page.change_nickname(self.account_page.generate_random_nickname(current_nickname)), "닉네임 변경 확인"
+        print("닉네임 변경 확인")
 
     def test_weekly_leaderboard(self):
         self.common_page.click_element(self.account_page.menu_icon())

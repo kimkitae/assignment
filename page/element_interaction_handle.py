@@ -89,7 +89,6 @@ class ElementInteractionHandler:
                 raise ValueError("Invalid OS type")
             
             element.clear()
-            print(f"{element_type} 클리어")
         except TimeoutException:
             raise Exception(f"{element_type} 오브젝트를 찾지 못함")
 

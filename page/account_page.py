@@ -100,6 +100,7 @@ class AccountPage:
         self.common_page.click_element(self.account_nickname_edit_button())
         self.common_page.clean_text_field("TEXT_FIELD")
         self.common_page.set_text(nickname, self.nickname_text_field())
+        print(f"닉네임 입력: {nickname}")
         self.common_page.click_element(self.nickname_confirm_button())
         self.common_page.wait_for(self.account_nickname_text(), timeout=5)
         return self.common_page.get_text(self.account_nickname_text()) == nickname
