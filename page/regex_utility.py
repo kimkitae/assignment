@@ -62,7 +62,9 @@ class RegexUtility:
                     r'^-?\d+(\.\d+)?%$'                    # 변동률 (1.99%)
                 ],
                 "이벤트날짜" : r'\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2} UTC', # airdrop 내 이벤트 날짜 문구
-                "이벤트상태" : r'Closed|Opened' # airdrop 내 이벤트 상태 문구
+                "이벤트상태" : r'Closed|Opened', # airdrop 내 이벤트 상태 문구
+                "위클리리더보드카운트" : r'\d+', # 위클리 리더보드 카운트
+                "랜덤숫자플러스" : r'\d+\+', # 랜덤 숫자 뒤에 + 기호가 오는 표현을 위한 정규식
             }
 
             if keyword and isinstance(keyword, str) and keyword in patterns:
