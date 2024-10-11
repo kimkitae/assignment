@@ -16,13 +16,6 @@ class TestScenario:
         self.account_page = AccountPage(driver, os_type)
         self.execute_method = ExecuteMethod(driver, os_type)
 
-    """
-    1. 닉네임 변경 여부 확인
-    2. weekly leaderboard 정상 랜딩
-    3. 스파크 리워드 진입 및 보유 스파크 노출
-    4. 디파짓 USDT 진입 확인  - address 및 memo 정규식 노출 확인 
-    5. 패스워드 내 진입 계정 정보 - 닉네임 변경, 휴대폰, 이메일, 이름 노출, 레벨, 
-    """ 
 
     def test_change_nickname(self):
         self.common_page.click_element(self.account_page.menu_icon())

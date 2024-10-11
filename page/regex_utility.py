@@ -48,6 +48,7 @@ class RegexUtility:
         max_retries = 2
         for _ in range(max_retries):
             current_page_source = page_source if page_source else self.execute_method.get_page_source_in_json()
+            print("current_page_source : ", current_page_source)
             if isinstance(current_page_source, dict):
                 current_page_source = self.dict_to_string(current_page_source)
             
@@ -65,6 +66,15 @@ class RegexUtility:
                 "이벤트상태" : r'Closed|Opened', # airdrop 내 이벤트 상태 문구
                 "위클리리더보드카운트" : r'\d+', # 위클리 리더보드 카운트
                 "랜덤숫자플러스" : r'\d+\+', # 랜덤 숫자 뒤에 + 기호가 오는 표현을 위한 정규식
+                "USDT_ADDRESS": r'^[A-Za-z0-9_-]+$',  # USDT 주소
+                "USDT_MEMO": r'^\d+$',  # 랜덤한 길이의 숫자로만 구성된 문자열
+                "assets_data": [r'^[A-Za-z\s]+$',                       # 코인 이름 (예: Bitcoin, Tether USD)
+                    r'^\d+% APR$|^$',                       # APR (예: 5% APR) 또는 존재하지 않을 수 있음 (빈 문자열 허용)
+                    r'^[A-Z]+$',                            # 코인 심볼 (예: BTC)
+                    r'^\d+\.\d+$',                          # 수량 (예: 0.00000000)
+                    r'^[A-Z]+$',                            # 단위 (예: BTC)
+                    r'^\d+\.\d+$|^$',                       # 가치 (예: 0.00) 또는 존재하지 않을 수 있음 (빈 문자열 허용)
+                ],
             }
 
             if keyword and isinstance(keyword, str) and keyword in patterns:
