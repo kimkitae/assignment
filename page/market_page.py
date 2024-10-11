@@ -47,6 +47,30 @@ class MarketPage:
             return ElementType.BUTTON, StringType.BEGINS, "carousel_no5_image"
         else:
             return "carousel_no5_image"
+    
+    def search_icon(self):
+        if self.os_type == "ios":
+            return "search_icon"
+        else:
+            return "search_icon"
+        
+    def search_input(self):
+        if self.os_type == "ios":
+            return "text_field"
+        else:
+            return "search_input"
+        
+    def search_result_coin_name(self):
+        if self.os_type == "ios":
+            return "searched_product_ticker_"
+        else:
+            return "BTC"
+
+    def notification_button(self):
+        if self.os_type == "ios":
+            return "notification_icon"
+        else:
+            return "notification_icon"
 
     """
     ========== 함수 변수 ==========
@@ -126,6 +150,13 @@ class MarketPage:
                 print(f"'{field}' 와 '{pattern}' 이 일치하지 않습니다.")
                 return False
         return True
+    
+    def is_search_result_coin(self, search_keyword: str):
+        locator = self.search_result_coin_name() + search_keyword
+        print(f"검색 결과 코인 이름 : {self.common_page.get_text(locator)}")
+        return self.common_page.is_visible(locator)
+
+        
 
 
 

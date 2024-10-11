@@ -48,13 +48,13 @@ class RegexUtility:
         max_retries = 2
         for _ in range(max_retries):
             current_page_source = page_source if page_source else self.execute_method.get_page_source_in_json()
-            print("current_page_source : ", current_page_source)
             if isinstance(current_page_source, dict):
                 current_page_source = self.dict_to_string(current_page_source)
             
             patterns = {
                 "리워드문구": r'Verify identity now', # 미인증 후 앱 진입 시 노출되는 문구
-                "코인수": r'(\d+) Coins are up', # Market 내 표시되는 코인 수
+                "코인up": r'(\d+) Coins are up', # Market 내 표시되는 코인 수
+                "코인down": r'(\d+) Coins are down', # Market 내 표시되는 코인 수
                 "코인리스트정보": [
                     r'^[A-Z0-9]+$',                        # 코인 이름 (BTC)
                     r'^\d+x$',                             # 레버리지 (100x)
@@ -75,6 +75,7 @@ class RegexUtility:
                     r'^[A-Z]+$',                            # 단위 (예: BTC)
                     r'^\d+\.\d+$|^$',                       # 가치 (예: 0.00) 또는 존재하지 않을 수 있음 (빈 문자열 허용)
                 ],
+                "알림종류" : r'Promotions|System'
             }
 
             if keyword and isinstance(keyword, str) and keyword in patterns:

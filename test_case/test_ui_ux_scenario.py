@@ -23,18 +23,26 @@ class TestScenario:
         self.execute_method = ExecuteMethod(driver, os_type)
     
 
-    """
-    Notification 정상 랜딩
-    
+    def test_validate_coin_up_down_count(self):
 
-    2. price Alerts 이 두번 눌러야 상태 변경 (UX 개선 필요)
-    3. 검색 화면 정상 노출 확인
-    4. 검색을 통한 상세 트레이드 화면 노출
-    5. earn 진입 후 디파짓 동작 확인
-    history 
-    """
-    def test_market_trade_normal(self):
+        coin_up_count = self.common_page.get_text_by_keyword("코인up")
+        coin_down_count = self.common_page.get_text_by_keyword("코인down")
+
+        print(f"코인 상승 카운트 : {coin_up_count} / 코인 하락 카운트 : {coin_down_count}")
+        assert len(coin_up_count) > 13, "코인 상승 카운트 노출 확인"
+        assert len(coin_down_count) > 13, "코인 하락 카운트 노출 확인"
 
 
+    def test_search_function(self):
+        
+        self.common_page.click_element(self.market_page.search_icon())
+        self.common_page.set_text("btc", self.market_page.search_input())
+        self.common_page.press_key("search")
 
+        assert self.market_page.is_search_result_coin("btc"), "검색 결과 코인 노출 확인"
 
+    def test_notification_function(self):
+        self.common_page.click_element(self.market_page.notification_button())
+        notification_type = self.common_page.get_text_by_keyword("알림종류")
+        print(f"알림 종류 : {notification_type}")
+        assert notification_type == "Promotions" or notification_type == "System", "알림 센터 내 알림 종류 노출 확인"

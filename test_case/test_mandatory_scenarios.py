@@ -44,12 +44,16 @@ class TestScenario:
         self.assets_page.click_assets_button()
         self.login_page.click_setting_icon()
         self.login_page.click_support_menu("Announcement")
+        print("Announcement 선택 후 웹페이지 로딩을 위해 5초 대기")
         time.sleep(5)
         self.etc_page.click_open_messaging_windows()
+        print("open messaging windows 선택 후 챗봇 불러오기 위해 5초 대기")
         time.sleep(5)
         assert self.etc_page.is_visible_chatbot(), "챗봇 노출 확인"
+        print("챗봇 노출 확인 후 챗봇 닫기 버튼 선택")
         self.etc_page.click_close_messaging_windows()
         self.execute_method.activate_app()
+        print("앱 전환 후 Account 화면 정상 노출 확인")
         assert self.common_page.is_visible(self.login_page.account_main_title()), "Account 화면 정상 노출 확인"
 
     
