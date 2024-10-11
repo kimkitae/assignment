@@ -44,10 +44,12 @@ class VisibleType(Enum):
 
 class ElementAttributeConverter:
     
-    def __init__(self, os_type):
+    def __init__(self, driver, os_type):
+        self.driver = driver
         self.os_type = os_type
 
     def create_locator(self, *args):
+        print(f"create_locator - {args}")
         if self.os_type == "ios":
             if len(args) == 1 and isinstance(args[0], str):
                 if args[0].startswith("//"):
@@ -64,6 +66,7 @@ class ElementAttributeConverter:
         return AppiumBy.XPATH, xpath
     
     def id_object(self, id, index=0):
+        print(f"id_object - {id}")
         if index == 0:
             return AppiumBy.ID, id
         else:
@@ -133,7 +136,8 @@ class ElementAttributeConverter:
         if element_index == 0:
             return AppiumBy.IOS_PREDICATE, predicate
         else:
-            return self.list_test_objects(predicate, element_type, element_index, property_value)
+            return AppiumBy.IOS_PREDICATE, f"({predicate})[{element_index + 1}]"
+            # return self.list_test_objects(predicate, element_type, element_index, property_value)
     
     def find_elements_by_xpath(self, element_type, index, property_type, property_value):
         xpath = (f"//*[@type='{element_type.value}' and "
@@ -164,3 +168,9 @@ class ElementAttributeConverter:
                 return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().resourceId("{locator}").instance({index})'
         else:
             raise ValueError("Invalid arguments for Android locator")
+
+    def find_element(self, args):
+        return self.driver.find_element(*args)
+
+    def find_elements(self, args):
+        return self.driver.find_elements(*args)

@@ -1,7 +1,6 @@
 import time
 import pytest
 from page.common_page import CommonPage
-from page.home_page import HomePage
 from page.element_attribute_converter import ElementType, PropertyType
 
 
@@ -10,7 +9,6 @@ class TestApp:
     @pytest.fixture(autouse=True)
     def setup(self, driver, os_type):
         self.common_page = CommonPage(driver, os_type)
-        self.home_page = HomePage(driver, os_type)
 
     def test_move_trade_fail_forcely(self, driver):
         # iOS predicate 사용하여 클릭

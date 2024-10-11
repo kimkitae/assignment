@@ -52,20 +52,30 @@ class ElementGestureControl:
 
         self.execute_method.drag_from_to(start_x, start_y, end_x, end_y, 1000)
 
-    def swipe_to_element(self, element, duration_time=1000):
+    def swipe_to_element(self, locator, duration_time=1000):
         start_x = self.screen_width // 2
         end_x = self.screen_width // 2
         start_y = int(self.screen_height * 2 / 3)
         end_y = int(self.screen_height / 3)
+        print(f"start_x - {start_x}, end_x - {end_x}, start_y - {start_y}, end_y- {end_y}")
+        print(f"swipe_to_element - {locator}")
 
-        return self.swipe_to_find_element_f(element, start_x, start_y, end_x, end_y, duration_time)
+        return self.swipe_to_find_element_f(locator, start_x, start_y, end_x, end_y, duration_time)
 
-    def swipe_to_find_element_f(self, element, start_x, start_y, end_x, end_y, duration_time):
+    def swipe_to_find_element_f(self, locator, start_x, start_y, end_x, end_y, duration_time):
+
         try:
             for _ in range(self.MAX_RETRIES):
                 try:
-                    element = WebDriverWait(self.driver, 1).until(EC.visibility_of(element))
+                    element = WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located(locator))
+
                     if element.is_displayed():
+                        location = element.location
+                        size = element.size
+
+                        if (location['y'] + size['height']) > self.screen_height * 0.8:
+                            self.swipe('down')
+
                         return True
                 except TimeoutException:
                     self.execute_method.drag_from_to(start_x, start_y, end_x, end_y, duration_time)

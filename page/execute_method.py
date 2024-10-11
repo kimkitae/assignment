@@ -2,6 +2,9 @@ import time
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.command import Command
+
+from page.element_attribute_converter import ElementType, PropertyType
 
 
 class ExecuteMethod:

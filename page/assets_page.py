@@ -28,7 +28,4 @@ class AssetsPage:
      
     def click_assets_button(self):
         locator = self.bottom_tab_assets_button()
-        if self.common_page.is_locators(locator):
-            self.common_page.click_element(*locator)
-        else :
-            self.common_page.click_element(locator)
+        self.common_page.click_element(locator)

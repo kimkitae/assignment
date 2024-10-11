@@ -49,17 +49,11 @@ class ChallengePage:
 
     def click_challenge_button(self):
         locator = self.bottom_tab_challenge_button()
-        if self.common_page.is_locators(locator):
-            self.common_page.click_element(*locator)
-        else :
-            self.common_page.click_element(locator)
+        self.common_page.click_element(locator)
     
     def click_launch_airdrop_button(self):
         locator = self.top_tab_launch_airdrop_button()
-        if self.common_page.is_locators(locator):
-            self.common_page.click_element(*locator)
-        else :
-            self.common_page.click_element(locator)
+        self.common_page.click_element(locator)
 
     def get_event_info(self):
         event_info = []
@@ -71,16 +65,15 @@ class ChallengePage:
             status_element = self.event_status_element(i)
 
             is_visible = False
-            if self.common_page.is_locators(data_element):
-                is_visible = self.common_page.is_visible(*data_element)
-            else:
-                is_visible = self.common_page.is_visible(data_element)
+            print(f"data_element: {data_element}, status_element: {status_element}")
+            is_visible = self.common_page.is_visible(data_element)
+            print(f"is_visible: {is_visible}")
 
             if not is_visible:
                 break
 
-            data_text = self.common_page.get_text(*data_element)
-            status_text = self.common_page.get_text(*status_element)
+            data_text = self.common_page.get_text(data_element)
+            status_text = self.common_page.get_text(status_element)
             event_info.append((data_text, status_text))
 
             i += 1
