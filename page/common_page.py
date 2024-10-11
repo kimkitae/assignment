@@ -64,6 +64,9 @@ class CommonPage:
         locator = self.handle_locator(*args)
         return self.interaction_handler.get_text(locator)
 
+    def clean_text_field(self, element_type):
+        self.interaction_handler.clean_text_field(element_type)
+
     def scroll_to_text(self, text):
         self.gesture_control.scroll_to_text(text)
 

@@ -53,7 +53,8 @@ class RegexUtility:
             
             patterns = {
                 "리워드문구": r'Verify identity now', # 미인증 후 앱 진입 시 노출되는 문구
-                "코인수": r'(\d+) Coins are up', # Market 내 표시되는 코인 수
+                "코인up": r'(\d+) Coins are up', # Market 내 표시되는 코인 수
+                "코인down": r'(\d+) Coins are down', # Market 내 표시되는 코인 수
                 "코인리스트정보": [
                     r'^[A-Z0-9]+$',                        # 코인 이름 (BTC)
                     r'^\d+x$',                             # 레버리지 (100x)
@@ -62,7 +63,19 @@ class RegexUtility:
                     r'^-?\d+(\.\d+)?%$'                    # 변동률 (1.99%)
                 ],
                 "이벤트날짜" : r'\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2} UTC', # airdrop 내 이벤트 날짜 문구
-                "이벤트상태" : r'Closed|Opened' # airdrop 내 이벤트 상태 문구
+                "이벤트상태" : r'Closed|Opened', # airdrop 내 이벤트 상태 문구
+                "위클리리더보드카운트" : r'\d+', # 위클리 리더보드 카운트
+                "랜덤숫자플러스" : r'\d+\+', # 랜덤 숫자 뒤에 + 기호가 오는 표현을 위한 정규식
+                "USDT_ADDRESS": r'^[A-Za-z0-9_-]+$',  # USDT 주소
+                "USDT_MEMO": r'^\d+$',  # 랜덤한 길이의 숫자로만 구성된 문자열
+                "assets_data": [r'^[A-Za-z\s]+$',                       # 코인 이름 (예: Bitcoin, Tether USD)
+                    r'^\d+% APR$|^$',                       # APR (예: 5% APR) 또는 존재하지 않을 수 있음 (빈 문자열 허용)
+                    r'^[A-Z]+$',                            # 코인 심볼 (예: BTC)
+                    r'^\d+\.\d+$',                          # 수량 (예: 0.00000000)
+                    r'^[A-Z]+$',                            # 단위 (예: BTC)
+                    r'^\d+\.\d+$|^$',                       # 가치 (예: 0.00) 또는 존재하지 않을 수 있음 (빈 문자열 허용)
+                ],
+                "알림종류" : r'Promotions|System'
             }
 
             if keyword and isinstance(keyword, str) and keyword in patterns:
