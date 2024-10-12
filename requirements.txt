@@ -23,6 +23,7 @@ propcache==0.2.0
 PySocks==1.7.1
 pytest==8.3.3
 pytest-reportportal==5.4.2
+python-dotenv==1.0.1
 reportportal-client==5.5.8
 requests==2.32.3
 selenium==4.25.0
@@ -31,7 +32,7 @@ sortedcontainers==2.4.0
 tomli==2.0.2
 trio==0.26.2
 trio-websocket==0.11.1
-typing_extensions==4.12.2
+typing-extensions==4.12.2
 urllib3==2.2.3
 websocket-client==1.8.0
 wsproto==1.2.0

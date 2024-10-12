@@ -2,9 +2,11 @@
 import random
 import string
 import time
+import os
 from page.common_page import CommonPage
-from helper.element_attribute_converter import ElementType
+from helper.element_attribute_converter import AndroidElementType, AndroidPropertyType, ElementType
 from helper.regex_utility import RegexUtility
+from dotenv import load_dotenv
 
 
 class AccountPage:
@@ -14,16 +16,33 @@ class AccountPage:
         self.common_page = CommonPage(driver, os_type, rp_logger)
         self.regex_utility = RegexUtility(driver, os_type, rp_logger)
         self.logger = rp_logger
+        load_dotenv()
 
     """
     ========== 함수 변수 ==========
     """
 
+    def get_account_info(self, key, is_public=False):
+        
+        account_info = {
+            "email": os.getenv("EMAIL"),
+            "phone": os.getenv("PHONE"), 
+            "name": os.getenv("NAME"),
+            "level": os.getenv("LEVEL")
+        }
+        if self.os_type == "android":
+            if is_public:
+                return account_info.get(key, "정보를 찾을 수 없습니다.")
+            else:
+                return AndroidPropertyType.TEXT, account_info.get(key, "정보를 찾을 수 없습니다.")
+        else:
+            return account_info.get(key, "정보를 찾을 수 없습니다.")
+
     def menu_icon(self):
         if self.os_type == "ios":
             return "menu_icon"
         else:
-            return "prex_signin_menu"
+            return "menu_icon"
 
     def account_nickname_text(self):
         if self.os_type == "ios":
@@ -41,14 +60,14 @@ class AccountPage:
         if self.os_type == "ios":
             return "account_set_nick_text_field"
         else:
-            return "account_main_title"
+            return AndroidElementType.EDIT_TEXT
 
 
     def nickname_confirm_button(self):
         if self.os_type == "ios":
             return "account_set_nick_confirm"
         else:
-            return "account_sign_out"
+            return AndroidElementType.BUTTON
 
 
     """
@@ -66,7 +85,7 @@ class AccountPage:
         if self.os_type == "ios":
             return "Weekly P&L leaderboard"
         else:
-            return "Weekly P&L leaderboard"
+            return AndroidPropertyType.TEXT, "Weekly P&L leaderboard"
         
     """
     ------
@@ -76,7 +95,7 @@ class AccountPage:
         if self.os_type == "ios":
             return "Hide Info"
         else:
-            return ""
+            return AndroidPropertyType.TEXT, "Hide Info"
 
     
     def back_icon(self):
@@ -127,5 +146,37 @@ class AccountPage:
             self.common_page.swipe_to_element(f"Setting_{title}")
             self.common_page.click_element(f"Setting_{title}")
         else:
-            self.common_page.scroll_to_text(f"Setting_{title}")
-            self.common_page.click_element(f"Setting_{title}")
+            self.common_page.swipe_to_element(AndroidPropertyType.TEXT, title)
+            self.common_page.click_element(AndroidPropertyType.TEXT, title)
+            time.sleep(5)
+
+    def get_masked_account_info(self):
+        email = self.get_account_info("email", is_public=True)
+        phone = self.get_account_info("phone", is_public=True)
+        name = self.get_account_info("name", is_public=True)
+
+        masked_email = f"{email[:2]}"
+        masked_phone_first = f"{phone[:3]}"
+        masked_phone_last = f"{phone[-2:]}"
+        masked_name_first = f"{name[:2]}"
+        masked_name_last = f"{name[-2:]}"
+        
+        masked_info = {
+            "email": masked_email,
+            "phone_first": masked_phone_first,
+            "phone_last": masked_phone_last,
+            "name_first": masked_name_first,
+            "name_last": masked_name_last,
+        }
+
+        if self.os_type == "android":
+            android_info = {
+                "email": (AndroidPropertyType.TEXT, masked_email),
+                "phone_first": (AndroidPropertyType.TEXT, masked_phone_first),
+                "phone_last": (AndroidPropertyType.TEXT, masked_phone_last),
+                "name_first": (AndroidPropertyType.TEXT, masked_name_first),
+                "name_last": (AndroidPropertyType.TEXT, masked_name_last),
+            }
+            return masked_info, android_info
+        else:
+            return masked_info, masked_info

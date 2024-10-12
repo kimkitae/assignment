@@ -81,19 +81,31 @@ class ElementGestureControl:
             return False
 
     def scroll_list_to_element_with_predicate(self, element_text, scroll_size):
-        predicate_string = f"type == 'XCUIElementTypeStaticText' AND visible == true AND label == '{element_text}'"
-        
-        for _ in range(self.MAX_RETRIES):
-            try:
-                self.driver.find_element_by_ios_predicate(predicate_string)
-                return True
-            except NoSuchElementException:
-                self.scroll_entire_list(scroll_size)
-        
-        self.logger.info(f"{self.MAX_RETRIES}회 이상 Element를 찾지 못했습니다.")
-        return False
+        if self.os_type == 'ios':
+            predicate_string = f"type == 'XCUIElementTypeStaticText' AND visible == true AND label == '{element_text}'"
+            
+            for _ in range(self.MAX_RETRIES):
+                try:
+                    self.driver.find_element_by_ios_predicate(predicate_string)
+                    return True
+                except NoSuchElementException:
+                    self.scroll_entire_list(scroll_size)
+            
+            self.logger.info(f"{self.MAX_RETRIES}회 이상 Element를 찾지 못했습니다.")
+            return False
+        else:
+            selector = f'new UiSelector().text("{element_text}")'
 
-    def scroll_entire_list(self, scroll_size):
+            for _ in range(self.MAX_RETRIES):
+                try:
+                    self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, selector)
+                    return True
+                except NoSuchElementException:
+                    self.scroll_entire_list(scroll_size)
+            
+            self.logger.info(f"{self.MAX_RETRIES}회 이상 Element를 찾지 못했습니다.")
+            return False
+    def scroll_entire_list(self):
         start_x = self.screen_width // 2
         start_y = int(self.screen_height * 0.8)
         end_y = int(self.screen_height * 0.2)

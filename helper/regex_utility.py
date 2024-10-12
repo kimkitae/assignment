@@ -47,10 +47,8 @@ class RegexUtility:
 
     def get_expressions(self, keyword=None, page_source=None):
         max_retries = 2
-        print(self.execute_method.get_page_source_in_json())
         for _ in range(max_retries):
             current_page_source = page_source if page_source else self.execute_method.get_page_source_in_json()
-            print(type(current_page_source)) 
             if isinstance(current_page_source, dict):
                 current_page_source = self.dict_to_string(current_page_source)
 
@@ -96,6 +94,7 @@ class RegexUtility:
 
             match = re.search(pattern, current_page_source)
             if match:
+                self.logger.info(f"{keyword}에 해당하는 패턴을 찾았습니다.")
                 return match.group(0)  # 매칭된 결과 반환
 
             time.sleep(3)  # 5초 대기 후 재시도
@@ -112,21 +111,3 @@ class RegexUtility:
             else:
                 result += str(v) + "\n"
         return result
-    
-    def xml_to_json(self, element):
-        result = {}
-        for child in element:
-            child_data = self.xml_to_json(child)
-            if child.tag in result:
-                if type(result[child.tag]) is list:
-                    result[child.tag].append(child_data)
-                else:
-                    result[child.tag] = [result[child.tag], child_data]
-            else:
-                result[child.tag] = child_data
-        if element.text and element.text.strip():
-            result['#text'] = element.text.strip()
-        if element.attrib:
-            result['@attributes'] = element.attrib
-        return result
-

@@ -22,6 +22,7 @@ class ElementInteractionHandler:
                 EC.element_to_be_clickable(test_object)
     )
             element.click()
+            self.logger.info(f"{test_object} 클릭")
         except TimeoutException:
             self.logger.info(f"{test_object} 오브젝트를 찾지 못함")
             raise Exception(f"{test_object} 오브젝트를 찾지 못함")
@@ -36,7 +37,7 @@ class ElementInteractionHandler:
         actions.w3c_actions.pointer_action.move_to_location(x, y)
         actions.w3c_actions.pointer_action.click()
         actions.w3c_actions.perform()
-        self.logger.info(f"좌표 - {x} / {y}")
+        self.logger.info(f"좌표 - {x} / {y} 클릭")
 
     def tap_test_object_xy(self, test_object, wait_time=3):
         try:
@@ -57,7 +58,9 @@ class ElementInteractionHandler:
             element = WebDriverWait(self.driver, wait_time).until(
                 EC.presence_of_element_located(test_object)
             )
+
             element.send_keys(text_value)
+            self.logger.info(f"{test_object}에 {text_value} 입력")
         except TimeoutException:
             self.logger.info(f"{test_object} 오브젝트를 찾지 못함")
             raise Exception(f"{test_object} 오브젝트를 찾지 못함")
@@ -68,6 +71,7 @@ class ElementInteractionHandler:
                 EC.presence_of_element_located(test_object)
             )
             result = element.text
+            self.logger.info(f"{test_object}의 텍스트: {result}")
             return result
         except TimeoutException:
             self.logger.info(f"{test_object} 오브젝트를 찾지 못함")
@@ -97,6 +101,7 @@ class ElementInteractionHandler:
                 raise ValueError("Invalid OS type")
             
             element.clear()
+            self.logger.info(f"{element_type} 텍스트 필드 클리어")
         except TimeoutException:
             self.logger.info(f"{element_type} 오브젝트를 찾지 못함")
             raise Exception(f"{element_type} 오브젝트를 찾지 못함")
@@ -108,6 +113,7 @@ class ElementInteractionHandler:
                 actions = ActionChains(self.driver)
                 actions.send_keys(key)
                 actions.perform()
+                self.logger.info(f"{key} 키를 누름")
             except TimeoutException:
                 self.logger.info(f"{key} 키를 찾지 못함")
                 raise Exception(f"{key} 키를 찾지 못함")
@@ -127,6 +133,7 @@ class ElementInteractionHandler:
                     raise TypeError("키는 문자열 또는 정수여야 합니다.")
 
                 self.driver.press_keycode(key_code)
+                self.logger.info(f"{key} 키를 누름")
             except TimeoutException:
                 self.logger.info(f"{key} 키를 찾지 못함")
                 raise Exception(f"{key} 키를 찾지 못함")

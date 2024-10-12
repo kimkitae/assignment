@@ -3,6 +3,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.command import Command
+from selenium.webdriver import ActionChains
 
 from helper.element_attribute_converter import ElementType, PropertyType
 
@@ -39,13 +40,23 @@ class ExecuteMethod:
 
     def drag_from_to(self, start_x, start_y, end_x, end_y, duration_time):
         duration = duration_time / 1000.0
-        self.driver.execute_script("mobile: dragFromToForDuration", {
-            "duration": duration,
-            "fromX": start_x,
-            "fromY": start_y,
-            "toX": end_x,
-            "toY": end_y
-        })
+        if self.os_type == "ios":
+            self.driver.execute_script("mobile: dragFromToForDuration", {
+                "duration": duration,
+                "fromX": start_x,
+                "fromY": start_y,
+                "toX": end_x,
+                "toY": end_y
+            })
+        else:
+            actions = ActionChains(self.driver)
+            actions.w3c_actions.pointer_action.move_to_location(start_x, start_y)
+            actions.w3c_actions.pointer_action.pointer_down()
+            actions.w3c_actions.pointer_action.pause(duration)
+            actions.w3c_actions.pointer_action.move_to_location(end_x, end_y)
+            actions.w3c_actions.pointer_action.release()
+            actions.perform()
+       
 
     def deep_link(self, url):
         if self.os_type == "ios":

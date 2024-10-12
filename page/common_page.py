@@ -18,21 +18,30 @@ class CommonPage:
         self.regex_utility = RegexUtility(driver, os_type, rp_logger)
         self.logger = rp_logger
 
-    def handle_locator(self, locator):
+    def handle_locator(self, *locator):
         """
         주어진 로케이터를 처리하여 적절한 포맷으로 반환.
         """
-        if self.is_locators(locator):
-            return self.attribute_converter.create_locator(*locator)
-        else:
-            # locator가 문자열, AndroidElementType, AndroidPropertyType일 경우 처리
-            if isinstance(locator, (str, AndroidElementType, AndroidPropertyType)):
-                return self.attribute_converter.create_locator(locator)
-            # locator가 리스트나 튜플일 경우 풀어서 처리
-            elif isinstance(locator, (list, tuple)):
+        # locator가 하나만 전달된 경우 해당 값으로 처리
+        if len(locator) == 1:
+            single_locator = locator[0]
+            if isinstance(single_locator, (str, AndroidElementType, AndroidPropertyType)):
+                return self.attribute_converter.create_locator(single_locator)
+            elif isinstance(single_locator, (list, tuple)):
+                return self.attribute_converter.create_locator(*single_locator)
+            else:
+                raise TypeError(f"지원하지 않는 locator 타입입니다: {type(single_locator)}")
+
+        # locator가 여러 개 전달된 경우 그대로 풀어서 처리
+        elif len(locator) > 1:
+            if self.is_locators(locator):
                 return self.attribute_converter.create_locator(*locator)
             else:
-                raise TypeError(f"지원하지 않는 locator 타입입니다: {type(locator)}")
+                raise ValueError("올바르지 않은 다중 로케이터 형식입니다.")
+
+        # 만약 locator가 비어 있을 경우 예외 처리
+        else:
+            raise ValueError("로케이터가 제공되지 않았습니다.")
 
     def get_locator(self, *args):
         return self.attribute_converter.create_locator(*args)
@@ -62,7 +71,6 @@ class CommonPage:
 
     def set_text(self, text, *args):
         locator = self.handle_locator(*args)
-        print(locator)
         self.interaction_handler.set_text(locator, text)
 
     def get_text(self, *args):

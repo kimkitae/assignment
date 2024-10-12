@@ -26,7 +26,7 @@ class TestScenario:
         self.logger = rp_logger
     
     # TODO : 안드로이드 get page 소스 관련 수정 필요
-    def validate_coin_up_down_count(self):
+    def test_validate_coin_up_down_count(self):
 
         coin_up_count = self.common_page.get_text_by_keyword("코인up")
         coin_down_count = self.common_page.get_text_by_keyword("코인down")
@@ -44,8 +44,7 @@ class TestScenario:
 
         assert self.market_page.is_search_result_coin("btc"), "검색 결과 코인 노출 확인"
 
-    #TODO : 안드로이드 내 알림 버튼 미노출
-    def notification_function(self):
+    def test_notification_function(self):
         self.common_page.click_element(self.market_page.notification_button())
         notification_type = self.common_page.get_text_by_keyword("알림종류")
         self.logger.info(f"알림 종류 : {notification_type}")
