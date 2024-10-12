@@ -1,5 +1,0 @@
-Appium 서버 실행 준비
-Appium 서버 시작 명령 실행됨. 포트: 4723
-Appium 서버가 포트 4723에서 성공적으로 시작되었습니다.
-Portfolio balance 타이틀 : Portfolio balance / Portfolio balance 값 : 0.00%
-드라이버가 종료되었습니다.

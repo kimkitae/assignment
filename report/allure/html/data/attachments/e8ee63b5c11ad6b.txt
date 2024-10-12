@@ -1,0 +1,1 @@
+[32mINFO    [0m conftest:test_ui_ux_scenario.py:50 알림 종류 : Promotions

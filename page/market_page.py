@@ -7,11 +7,12 @@ from page.execute_method import ExecuteMethod
 from appium.webdriver.common.appiumby import AppiumBy
 
 class MarketPage:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
+        self.logger = rp_logger
         self.driver = driver
         self.os_type = os_type
-        self.common_page = CommonPage(driver, os_type)
-        self.execute_method = ExecuteMethod(driver, os_type)
+        self.common_page = CommonPage(driver, os_type, rp_logger)
+        self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
 
     """
     ========== Element 변수 ==========
@@ -40,6 +41,7 @@ class MarketPage:
             elif title_name == "high_funding_rates":
                 return "carousel_no6_see_all"
             else:
+                self.logger.info(f"해당 카테고리는 존재하지 않습니다. : {title}")
                 raise ValueError(f"해당 카테고리는 존재하지 않습니다. : {title}")
     
     def coin_list(self):
@@ -100,11 +102,12 @@ class MarketPage:
 
     def is_valid_coin_information(self):
         coins_data = self.gather_information_coin_lists()
+        self.logger.info(f"코인 데이터 개수: {len(coins_data)}")
         assert len(coins_data) > 0, "코인 데이터 1개이상 노출 확인"
 
         for coin_data in coins_data:
             is_valid = self.validata_coin_data(coin_data)
-            print(f"코인 정보: {coin_data}, 일치 여부: {is_valid}")
+            self.logger.info(f"코인 정보: {coin_data}, 일치 여부: {is_valid}")
             if not is_valid:
                 return False
         return True
@@ -141,19 +144,20 @@ class MarketPage:
 
         # # 패턴과 데이터 필드 수가 일치하는지 확인
         if len(fields) != len(patterns):
-            print(f"패턴 수와, 실제 데이터 필드 수가 일치 하지 않습니다. Patterns: {len(patterns)}, Fields: {len(fields)}")
+            self.logger.info(f"패턴 수와, 실제 데이터 필드 수가 일치 하지 않습니다. Patterns: {len(patterns)}, Fields: {len(fields)}")
             return False
         
         # 각 필드가 정규식 패턴에 맞는지 검사
         for pattern, field in zip(patterns, fields):
+            self.logger.info(f"패턴: {pattern}, 필드: {field}")
             if not re.match(pattern, field):
-                print(f"'{field}' 와 '{pattern}' 이 일치하지 않습니다.")
+                self.logger.info(f"'{field}' 와 '{pattern}' 이 일치하지 않습니다.")
                 return False
         return True
     
     def is_search_result_coin(self, search_keyword: str):
         locator = self.search_result_coin_name() + search_keyword
-        print(f"검색 결과 코인 이름 : {self.common_page.get_text(locator)}")
+        self.logger.info(f"검색 결과 코인 이름 : {self.common_page.get_text(locator)}")
         return self.common_page.is_visible(locator)
 
         

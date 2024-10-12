@@ -7,10 +7,11 @@ from page.element_attribute_converter import ElementType, PropertyType, StringTy
 
 
 class AssetsPage:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
         self.os_type = os_type
-        self.common_page = CommonPage(driver, os_type)
+        self.common_page = CommonPage(driver, os_type, rp_logger)
+        self.logger = rp_logger
 
     
     """
@@ -149,15 +150,15 @@ class AssetsPage:
 
             # 필드 개수 보정: 부족하거나 초과하는 필드를 맞춤
             if len(fields) < 6:
-                print(f"필드 수가 {len(fields)}개로 부족합니다. 기본값으로 채웁니다. 원래 필드: {fields}")
+                self.logger.info(f"필드 수가 {len(fields)}개로 부족합니다. 기본값으로 채웁니다. 원래 필드: {fields}")
                 fields += ['0.00'] * (6 - len(fields))
             elif len(fields) > 6:
-                print(f"필드 수가 {len(fields)}개로 초과합니다. 초과 필드를 제거합니다. 원래 필드: {fields}")
+                self.logger.info(f"필드 수가 {len(fields)}개로 초과합니다. 초과 필드를 제거합니다. 원래 필드: {fields}")
                 fields = fields[:6]
 
             # 유효성 검사 수행
             is_valid = self.validata_assets_data(", ".join(fields))
-            print(f"assets 정보: {asset}, 일치 여부: {is_valid}")
+            self.logger.info(f"assets 정보: {asset}, 일치 여부: {is_valid}")
             if not is_valid:
                 return False
         return True
@@ -204,13 +205,13 @@ class AssetsPage:
         
         # 패턴과 데이터 필드 수가 일치하는지 확인
         if len(fields) != len(patterns):
-            print(f"패턴 수와, 실제 데이터 필드 수가 일치 하지 않습니다. Patterns: {len(patterns)}, Fields: {len(fields)}")
+            self.logger.info(f"패턴 수와, 실제 데이터 필드 수가 일치 하지 않습니다. Patterns: {len(patterns)}, Fields: {len(fields)}")
             return False
 
         # 각 필드가 정규식 패턴에 맞는지 검사
         for pattern, field in zip(patterns, fields):
             if not re.match(pattern, field):
-                print(f"'{field}' 와 '{pattern}' 이 일치하지 않습니다.")
+                self.logger.info(f"'{field}' 와 '{pattern}' 이 일치하지 않습니다.")
                 return False
 
         return True

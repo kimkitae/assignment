@@ -110,3 +110,6 @@ java -jar agent.jar -url http://localhost:8081/ -secret 868c682289d767d09f4b9eba
 2. capabilities 를 통해 정의된 값 기준으로 `driver` 초기화
 3. `appium_server`클래스 내 `4723` PORT 기준으로 사용가능 여부 판단하여, 사용 불가 시 다른 PORT로 재 시도 후 사용가능 하너 PORT인 경우 APPIUM 서버 실행
 4. 테스트 종료 후 `yield`를 통해 생성된 `driver` 종료
+
+
+`first-key_DC4EfeuPTbCBHNEKorOD4NAPHWcEV9dWAJQICmtqdiJ4wHOHSZlPNnTzg-5Zy1pp`

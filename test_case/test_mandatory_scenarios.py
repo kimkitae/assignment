@@ -13,15 +13,15 @@ from page.element_attribute_converter import ElementType, PropertyType, StringTy
 class TestScenario:
     
     @pytest.fixture(autouse=True)
-    def setup(self, driver, os_type):
-        self.common_page = CommonPage(driver, os_type)
-        self.login_page = LoginPage(driver, os_type)
-        self.market_page = MarketPage(driver, os_type)
-        self.challenge_page = ChallengePage(driver, os_type)
-        self.assets_page = AssetsPage(driver, os_type)
-        self.etc_page = EtcPage(driver, os_type)
-        self.execute_method = ExecuteMethod(driver, os_type)
-    
+    def setup(self, driver, os_type, rp_logger):
+        self.common_page = CommonPage(driver, os_type, rp_logger)
+        self.login_page = LoginPage(driver, os_type, rp_logger)
+        self.market_page = MarketPage(driver, os_type, rp_logger)
+        self.challenge_page = ChallengePage(driver, os_type, rp_logger)
+        self.assets_page = AssetsPage(driver, os_type, rp_logger)
+        self.etc_page = EtcPage(driver, os_type, rp_logger)
+        self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
+        self.logger = rp_logger
     # Test Case 1: High volume 카테고리 코인 데이터 유효성 검사
     def test_market_trade_normal(self):
         self.market_page.click_market_button()
@@ -44,16 +44,16 @@ class TestScenario:
         self.assets_page.click_assets_button()
         self.login_page.click_setting_icon()
         self.login_page.click_support_menu("Announcement")
-        print("Announcement 선택 후 웹페이지 로딩을 위해 5초 대기")
+        self.logger.info("Announcement 선택 후 웹페이지 로딩을 위해 5초 대기")
         time.sleep(5)
         self.etc_page.click_open_messaging_windows()
-        print("open messaging windows 선택 후 챗봇 불러오기 위해 5초 대기")
+        self.logger.info("open messaging windows 선택 후 챗봇 불러오기 위해 5초 대기")
         time.sleep(5)
         assert self.etc_page.is_visible_chatbot(), "챗봇 노출 확인"
-        print("챗봇 노출 확인 후 챗봇 닫기 버튼 선택")
+        self.logger.info("챗봇 노출 확인 후 챗봇 닫기 버튼 선택")
         self.etc_page.click_close_messaging_windows()
         self.execute_method.activate_app()
-        print("앱 전환 후 Account 화면 정상 노출 확인")
+        self.logger.info("앱 전환 후 Account 화면 정상 노출 확인")
         assert self.common_page.is_visible(self.login_page.account_main_title()), "Account 화면 정상 노출 확인"
 
     

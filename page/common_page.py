@@ -7,15 +7,16 @@ from page.regex_utility import RegexUtility
 
 
 class CommonPage:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
         self.os_type = os_type
-        self.visibility_checker = ElementVisibilityChecker(driver)
-        self.gesture_control = ElementGestureControl(driver, os_type)
-        self.attribute_converter = ElementAttributeConverter(driver, os_type)
-        self.interaction_handler = ElementInteractionHandler(driver, os_type)
-        self.execute_method = ExecuteMethod(driver, os_type)
-        self.regex_utility = RegexUtility(driver, os_type)
+        self.visibility_checker = ElementVisibilityChecker(driver, rp_logger)
+        self.gesture_control = ElementGestureControl(driver, os_type, rp_logger)
+        self.attribute_converter = ElementAttributeConverter(driver, os_type, rp_logger)
+        self.interaction_handler = ElementInteractionHandler(driver, os_type, rp_logger)
+        self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
+        self.regex_utility = RegexUtility(driver, os_type, rp_logger)
+        self.logger = rp_logger
 
     def handle_locator(self, locator):
         """

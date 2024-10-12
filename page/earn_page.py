@@ -8,11 +8,12 @@ from page.regex_utility import RegexUtility
 
 
 class EarnPage:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
         self.os_type = os_type
-        self.common_page = CommonPage(driver, os_type)
-        self.regex_utility = RegexUtility(driver, os_type)
+        self.common_page = CommonPage(driver, os_type, rp_logger)
+        self.regex_utility = RegexUtility(driver, os_type, rp_logger)
+        self.logger = rp_logger
 
 
     """

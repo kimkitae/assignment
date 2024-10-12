@@ -7,10 +7,11 @@ from page.element_attribute_converter import ElementType, PropertyType
 
 
 class ChallengePage:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
         self.os_type = os_type
-        self.common_page = CommonPage(driver, os_type)
+        self.common_page = CommonPage(driver, os_type, rp_logger)
+        self.logger = rp_logger
 
 
 
@@ -77,7 +78,7 @@ class ChallengePage:
             i += 1
             if i > 1:
                 self.common_page.swipe("left")
-        print(f"전체 이벤트 일정: {event_info}")
+        self.logger.info(f"전체 이벤트 일정: {event_info}")
         return self.validate_event_info(event_info)
 
     def validate_event_info(self, event_info):
@@ -96,15 +97,15 @@ class ChallengePage:
 
             # 현재 날짜가 이벤트의 시작일과 종료일 사이에 포함되는지 확인하여 포함된다면 Opened 상태인지 확인
             if start_date <= current_date <= end_date:
-                print(f"시작 일 {start_date} - 종료 일 {end_date} / 현재 일 {current_date} - {status}")
+                self.logger.info(f"시작 일 {start_date} - 종료 일 {end_date} / 현재 일 {current_date} - {status}")
                 if status != "Opened":
-                    print(f"잘못된 이벤트 상태: {status}, Expected: Opened")
+                    self.logger.info(f"잘못된 이벤트 상태: {status}, Expected: Opened")
                     return False
             # 현재 날짜가 이벤트의 시작일과 종료일 사이에 포함되지 않는다면 Closed 상태인지 확인
             else:
-                print(f"시작 일 {start_date} - 종료 일 {end_date} / 현재 일 {current_date} - {status}")
+                self.logger.info(f"시작 일 {start_date} - 종료 일 {end_date} / 현재 일 {current_date} - {status}")
                 if status != "Closed":
-                    print(f"잘못된 이벤트 상태: {status}, Expected: Closed")
+                    self.logger.info(f"잘못된 이벤트 상태: {status}, Expected: Closed")
                     return False
 
         return True

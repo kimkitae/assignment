@@ -44,9 +44,10 @@ class VisibleType(Enum):
 
 class ElementAttributeConverter:
     
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
         self.os_type = os_type
+        self.logger = rp_logger
 
     def create_locator(self, *args):
         if self.os_type == "ios":

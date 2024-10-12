@@ -11,7 +11,8 @@ from selenium.webdriver.common.actions.pointer_input import PointerInput
 
 
 class ElementInteractionHandler:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
+        self.logger = rp_logger
         self.driver = driver
         self.os_type = os_type
 
@@ -22,8 +23,10 @@ class ElementInteractionHandler:
     )
             element.click()
         except TimeoutException:
+            self.logger.info(f"{test_object} 오브젝트를 찾지 못함")
             raise Exception(f"{test_object} 오브젝트를 찾지 못함")
         except IndexError:
+            self.logger.info("입력한 index의 오브젝트가 존재하지 않습니다. Index 번호를 다시 한번 확인해주세요.")
             raise Exception("입력한 index의 오브젝트가 존재하지 않습니다. Index 번호를 다시 한번 확인해주세요.")
 
     def tap_xy(self, x, y):
@@ -33,7 +36,7 @@ class ElementInteractionHandler:
         actions.w3c_actions.pointer_action.move_to_location(x, y)
         actions.w3c_actions.pointer_action.click()
         actions.w3c_actions.perform()
-        print(f"좌표 - {x} / {y}")
+        self.logger.info(f"좌표 - {x} / {y}")
 
     def tap_test_object_xy(self, test_object, wait_time=3):
         try:
@@ -46,6 +49,7 @@ class ElementInteractionHandler:
             center_y = location['y'] + size['height'] // 2
             self.tap_xy(center_x, center_y)
         except TimeoutException:
+            self.logger.info(f"{test_object} 오브젝트를 찾지 못함")
             raise Exception(f"{test_object} 오브젝트를 찾지 못함")
 
     def set_text(self, test_object, text_value, wait_time=1.5):
@@ -55,6 +59,7 @@ class ElementInteractionHandler:
             )
             element.send_keys(text_value)
         except TimeoutException:
+            self.logger.info(f"{test_object} 오브젝트를 찾지 못함")
             raise Exception(f"{test_object} 오브젝트를 찾지 못함")
 
     def get_text(self, test_object, wait_time=3):
@@ -65,6 +70,7 @@ class ElementInteractionHandler:
             result = element.text
             return result
         except TimeoutException:
+            self.logger.info(f"{test_object} 오브젝트를 찾지 못함")
             raise Exception(f"{test_object} 오브젝트를 찾지 못함")
 
     def clean_text_field(self, element_type, wait_time=3):
@@ -79,6 +85,7 @@ class ElementInteractionHandler:
                         EC.presence_of_element_located((AppiumBy.CLASS_NAME, "XCUIElementTypeSecureTextField"))
                     )
                 else:
+                    self.logger.info("Invalid element_type")
                     raise ValueError("Invalid element_type")
             elif self.os_type == "android":
                 # Android에 맞는 로직 추가
@@ -86,10 +93,12 @@ class ElementInteractionHandler:
                     EC.presence_of_element_located((AppiumBy.CLASS_NAME, "android.widget.EditText"))
                 )
             else:
+                self.logger.info("Invalid OS type")
                 raise ValueError("Invalid OS type")
             
             element.clear()
         except TimeoutException:
+            self.logger.info(f"{element_type} 오브젝트를 찾지 못함")
             raise Exception(f"{element_type} 오브젝트를 찾지 못함")
 
     def press_key(self, key):
@@ -99,11 +108,13 @@ class ElementInteractionHandler:
                 actions.send_keys(key)
                 actions.perform()
             except TimeoutException:
+                self.logger.info(f"{key} 키를 찾지 못함")
                 raise Exception(f"{key} 키를 찾지 못함")
         else :
             try:
                 self.driver.press_keycode(key)
             except TimeoutException:
+                self.logger.info(f"{key} 키를 찾지 못함")
                 raise Exception(f"{key} 키를 찾지 못함")
     
     def set_permission(self, permissions):

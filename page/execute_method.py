@@ -8,7 +8,8 @@ from page.element_attribute_converter import ElementType, PropertyType
 
 
 class ExecuteMethod:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
+        self.logger = rp_logger
         self.driver = driver
         self.os_type = os_type
 
@@ -93,18 +94,21 @@ class ExecuteMethod:
         if self.os_type == "ios":
             return self.driver.execute_script("mobile: startXCTestScreenRecording", {"fps": 24})
         else:
+            self.logger.info(f"스크린 녹화는 아이폰에서만 가능합니다.")
             raise ValueError(f"스크린 녹화는 아이폰에서만 가능합니다.")
 
     def get_xctest_screen_recording_info(self):
         if self.os_type == "ios":
             return self.driver.execute_script("mobile: getXCTestScreenRecordingInfo")
         else:
+            self.logger.info(f"스크린 녹화는 아이폰에서만 가능합니다.")
             raise ValueError(f"스크린 녹화는 아이폰에서만 가능합니다.")
 
     def stop_xctest_screen_recording(self):
         if self.os_type == "ios":
             self.driver.execute_script("mobile: stopXCTestScreenRecording")
         else:
+            self.logger.info(f"스크린 녹화는 아이폰에서만 가능합니다.")
             raise ValueError(f"스크린 녹화는 아이폰에서만 가능합니다.")
 
     def system_alert(self, action="accept", button_name=None):
@@ -117,4 +121,5 @@ class ExecuteMethod:
                 self.driver.execute_script("mobile: alert", {"action": action, "buttonLabel": button_name})
                 return True
         else:
+            self.logger.info(f"시스템 알림은 아이폰에서만 가능합니다.")
             raise ValueError(f"시스템 알림은 아이폰에서만 가능합니다.")

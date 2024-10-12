@@ -1,2 +1,0 @@
-코인 상승 카운트 : 248 Coins are up / 코인 하락 카운트 : 18 Coins are down
-드라이버가 종료되었습니다.

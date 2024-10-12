@@ -17,9 +17,11 @@ class ScrollSize(Enum):
 class ElementGestureControl:
     MAX_RETRIES = 10
 
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
-        self.execute_method = ExecuteMethod(driver, os_type)
+        self.os_type = os_type
+        self.logger = rp_logger
+        self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
         self.screen_size = driver.get_window_size()
         self.screen_width = self.screen_size['width']
         self.screen_height = self.screen_size['height']
@@ -75,7 +77,7 @@ class ElementGestureControl:
                     time.sleep(0.5)
             return False
         except Exception as e:
-            print(f'Object찾기 실패: {e}')
+            self.logger.info(f'Object찾기 실패: {e}')
             return False
 
     def scroll_list_to_element_with_predicate(self, element_text, scroll_size):
@@ -88,7 +90,7 @@ class ElementGestureControl:
             except NoSuchElementException:
                 self.scroll_entire_list(scroll_size)
         
-        print(f"{self.MAX_RETRIES}회 이상 Element를 찾지 못했습니다.")
+        self.logger.info(f"{self.MAX_RETRIES}회 이상 Element를 찾지 못했습니다.")
         return False
 
     def scroll_entire_list(self, scroll_size):
@@ -164,7 +166,7 @@ class ElementGestureControl:
             
             # 숨겨진 높이만큼 화면을 스크롤, to_center_y 값 보정
             to_center_y = max(from_center_y - hidden_height, 100)  # 최소값을 설정하여 화면 밖으로 나가는 것을 방지
-            print(f"해당 요소가 화면 아래에 가려져 있어 ({from_center_x}, {from_center_y}) to ({from_center_x}, {to_center_y}) 만큼 스크롤 합니다.")
+            self.logger.info(f"해당 요소가 화면 아래에 가려져 있어 ({from_center_x}, {from_center_y}) to ({from_center_x}, {to_center_y}) 만큼 스크롤 합니다.")
             self.execute_method.drag_from_to(from_center_x, from_center_y, from_center_x, to_center_y, 2500)
         elif element_top < screen_top:
             # 요소의 상단이 화면 상단보다 위에 있으면, 일부가 화면 위로 가려진 상태
@@ -172,5 +174,5 @@ class ElementGestureControl:
             
             # 숨겨진 높이만큼 화면을 스크롤, to_center_y 값 보정
             to_center_y = min(from_center_y + hidden_height, screen_bottom - 100)  # 최대값을 설정하여 화면 밖으로 나가는 것을 방지
-            print(f"해당 요소가 화면 아래에 가려져 있어 ({from_center_x}, {from_center_y}) to ({from_center_x}, {to_center_y}) 만큼 스크롤 합니다.")
+            self.logger.info(f"해당 요소가 화면 아래에 가려져 있어 ({from_center_x}, {from_center_y}) to ({from_center_x}, {to_center_y}) 만큼 스크롤 합니다.")
             self.execute_method.drag_from_to(from_center_x, from_center_y, from_center_x, to_center_y, 2500)

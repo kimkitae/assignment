@@ -5,7 +5,8 @@ from selenium.common.exceptions import TimeoutException
 import concurrent.futures
 
 class ElementVisibilityChecker:
-    def __init__(self, driver):
+    def __init__(self, driver, rp_logger):
+        self.logger = rp_logger
         self.driver = driver
 
     def wait_for(self, test_object, wait_time=3):
@@ -27,6 +28,7 @@ class ElementVisibilityChecker:
             )
             return True
         except TimeoutException:
+            self.logger.info(f"{test_object} 요소를 찾을 수 없습니다.")
             raise Exception(f"{test_object} 요소를 찾을 수 없습니다.")
 
     def is_not_visible(self, test_object, wait_time=1):
@@ -43,13 +45,13 @@ class ElementVisibilityChecker:
             try:
                 return self.is_visible(("ios_predicate", f"label == '{string}'"))
             except Exception as e:
-                print(f"{string} 확인 중 오류 발생: {str(e)}")
+                self.logger.info(f"{string} 확인 중 오류 발생: {str(e)}")
                 return False
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             results = list(executor.map(check_visibility, strings_to_test))
 
         for string, result in zip(strings_to_test, results):
-            print(f"{string} isVisible : {result}")
+            self.logger.info(f"{string} isVisible : {result}")
 
         return all(results)

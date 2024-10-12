@@ -5,9 +5,10 @@ import time
 
 
 class RegexUtility:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
+        self.logger = rp_logger
         self.driver = driver
-        self.execute_method = ExecuteMethod(driver, os_type)
+        self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
 
     def matchered_text(self, patterns, page_source=None):
         current_page_source = page_source if page_source else self.execute_method.get_page_source_in_json()
@@ -18,10 +19,10 @@ class RegexUtility:
         match = re.search(patterns, current_page_source)
         if match:
             matched_value = match.group(0)
-            print(f"패턴과 일치하는 값: {matched_value}")
+            self.logger.info(f"패턴과 일치하는 값: {matched_value}")
             return matched_value
         else:
-            print("패턴과 일치하는 값이 없습니다.")
+            self.logger.info("패턴과 일치하는 값이 없습니다.")
             return "null"
 
     def matchered_text_with_index(self, patterns, index=0, page_source=None):
@@ -32,10 +33,10 @@ class RegexUtility:
         match = re.search(patterns, current_page_source)
         if match:
             matched_value = match.group(index)
-            print(f"패턴과 일치하는 값: {matched_value}")
+            self.logger.info(f"패턴과 일치하는 값: {matched_value}")
             return matched_value
         else:
-            print("패턴과 일치하는 값이 없습니다.")
+            self.logger.info("패턴과 일치하는 값이 없습니다.")
             return "null"
 
     def remove_digits_and_whitespace(self, text):
@@ -97,7 +98,7 @@ class RegexUtility:
 
             time.sleep(3)  # 5초 대기 후 재시도
             
-        print(f"{keyword}에 해당하는 패턴을 찾지 못했습니다.")
+        self.logger.info(f"{keyword}에 해당하는 패턴을 찾지 못했습니다.")
         return "null"
     
     def dict_to_string(self, d, level=0):
