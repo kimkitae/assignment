@@ -9,7 +9,7 @@ from driver_manager import DriverManager
 from page.execute_method import ExecuteMethod
 
 def pytest_addoption(parser):
-    parser.addoption("--os", action="store", default="ios", help="Select OS: ios or android")
+    parser.addoption("--os", action="store", default="android", help="Select OS: ios or android")
 
 @pytest.fixture(scope="session")
 def os_type(request):

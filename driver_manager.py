@@ -60,9 +60,15 @@ class DriverManager:
         options = UiAutomator2Options()
         options.platformName = "Android"
         options.deviceName = "Android Device"
-        options.appPackage = "com.aqx.prex"
-        options.appActivity = "com.aqx.prex.MainActivity"
-        # ... (안드로이드 관련 옵션들 추가)
+        options.appPackage = "com.prestolabs.android.prex"
+        options.appActivity = "com.prestolabs.android.prex.MainActivity"
+        options.autoGrantPermissions = True
+        options.udid = "RF9N301TGWN"
+        options.platformVersion = "11"
+        options.automationName = "UiAutomator2"
+        options.noReset = True
+        options.fullReset = False
+
         return options
 
     def quit_driver(self):
