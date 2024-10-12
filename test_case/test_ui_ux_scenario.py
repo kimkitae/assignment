@@ -4,12 +4,12 @@ import logging
 from page.assets_page import AssetsPage
 from page.challenge_page import ChallengePage
 from page.etc_page import EtcPage
-from page.execute_method import ExecuteMethod
+from helper.execute_method import ExecuteMethod
 from page.market_page import MarketPage
 from page.common_page import CommonPage
 from page.login_page import LoginPage
 from reportportal_client import RPLogger, RPLogHandler
-from page.element_attribute_converter import ElementType, PropertyType, StringType
+from helper.element_attribute_converter import ElementType, PropertyType, StringType
 
 class TestScenario:
     
@@ -25,8 +25,8 @@ class TestScenario:
 
         self.logger = rp_logger
     
-
-    def test_validate_coin_up_down_count(self):
+    # TODO : 안드로이드 get page 소스 관련 수정 필요
+    def validate_coin_up_down_count(self):
 
         coin_up_count = self.common_page.get_text_by_keyword("코인up")
         coin_down_count = self.common_page.get_text_by_keyword("코인down")
@@ -44,7 +44,8 @@ class TestScenario:
 
         assert self.market_page.is_search_result_coin("btc"), "검색 결과 코인 노출 확인"
 
-    def test_notification_function(self):
+    #TODO : 안드로이드 내 알림 버튼 미노출
+    def notification_function(self):
         self.common_page.click_element(self.market_page.notification_button())
         notification_type = self.common_page.get_text_by_keyword("알림종류")
         self.logger.info(f"알림 종류 : {notification_type}")

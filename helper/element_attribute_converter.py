@@ -42,6 +42,23 @@ class VisibleType(Enum):
     FALSE = False
 
 
+class AndroidElementType(Enum):
+    BUTTON = "android.widget.Button"
+    TEXT_VIEW = "android.widget.TextView"
+    IMAGE_VIEW = "android.widget.ImageView"
+    EDIT_TEXT = "android.widget.EditText"
+    SWITCH = "android.widget.Switch"
+    CHECK_BOX = "android.widget.CheckBox"
+    RADIO_BUTTON = "android.widget.RadioButton"
+    SPINNER = "android.widget.Spinner"
+    LIST_VIEW = "android.widget.ListView"
+    GRID_VIEW = "android.widget.GridView"
+    VIEW = "android.view.View"
+
+class AndroidPropertyType(Enum):
+    DESC = "description"
+    TEXT = "text"
+
 
 class ElementAttributeConverter:
     
@@ -49,6 +66,7 @@ class ElementAttributeConverter:
         self.driver = driver
         self.os_type = os_type
         self.logger = rp_logger
+
 
     def create_locator(self, *args):
         if self.os_type == "ios":
@@ -58,10 +76,8 @@ class ElementAttributeConverter:
                 elif ":" not in args[0]:  # ID로 간주
                     return self.id_object(args[0])
             return self.ios_predicate_object(*args)
-        elif self.os_type == "android":
-            return self.android_locator(*args)
         else:
-            raise ValueError(f"지원하지 않는 OS 입니다.: {self.os_type}")
+            return self.android_locator(*args)
 
     
     def find_element(self, args):
@@ -181,42 +197,39 @@ class ElementAttributeConverter:
                     return AppiumBy.ID, arg
                 else:
                     return AppiumBy.ACCESSIBILITY_ID, arg
+            elif isinstance(arg, AndroidElementType):
+                return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().className("{arg.value}")'
+            elif isinstance(arg, AndroidPropertyType):
+                return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().{arg.value}()'
+
         elif len(args) == 2:
-            if isinstance(args[0], ElementType):
-                return self.android_ui_automator_by_class_and_text(*args)
+            if isinstance(args[0], AndroidElementType):
+                return self.android_ui_automator_by_property_and_value_with_index(args[0], args[1])
+            elif isinstance(args[0], AndroidPropertyType):
+                return self.android_ui_automator_by_property_and_value_with_index(args[0], args[1])
             elif isinstance(args[0], str) and isinstance(args[1], int):
                 return self.android_locator_with_index(*args)
-        self.logger.error("올바르지 않은 값 입니다.")
-        raise ValueError("Invalid arguments for Android locator")
+            elif args[0] == "uiautomator":
+                return AppiumBy.ANDROID_UIAUTOMATOR, args[1]
 
-    def android_ui_automator_by_class_and_text(self, element_type, text):
-        class AndroidElementType(Enum):
-            BUTTON = "android.widget.Button"
-            TEXT_VIEW = "android.widget.TextView"
-            IMAGE_VIEW = "android.widget.ImageView"
-            EDIT_TEXT = "android.widget.EditText"
-            SWITCH = "android.widget.Switch"
-            CHECK_BOX = "android.widget.CheckBox"
-            RADIO_BUTTON = "android.widget.RadioButton"
-            SPINNER = "android.widget.Spinner"
-            LIST_VIEW = "android.widget.ListView"
-            GRID_VIEW = "android.widget.GridView"
-            VIEW = "android.view.View"
+        self.logger.error(f"올바르지 않은 값 입니다. : {args}")
+        raise ValueError("올바르지 않은 값 입니다.")
 
-            def get_class_name(self):
-                return self.value
-        
-        if isinstance(element_type, str):
-            element_type = AndroidElementType[element_type.upper()]
-
-        class_name = element_type.get_class_name()
-        return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().className("{class_name}").text("{text}")'
+    def android_ui_automator_by_property_and_value_with_index(self, property_type, value, index=0):
+        if isinstance(property_type, AndroidElementType):
+            return AppiumBy.ANDROID_UIAUTOMATOR, (
+                f"new UiSelector().className('{property_type.value}').text('{value}').instance({index})" if property_type == AndroidElementType.TEXT else
+                f"new UiSelector().className('{property_type.value}').description('{value}').instance({index})"
+            )
+        return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().{property_type.value}("{value}").instance({index})'
 
     def android_locator_with_index(self, locator, index):
         if locator.startswith("//"):
             return AppiumBy.XPATH, f"({locator})[{index + 1}]"
         elif ":" in locator:
-            return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().resourceId("{locator}").instance({index})'
+            return AppiumBy.ANDROID_UIAUTOMATOR, f"new UiSelector().resourceId('{locator}').instance({index})"
         else:
-            return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().description("{locator}").instance({index})'
-
+            return AppiumBy.ANDROID_UIAUTOMATOR, (
+                f"new UiSelector().text('{locator}').instance({index})" if locator else
+                f"new UiSelector().description('{locator}').instance({index})"
+            )

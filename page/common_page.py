@@ -1,9 +1,9 @@
-from page.element_attribute_converter import ElementAttributeConverter
-from page.element_gesture_control import ElementGestureControl
-from page.element_interaction_handle import ElementInteractionHandler
-from page.element_visibility_checker import ElementVisibilityChecker
-from page.execute_method import ExecuteMethod
-from page.regex_utility import RegexUtility
+from helper.element_attribute_converter import AndroidElementType, AndroidPropertyType, ElementAttributeConverter, ElementType
+from helper.element_gesture_control import ElementGestureControl
+from helper.element_interaction_handle import ElementInteractionHandler
+from helper.element_visibility_checker import ElementVisibilityChecker
+from helper.execute_method import ExecuteMethod
+from helper.regex_utility import RegexUtility
 
 
 class CommonPage:
@@ -25,11 +25,14 @@ class CommonPage:
         if self.is_locators(locator):
             return self.attribute_converter.create_locator(*locator)
         else:
-            # locator가 문자열일 경우, 이를 풀지 않고 그대로 전달
-            if isinstance(locator, str):
+            # locator가 문자열, AndroidElementType, AndroidPropertyType일 경우 처리
+            if isinstance(locator, (str, AndroidElementType, AndroidPropertyType)):
                 return self.attribute_converter.create_locator(locator)
+            # locator가 리스트나 튜플일 경우 풀어서 처리
+            elif isinstance(locator, (list, tuple)):
+                return self.attribute_converter.create_locator(*locator)
             else:
-                return self.attribute_converter.create_locator(*locator)  # 튜플일 경우 풀어서 전달
+                raise TypeError(f"지원하지 않는 locator 타입입니다: {type(locator)}")
 
     def get_locator(self, *args):
         return self.attribute_converter.create_locator(*args)
@@ -59,6 +62,7 @@ class CommonPage:
 
     def set_text(self, text, *args):
         locator = self.handle_locator(*args)
+        print(locator)
         self.interaction_handler.set_text(locator, text)
 
     def get_text(self, *args):

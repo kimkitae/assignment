@@ -5,12 +5,12 @@ from page.assets_page import AssetsPage
 from page.challenge_page import ChallengePage
 from page.earn_page import EarnPage
 from page.etc_page import EtcPage
-from page.execute_method import ExecuteMethod
+from helper.execute_method import ExecuteMethod
 from page.market_page import MarketPage
 from page.common_page import CommonPage
 from page.login_page import LoginPage
 
-from page.element_attribute_converter import ElementType, PropertyType, StringType
+from helper.element_attribute_converter import ElementType, PropertyType, StringType
 
 class TestScenario:
     
@@ -25,6 +25,8 @@ class TestScenario:
         self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
         self.earn_page = EarnPage(driver, os_type, rp_logger)
         self.logger = rp_logger
+
+        
     def test_check_asset_portfolio(self):
         self.common_page.click_element(self.assets_page.bottom_tab_assets_button())
         balance_title = self.common_page.get_text(self.assets_page.portfolio_balance_title())

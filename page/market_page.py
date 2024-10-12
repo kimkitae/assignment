@@ -2,8 +2,8 @@
 import re
 import time
 from page.common_page import CommonPage
-from page.element_attribute_converter import ElementType, PropertyType, StringType
-from page.execute_method import ExecuteMethod
+from helper.element_attribute_converter import AndroidPropertyType, ElementType, PropertyType, StringType, AndroidElementType
+from helper.execute_method import ExecuteMethod
 from appium.webdriver.common.appiumby import AppiumBy
 
 class MarketPage:
@@ -60,13 +60,13 @@ class MarketPage:
         if self.os_type == "ios":
             return "text_field"
         else:
-            return "search_input"
-        
+            return AndroidElementType.EDIT_TEXT
+ 
     def search_result_coin_name(self):
         if self.os_type == "ios":
             return "searched_product_ticker_"
         else:
-            return "BTC"
+            return "searched_product_ticker_"
 
     def notification_button(self):
         if self.os_type == "ios":

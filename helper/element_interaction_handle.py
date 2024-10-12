@@ -102,6 +102,7 @@ class ElementInteractionHandler:
             raise Exception(f"{element_type} 오브젝트를 찾지 못함")
 
     def press_key(self, key):
+
         if self.os_type == "ios":
             try:
                 actions = ActionChains(self.driver)
@@ -112,11 +113,20 @@ class ElementInteractionHandler:
                 raise Exception(f"{key} 키를 찾지 못함")
         else :
             try:
-                self.driver.press_keycode(key)
+                if isinstance(key, str):
+                    key_value = key.lower()
+                    if key_value in ['search', 'enter']:
+                        key_code = 66
+                    else:
+                        self.logger.info(f"지원하지 않는 키: {key_value}")
+                        raise ValueError(f"지원하지 않는 키: {key_value}")
+                elif isinstance(key, int):
+                    key_code = key
+                else:
+                    self.logger.info("키는 문자열 또는 정수여야 합니다.")
+                    raise TypeError("키는 문자열 또는 정수여야 합니다.")
+
+                self.driver.press_keycode(key_code)
             except TimeoutException:
                 self.logger.info(f"{key} 키를 찾지 못함")
                 raise Exception(f"{key} 키를 찾지 못함")
-    
-    def set_permission(self, permissions):
-        permissions["bundleId"] = "com.rgpkorea.enp.yogiyo"
-        self.driver.execute_script("mobile: setPermission", permissions)

@@ -3,7 +3,7 @@
 import re
 import time
 from page.common_page import CommonPage
-from page.element_attribute_converter import ElementType, PropertyType, StringType
+from helper.element_attribute_converter import ElementType, PropertyType, StringType
 
 
 class AssetsPage:

@@ -1,5 +1,5 @@
 import re
-from page.execute_method import ExecuteMethod
+from helper.execute_method import ExecuteMethod
 import time
 import xml.etree.ElementTree as ET
 

@@ -2,7 +2,7 @@ import time
 import pytest
 
 from page.account_page import AccountPage
-from page.execute_method import ExecuteMethod
+from helper.execute_method import ExecuteMethod
 from page.common_page import CommonPage
 from page.login_page import LoginPage
 from page.element_attribute_converter import ElementType, PropertyType, StringType

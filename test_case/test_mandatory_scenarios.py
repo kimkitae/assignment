@@ -4,7 +4,7 @@ import pytest
 from page.assets_page import AssetsPage
 from page.challenge_page import ChallengePage
 from page.etc_page import EtcPage
-from page.execute_method import ExecuteMethod
+from helper.execute_method import ExecuteMethod
 from page.market_page import MarketPage
 from page.common_page import CommonPage
 from page.login_page import LoginPage

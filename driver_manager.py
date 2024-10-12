@@ -63,8 +63,8 @@ class DriverManager:
         options.appPackage = "com.prestolabs.android.prex"
         options.appActivity = "com.prestolabs.android.prex.MainActivity"
         options.autoGrantPermissions = True
-        options.udid = "RF9N301TGWN"
-        options.platformVersion = "11"
+        options.udid = "R3CW70MWY3Z"
+        options.platformVersion = "14"
         options.automationName = "UiAutomator2"
         options.noReset = True
         options.fullReset = False

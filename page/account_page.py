@@ -3,8 +3,8 @@ import random
 import string
 import time
 from page.common_page import CommonPage
-from page.element_attribute_converter import ElementType
-from page.regex_utility import RegexUtility
+from helper.element_attribute_converter import ElementType
+from helper.regex_utility import RegexUtility
 
 
 class AccountPage:

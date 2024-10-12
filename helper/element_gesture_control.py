@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from enum import Enum
-from page.execute_method import ExecuteMethod
+from helper.execute_method import ExecuteMethod
 from appium.webdriver.common.appiumby import AppiumBy
 
 

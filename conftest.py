@@ -6,7 +6,7 @@ from reportportal_client import RPLogger, RPLogHandler
 from appium import webdriver
 from appium_server import AppiumServer
 from driver_manager import DriverManager
-from page.execute_method import ExecuteMethod
+from helper.execute_method import ExecuteMethod
 
 def pytest_addoption(parser):
     parser.addoption("--os", action="store", default="android", help="Select OS: ios or android")
@@ -27,9 +27,9 @@ def driver(appium_server, os_type, rp_logger):
     driver_manager = DriverManager(appium_server.port, os_type)
     driver = driver_manager.init_driver()
     execute_method = ExecuteMethod(driver, os_type, rp_logger)
-    execute_method.launch_app()
+    # execute_method.launch_app()
     yield driver
-    execute_method.terminate_app()
+    # execute_method.terminate_app()
     driver_manager.quit_driver()
 
 @pytest.fixture(scope="session")

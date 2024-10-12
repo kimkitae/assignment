@@ -3,7 +3,7 @@
 
 
 from page.common_page import CommonPage
-from page.element_attribute_converter import ElementType, PropertyType
+from helper.element_attribute_converter import ElementType, PropertyType
 
 
 class EtcPage:

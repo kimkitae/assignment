@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.command import Command
 
-from page.element_attribute_converter import ElementType, PropertyType
+from helper.element_attribute_converter import ElementType, PropertyType
 
 
 class ExecuteMethod:
@@ -17,19 +17,19 @@ class ExecuteMethod:
         if self.os_type == "ios":
             self.driver.execute_script("mobile: activateApp", {"bundleId": "com.aqx.prex"})
         elif self.os_type == "android":
-            self.driver.execute_script("mobile: activateApp", {"packageId": "com.aqx.prex"})
+            self.driver.execute_script("mobile: activateApp", {"appId": "com.prestolabs.android.prex"})
 
     def launch_app(self):
         if self.os_type == "ios":
             self.driver.execute_script("mobile: launchApp", {"bundleId": "com.aqx.prex"})
         elif self.os_type == "android":
-            self.driver.execute_script("mobile: launchApp", {"packageId": "com.aqx.prex"})
+            self.driver.execute_script("mobile: activateApp", {"appId": "com.prestolabs.android.prex"})
 
     def terminate_app(self):
         if self.os_type == "ios":
             self.driver.execute_script("mobile: terminateApp", {"bundleId": "com.aqx.prex"})
         elif self.os_type == "android":
-            self.driver.execute_script("mobile: terminateApp", {"packageId": "com.aqx.prex"})
+            self.driver.execute_script("mobile: terminateApp", {"appId": "com.prestolabs.android.prex"})
 
     def swipe(self,direction):
         self.driver.execute_script("mobile: swipe", {"direction": direction, "velocity": 250})
@@ -60,7 +60,10 @@ class ExecuteMethod:
         return self.driver.execute_script("mobile: getContexts", {"waitForWebviewMs": wait_for_webview_ms})
 
     def get_page_source_in_json(self):
-        return self.driver.execute_script("mobile: source", {"format": "json", "recursive": True})
+        if self.os_type == "ios":
+            return self.driver.execute_script("mobile: source", {"format": "json", "recursive": True})
+        elif self.os_type == "android":
+            return self.driver.page_source
 
     def hide_keyboard(self):
         self.driver.execute_script("mobile: hideKeyboard", {"keys": ["done", "완료"]})
