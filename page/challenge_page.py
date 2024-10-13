@@ -2,15 +2,18 @@
 
 from datetime import datetime, timezone
 import re
+import time
 from page.common_page import CommonPage
-from page.element_attribute_converter import ElementType, PropertyType
-
+from helper.element_attribute_converter import AndroidPropertyType, ElementType, PropertyType
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.common.exceptions import NoSuchElementException
 
 class ChallengePage:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
         self.os_type = os_type
-        self.common_page = CommonPage(driver, os_type)
+        self.common_page = CommonPage(driver, os_type, rp_logger)
+        self.logger = rp_logger
 
 
 
@@ -22,13 +25,13 @@ class ChallengePage:
         if self.os_type == "ios":
             return ElementType.STATIC_TEXT, PropertyType.LABEL, "Challenge"
         else:
-            return "market_button"
+            return "tab_challenge"
 
     def top_tab_launch_airdrop_button(self):
         if self.os_type == "ios":
             return ElementType.BUTTON, PropertyType.LABEL, "Launch Airdrop, Launch Airdrop"
         else:
-            return "launch_airdrop_button"
+            return AndroidPropertyType.TEXT, "Launch Airdrop"
     
     def event_data_element(self, index):
         if self.os_type == "ios":
@@ -59,25 +62,46 @@ class ChallengePage:
         event_info = []
         max_iterations = 15
         i = 1
+        last_date_text = ""
+        duplicate_count = 0
 
         while i <= max_iterations:
-            data_element = self.event_data_element(i)
-            status_element = self.event_status_element(i)
+            if self.os_type == "ios":
+                data_element = self.event_data_element(i)
+                status_element = self.event_status_element(i)
 
-            is_visible = False
-            is_visible = self.common_page.is_visible(data_element)
+                is_visible = False
+                is_visible = self.common_page.is_visible(data_element)
 
-            if not is_visible:
-                break
+                if not is_visible:
+                    break
 
-            data_text = self.common_page.get_text(data_element)
-            status_text = self.common_page.get_text(status_element)
-            event_info.append((data_text, status_text))
+                data_text = self.common_page.get_text(data_element)
+                status_text = self.common_page.get_text(status_element)
+                event_info.append((data_text, status_text))
 
+            else:
+                try:
+                    date_element, status = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Closed").fromParent(new UiSelector().className("android.widget.TextView").instance(3))'), "Closed"
+                except NoSuchElementException:
+                    date_element, status = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Opened").fromParent(new UiSelector().className("android.widget.TextView").instance(3))'), "Opened"
+                
+                date_text = date_element.get_attribute('text')
+                if date_text == last_date_text:
+                    if duplicate_count == 1:
+                        self.logger.info("최근 이벤트 날짜가 중복되어 더 이상 새로운 데이터가 없는 것으로 판단하여 중단합니다.")
+                        break
+                    duplicate_count += 1
+                
+                last_date_text = date_text
+                
+                event_info.append((date_text, status))
+            
+            self.common_page.swipe("left")
+            time.sleep(1)
             i += 1
-            if i > 1:
-                self.common_page.swipe("left")
-        print(f"전체 이벤트 일정: {event_info}")
+
+        self.logger.info(f"전체 이벤트 일정: {event_info}")
         return self.validate_event_info(event_info)
 
     def validate_event_info(self, event_info):
@@ -85,6 +109,7 @@ class ChallengePage:
         current_month_day = current_time.strftime("%m.%d")
 
         for data_text, status in event_info:
+            self.logger.info(f"이벤트 날짜 추출, {self.common_page.get_text_by_keyword('이벤트날짜', data_text)}, 날짜 {data_text}")
             assert self.common_page.get_text_by_keyword("이벤트날짜", data_text) == data_text, "이벤트 날짜 텍스트 유효성 검사"
 
             start_date_str, end_date_str = self.parse_date_range(data_text)
@@ -96,15 +121,15 @@ class ChallengePage:
 
             # 현재 날짜가 이벤트의 시작일과 종료일 사이에 포함되는지 확인하여 포함된다면 Opened 상태인지 확인
             if start_date <= current_date <= end_date:
-                print(f"시작 일 {start_date} - 종료 일 {end_date} / 현재 일 {current_date} - {status}")
+                self.logger.info(f"시작 일 {start_date} - 종료 일 {end_date} / 현재 일 {current_date} - {status}")
                 if status != "Opened":
-                    print(f"잘못된 이벤트 상태: {status}, Expected: Opened")
+                    self.logger.info(f"잘못된 이벤트 상태: {status}, Expected: Opened")
                     return False
             # 현재 날짜가 이벤트의 시작일과 종료일 사이에 포함되지 않는다면 Closed 상태인지 확인
             else:
-                print(f"시작 일 {start_date} - 종료 일 {end_date} / 현재 일 {current_date} - {status}")
+                self.logger.info(f"시작 일 {start_date} - 종료 일 {end_date} / 현재 일 {current_date} - {status}")
                 if status != "Closed":
-                    print(f"잘못된 이벤트 상태: {status}, Expected: Closed")
+                    self.logger.info(f"잘못된 이벤트 상태: {status}, Expected: Closed")
                     return False
 
         return True

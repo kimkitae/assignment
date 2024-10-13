@@ -1,34 +1,48 @@
-from page.element_attribute_converter import ElementAttributeConverter
-from page.element_gesture_control import ElementGestureControl
-from page.element_interaction_handle import ElementInteractionHandler
-from page.element_visibility_checker import ElementVisibilityChecker
-from page.execute_method import ExecuteMethod
-from page.regex_utility import RegexUtility
+import time
+from helper.element_attribute_converter import AndroidElementType, AndroidPropertyType, ElementAttributeConverter, ElementType
+from helper.element_gesture_control import ElementGestureControl
+from helper.element_interaction_handle import ElementInteractionHandler
+from helper.element_visibility_checker import ElementVisibilityChecker
+from helper.execute_method import ExecuteMethod
+from helper.regex_utility import RegexUtility
 
 
 class CommonPage:
-    def __init__(self, driver, os_type):
+    def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
         self.os_type = os_type
-        self.visibility_checker = ElementVisibilityChecker(driver)
-        self.gesture_control = ElementGestureControl(driver, os_type)
-        self.attribute_converter = ElementAttributeConverter(driver, os_type)
-        self.interaction_handler = ElementInteractionHandler(driver, os_type)
-        self.execute_method = ExecuteMethod(driver, os_type)
-        self.regex_utility = RegexUtility(driver, os_type)
+        self.visibility_checker = ElementVisibilityChecker(driver, rp_logger)
+        self.gesture_control = ElementGestureControl(driver, os_type, rp_logger)
+        self.attribute_converter = ElementAttributeConverter(driver, os_type, rp_logger)
+        self.interaction_handler = ElementInteractionHandler(driver, os_type, rp_logger)
+        self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
+        self.regex_utility = RegexUtility(driver, os_type, rp_logger)
+        self.logger = rp_logger
 
-    def handle_locator(self, locator):
+    def handle_locator(self, *locator):
         """
         주어진 로케이터를 처리하여 적절한 포맷으로 반환.
         """
-        if self.is_locators(locator):
-            return self.attribute_converter.create_locator(*locator)
-        else:
-            # locator가 문자열일 경우, 이를 풀지 않고 그대로 전달
-            if isinstance(locator, str):
-                return self.attribute_converter.create_locator(locator)
+        # locator가 하나만 전달된 경우 해당 값으로 처리
+        if len(locator) == 1:
+            single_locator = locator[0]
+            if isinstance(single_locator, (str, AndroidElementType, AndroidPropertyType)):
+                return self.attribute_converter.create_locator(single_locator)
+            elif isinstance(single_locator, (list, tuple)):
+                return self.attribute_converter.create_locator(*single_locator)
             else:
-                return self.attribute_converter.create_locator(*locator)  # 튜플일 경우 풀어서 전달
+                raise TypeError(f"지원하지 않는 locator 타입입니다: {type(single_locator)}")
+
+        # locator가 여러 개 전달된 경우 그대로 풀어서 처리
+        elif len(locator) > 1:
+            if self.is_locators(locator):
+                return self.attribute_converter.create_locator(*locator)
+            else:
+                raise ValueError("올바르지 않은 다중 로케이터 형식입니다.")
+
+        # 만약 locator가 비어 있을 경우 예외 처리
+        else:
+            raise ValueError("로케이터가 제공되지 않았습니다.")
 
     def get_locator(self, *args):
         return self.attribute_converter.create_locator(*args)
@@ -93,3 +107,18 @@ class CommonPage:
             bool: 여러 로케이터이면 True, 아니면 False
         """
         return isinstance(locator, tuple) and len(locator) > 1
+
+    def swtiching_context(self, context_name):
+
+        for _ in range(3):
+            contexts = self.driver.contexts
+            if any("WEBVIEW" in context for context in contexts) and context_name in contexts:
+                self.driver.switch_to.context(context_name)
+                return True
+            time.sleep(1)
+        
+        self.logger.warning(f"{context_name}이 10초 내에 나타나지 않았습니다.")
+        return False
+
+    def is_webview_context(self):
+        return "WEBVIEW" in self.driver.context

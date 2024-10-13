@@ -1,12 +1,15 @@
 from appium import webdriver
 from appium.options.ios import XCUITestOptions
 from appium.options.android import UiAutomator2Options
+from dotenv import load_dotenv
+import os
 
 class DriverManager:
     def __init__(self, port, os_type):
         self.port = port
         self.os_type = os_type
         self.driver = None
+        load_dotenv()
 
     def init_driver(self):
         if self.os_type == "ios":
@@ -23,9 +26,9 @@ class DriverManager:
         options = XCUITestOptions()
         options.platformName = "iOS"
         options.deviceName = "iPhone"
-        options.udid = "00008101-000125D40202001E"
-        options.bundleId = "com.aqx.prex"
-        options.platform_version = "18.0"
+        options.udid = os.getenv("IOS_UDID")
+        options.bundleId = os.getenv("APP_PACKAGE")
+        options.platform_version = os.getenv("IOS_PLATFORM_VERSION")
         options.automationName = "XCUITest"
         options.noReset = True
         options.fullReset = False
@@ -46,7 +49,7 @@ class DriverManager:
         options.resetLocationService = True
         options.includeDeviceCapsToSessionInfo = True
         options.maxAPILatency = 60000.0
-        options.derivedDataPath = "/Users/kimkitae/Library/Developer/Xcode/DerivedData/WebDriverAgent-egvgxluocfqmiggkjczxcuhcygbq"
+        options.derivedDataPath = os.getenv("WEBDRIVERAGENT_PATH")
         options.autoLaunch = True
         options.wdaLaunchTimeout = 60000.0
         options.waitForQuietness = True
@@ -60,9 +63,17 @@ class DriverManager:
         options = UiAutomator2Options()
         options.platformName = "Android"
         options.deviceName = "Android Device"
-        options.appPackage = "com.aqx.prex"
-        options.appActivity = "com.aqx.prex.MainActivity"
-        # ... (안드로이드 관련 옵션들 추가)
+        options.appPackage = os.getenv("APP_PACKAGE")
+        options.appActivity = f"{os.getenv('APP_PACKAGE')}.MainActivity"
+        options.autoGrantPermissions = True
+        options.udid = os.getenv("ANDROID_UDID")
+        options.platformVersion = os.getenv("ANDROID_PLATFORM_VERSION")
+        options.automationName = "UiAutomator2"
+        options.noReset = True
+        options.fullReset = False
+        options.recreateChromeDriverSessions = True
+        options.chromedriver_executable = "./chromedriver/chromedriver"
+
         return options
 
     def quit_driver(self):

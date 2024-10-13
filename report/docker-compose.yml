@@ -87,7 +87,9 @@ services:
     #   - "9200:9200"  # OpenSearch HTTP API
     #   - "9600:9600"  # OpenSearch Performance Analyzer
     volumes:
-      - opensearch:/usr/share/opensearch/data
+      - ./report/opensearch/data:/usr/share/opensearch/data
+      - ./report/opensearch/report:/usr/share/opensearch/reports  # 결과 파일을 프로젝트의 report 폴더에 저장
+
     healthcheck:
       test: ["CMD", "curl","-s" ,"-f", "http://0.0.0.0:9200/_cat/health"]
     networks:
@@ -113,7 +115,9 @@ services:
       MIN_WAL_SIZE: 2GB
       MAX_WAL_SIZE: 4GB
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - ./report/postgres/data:/var/lib/postgresql/data
+      - ./report/postgres/report:/var/lib/postgresql/reports  # 결과 파일을 프로젝트의 report 폴더에 저장
+
     ## Uncomment to expose Database
     # ports:
     #   - "5432:5432"
@@ -146,6 +150,9 @@ services:
         rabbitmq_auth_backend_ldap
         rabbitmq_shovel
         rabbitmq_shovel_management
+    volumes:
+      - ./report/rabbitmq/data:/bitnami/rabbitmq
+      - ./report/rabbitmq/report:/bitnami/rabbitmq/reports  # 결과 파일을 프로젝트의 report 폴더에 저장
     healthcheck:
       test: ["CMD", "rabbitmqctl", "status"]
       interval: 30s
@@ -247,7 +254,7 @@ services:
       REPORTING_CONSUMER_PREFETCHCOUNT: 10
       REPORTING_PARKINGLOT_TTL_DAYS: 7
     volumes:
-      - storage:/data/storage
+      - ./report/storage/data:/data/storage
     healthcheck:
       test: curl -f http://0.0.0.0:8585/health
       interval: 60s
@@ -280,7 +287,7 @@ services:
       RP_INITIAL_ADMIN_PASSWORD: "erebus"
       JAVA_OPTS: -Djava.security.egd=file:/dev/./urandom -XX:MinRAMPercentage=60.0 -XX:MaxRAMPercentage=90.0 --add-opens=java.base/java.lang=ALL-UNNAMED
     volumes:
-      - storage:/data/storage
+      - ./report/storage/data:/data/storage
     healthcheck:
       test: curl -f http://0.0.0.0:9999/health
       interval: 60s
@@ -339,7 +346,7 @@ services:
         -XX:+HeapDumpOnOutOfMemoryError
         -XX:HeapDumpPath=/tmp
     volumes:
-      - storage:/data/storage
+      - ./report/storage/data:/data/storage
     healthcheck:
       test: curl -f http://0.0.0.0:8686/health || exit 1
       interval: 60s
@@ -365,7 +372,7 @@ services:
     environment:
       <<: *common-analyzer-environment
     volumes:
-      - storage:/data/storage
+      - ./report/storage/data:/data/storage
     depends_on:
       opensearch:
         condition: service_started
@@ -382,7 +389,7 @@ services:
     environment:
       <<: *common-analyzer-environment
     volumes:
-      - storage:/data/storage
+      - ./report/storage/data:/data/storage
     depends_on:
       opensearch:
         condition: service_started
@@ -436,12 +443,6 @@ services:
       - reportportal
     restart: on-failure
 
-## Define named volumes for persistent storage
-volumes:
-  opensearch:
-  storage:
-  postgres:
-
-## Define custom network for ReportPortal services
+# Define custom network for ReportPortal services
 networks:
   reportportal:

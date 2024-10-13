@@ -2,19 +2,20 @@ import time
 import pytest
 
 from page.account_page import AccountPage
-from page.execute_method import ExecuteMethod
+from helper.execute_method import ExecuteMethod
 from page.common_page import CommonPage
 from page.login_page import LoginPage
-from page.element_attribute_converter import ElementType, PropertyType, StringType
+from helper.element_attribute_converter import ElementType, PropertyType, StringType
 
 class TestScenario:
     
     @pytest.fixture(autouse=True)
-    def setup(self, driver, os_type):
-        self.common_page = CommonPage(driver, os_type)
-        self.login_page = LoginPage(driver, os_type)
-        self.account_page = AccountPage(driver, os_type)
-        self.execute_method = ExecuteMethod(driver, os_type)
+    def setup(self, driver, os_type, rp_logger):
+        self.common_page = CommonPage(driver, os_type, rp_logger)
+        self.login_page = LoginPage(driver, os_type, rp_logger)
+        self.account_page = AccountPage(driver, os_type, rp_logger)
+        self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
+        self.logger = rp_logger
 
 
     def test_change_nickname(self):
@@ -22,7 +23,7 @@ class TestScenario:
 
         current_nickname = self.account_page.account_nickname_text()
         assert self.account_page.change_nickname(self.account_page.generate_random_nickname(current_nickname)), "닉네임 변경 확인"
-        print("닉네임 변경 확인")
+        self.logger.info("닉네임 변경 확인")
 
     def test_weekly_leaderboard(self):
         self.common_page.click_element(self.account_page.menu_icon())
@@ -34,24 +35,25 @@ class TestScenario:
 
     def test_account_info(self):
 
-        email: str = "daearcdo@gmail.com"
-        phone: str = "+8201040681506"
-        name: str = "kitae kim"
-        level: str = "Level 2"
-
         self.common_page.click_element(self.account_page.menu_icon())
         self.account_page.click_support_menu("Password / Authentication")
         self.common_page.click_element(self.account_page.hide_info_button())
-        assert self.common_page.is_visible(email), "이메일 노출 확인"
-        assert self.common_page.is_visible(phone), "전화번호 노출 확인"
-        assert self.common_page.is_visible(name), "이름 노출 확인"
+        time.sleep(3)
+
+        assert self.common_page.is_visible(self.account_page.get_account_info("email")), "이메일 노출 확인"
+        assert self.common_page.is_visible(self.account_page.get_account_info("phone")), "전화번호 노출 확인"
+        assert self.common_page.is_visible(self.account_page.get_account_info("name")), "이름 노출 확인"
+        assert self.common_page.is_visible(self.account_page.get_account_info('level')), "레벨 노출 확인"
 
         self.common_page.click_element(self.account_page.hide_info_button())
-        print(f"email: {email[:2]}***, phone: +82***{phone[-2:]}, name: {name[:2]}***{name[-2:]}, level: {level}")
-        assert self.common_page.is_visible(email[:2]), "이메일 앞자리 2개 노출 확인"
-        assert self.common_page.is_visible("+82"), "전화번호 +82 노출 확인"
-        assert self.common_page.is_visible(phone[-2:]), "전화번호 뒷번호 2자리 노출 확인"
-        assert self.common_page.is_visible(name[:2]), "이름 앞자리 2개 노출 확인"
-        assert self.common_page.is_visible(name[-2:]), "이름 뒷자리 2개 노출 확인"
-        assert self.common_page.is_visible(level), "레벨 노출 확인"
+        time.sleep(3)
+
+        masked_info, masked_element = self.account_page.get_masked_account_info()
+        self.logger.info(f"email: {masked_info['email']}, phone: {masked_info['phone_first']}***{masked_info['phone_last']}, name: {masked_info['name_first']}***{masked_info['name_last']}")
+
+        assert self.common_page.is_visible(masked_element['email']), "이메일 앞자리 2개 노출 확인"
+        assert self.common_page.is_visible(masked_element['phone_first']), "전화번호 앞자리 3자리 노출 확인"
+        assert self.common_page.is_visible(masked_element['phone_last']), "전화번호 뒷번호 2자리 노출 확인"
+        assert self.common_page.is_visible(masked_element['name_first']), "이름 앞자리 2개 노출 확인"
+        assert self.common_page.is_visible(masked_element['name_last']), "이름 뒷자리 2개 노출 확인"
 

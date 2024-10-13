@@ -1,3 +1,0 @@
-positions open 설명 문구 노출 : All effective orders and contracts you possess show here.
-positions pending 설명 문구 노출 : When you place a trigger order, orders that are still awaiting execution show here.
-드라이버가 종료되었습니다.

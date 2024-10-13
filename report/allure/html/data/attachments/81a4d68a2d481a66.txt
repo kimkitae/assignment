@@ -1,0 +1,133 @@
+[32mINFO    [0m conftest:market_page.py:105 코인 데이터 개수: 22
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: BTC
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 100x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 321.88M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 62,199.6
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 2.52%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: BTC, 100x, 321.88M, 62,199.6, 2.52%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: ETH
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 100x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 54.86M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 2,440.68
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 1.67%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: ETH, 100x, 54.86M, 2,440.68, 1.67%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: SOL
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 50x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 6.98M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 144.087
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 4.30%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: SOL, 50x, 6.98M, 144.087, 4.30%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: BNB
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 50x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 2.11M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 572.584
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 1.54%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: BNB, 50x, 2.11M, 572.584, 1.54%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: XRP
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 50x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 875.88K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.5372
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 0.11%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: XRP, 50x, 875.88K, 0.5372, 0.11%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: SUI
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 4.13M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 2.0104
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 11.69%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: SUI, 25x, 4.13M, 2.0104, 11.69%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: 1000PEPE
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 50x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 3.18M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.0098274
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 7.41%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: 1000PEPE, 50x, 3.18M, 0.0098274, 7.41%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: WIF
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 2.25M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 2.6702
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 15.49%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: WIF, 25x, 2.25M, 2.6702, 15.49%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: DOGE
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 50x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 740.13K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.10962
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 4.03%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: DOGE, 50x, 740.13K, 0.10962, 4.03%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: NEIRO
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 10x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 4.81M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.0017389
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 3.55%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: NEIRO, 10x, 4.81M, 0.0017389, 3.55%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: UNI
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 1.55M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 8.000
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 2.69%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: UNI, 25x, 1.55M, 8.000, 2.69%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: 1000SHIB
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 827.95K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.017871
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 7.72%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: 1000SHIB, 25x, 827.95K, 0.017871, 7.72%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: TRX
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 79.45K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.16051
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 0.61%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: TRX, 25x, 79.45K, 0.16051, 0.61%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: AVAX
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 337.88K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 26.781
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 4.42%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: AVAX, 25x, 337.88K, 26.781, 4.42%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: NEAR
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 272.87K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 4.7657
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 5.47%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: NEAR, 25x, 272.87K, 4.7657, 5.47%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: FTM
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 20x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 716.72K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.67587
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 3.19%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: FTM, 20x, 716.72K, 0.67587, 3.19%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: LINK
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 307.24K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 10.849
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 2.38%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: LINK, 25x, 307.24K, 10.849, 2.38%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: EIGEN
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 20x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 3.29M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 4.034
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 9.33%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: EIGEN, 20x, 3.29M, 4.034, 9.33%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: SEI
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 455.18K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.4392
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 10.89%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: SEI, 25x, 455.18K, 0.4392, 10.89%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: SXP
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 20x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 4.64M
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 0.2688
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 20.80%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: SXP, 20x, 4.64M, 0.2688, 20.80%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: AAVE
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 265.26K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 143.55
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 0.22%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: AAVE, 25x, 265.26K, 143.55, 0.22%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^[A-Z0-9]+$, 필드: WLD
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+x$, 필드: 25x
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d+(\.\d+)?[MK]$, 필드: 816.82K
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^\d{1,3}(,\d{3})*(\.\d+)?$, 필드: 1.9184
+[32mINFO    [0m conftest:market_page.py:152 패턴: ^-?\d+(\.\d+)?%$, 필드: 13.90%
+[32mINFO    [0m conftest:market_page.py:110 코인 정보: WLD, 25x, 816.82K, 1.9184, 13.90%, 일치 여부: True

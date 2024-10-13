@@ -1,0 +1,1 @@
+[32mINFO    [0m conftest:test_account_management_scenario.py:51 email: da***, phone: +82***06, name: ki***im, level: Level 2

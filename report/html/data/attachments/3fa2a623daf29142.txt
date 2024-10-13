@@ -1,8 +1,0 @@
-필드 수가 5개로 부족합니다. 기본값으로 채웁니다. 원래 필드: ['Tether', '15% APR', 'USDT', '0.00000000', 'USDT']
-assets 정보: Tether, 15% APR, USDT, 0.00000000 , USDT, 일치 여부: True
-assets 정보: Bitcoin, 5% APR, BTC, 0.00000000 , BTC, 0.00, 일치 여부: True
-assets 정보: Ethereum, 5% APR, ETH, 0.00000000 , ETH, 0.00, 일치 여부: True
-필드 수가 5개로 부족합니다. 기본값으로 채웁니다. 원래 필드: ['Algorand', 'ALGO', '0.00000000', 'ALGO', '0.00']
-'ALGO' 와 '^\d+% APR$|^$' 이 일치하지 않습니다.
-assets 정보: Algorand, ALGO, 0.00000000 , ALGO, 0.00, 일치 여부: False
-드라이버가 종료되었습니다.
