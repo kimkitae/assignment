@@ -1,6 +1,7 @@
 
 import re
 import time
+from helper.regex_utility import RegexUtility
 from page.common_page import CommonPage
 from helper.element_attribute_converter import AndroidPropertyType, ElementType, PropertyType, StringType, AndroidElementType
 from helper.execute_method import ExecuteMethod
@@ -13,6 +14,7 @@ class MarketPage:
         self.os_type = os_type
         self.common_page = CommonPage(driver, os_type, rp_logger)
         self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
+        self.regex_utility = RegexUtility(driver, os_type, rp_logger)
 
     """
     ========== Element 변수 ==========
@@ -21,7 +23,7 @@ class MarketPage:
         if self.os_type == "ios":
             return ElementType.STATIC_TEXT, PropertyType.LABEL, "Market"
         else:
-            return "market_button"
+            return "tab_market"
         
     def bottom_button_view_all_selections(self):
          if self.os_type == "ios":
@@ -159,6 +161,30 @@ class MarketPage:
         locator = self.search_result_coin_name() + search_keyword
         self.logger.info(f"검색 결과 코인 이름 : {self.common_page.get_text(locator)}")
         return self.common_page.is_visible(locator)
+
+
+    def get_text_coin_up_and_down(self):
+        time.sleep(2)
+        if self.os_type == "ios":
+            coin_up_count = self.common_page.get_text_by_keyword("코인up")
+            coin_down_count = self.common_page.get_text_by_keyword("코인down")
+            self.logger.info(f"UP: {coin_up_count}, DOWN: {coin_down_count}")
+        else :
+
+            coins_up_number_element = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Coins are up").fromParent(new UiSelector().className("android.widget.TextView"))')
+            coins_up_number = coins_up_number_element.get_attribute('text')
+            coin_up_count = f"{coins_up_number} Coins are up"
+
+            coins_down_number_element = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Coins are down").fromParent(new UiSelector().className("android.widget.TextView"))')            
+            coins_down_number = coins_down_number_element.get_attribute('text')
+            coin_down_count = f"{coins_down_number} Coins are down"
+
+            self.logger.info(f"UP: {coin_up_count}, DOWN: {coin_down_count}")
+        
+        up_count = int(coin_up_count.split()[0])
+        down_count = int(coin_down_count.split()[0])
+
+        return up_count, down_count 
 
         
 

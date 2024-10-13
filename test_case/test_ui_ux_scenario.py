@@ -25,15 +25,12 @@ class TestScenario:
 
         self.logger = rp_logger
     
-    # TODO : 안드로이드 get page 소스 관련 수정 필요
     def test_validate_coin_up_down_count(self):
 
-        coin_up_count = self.common_page.get_text_by_keyword("코인up")
-        coin_down_count = self.common_page.get_text_by_keyword("코인down")
+        up_coin_count, coin_down_count = self.market_page.get_text_coin_up_and_down()
 
-        self.logger.info(f"코인 상승 카운트 : {coin_up_count} / 코인 하락 카운트 : {coin_down_count}")
-        assert len(coin_up_count) > 13, "코인 상승 카운트 노출 확인"
-        assert len(coin_down_count) > 13, "코인 하락 카운트 노출 확인"
+        assert up_coin_count >= 0, f"코인 상승 수가 0보다 같거나 높습니다.: {coin_down_count}"
+        assert coin_down_count >= 0, f"코인 하락 수가 0보다 같거나 높습니다.: {coin_down_count}"
 
 
     def test_search_function(self):

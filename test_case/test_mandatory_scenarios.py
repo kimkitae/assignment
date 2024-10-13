@@ -8,7 +8,7 @@ from helper.execute_method import ExecuteMethod
 from page.market_page import MarketPage
 from page.common_page import CommonPage
 from page.login_page import LoginPage
-from page.element_attribute_converter import ElementType, PropertyType, StringType
+from helper.element_attribute_converter import ElementType, PropertyType, StringType
 
 class TestScenario:
     

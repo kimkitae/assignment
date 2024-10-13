@@ -58,6 +58,8 @@ class AndroidElementType(Enum):
 class AndroidPropertyType(Enum):
     DESC = "description"
     TEXT = "text"
+    ACCESSIBILITY = "accessibilityId"
+
 
 
 class ElementAttributeConverter:
@@ -203,33 +205,24 @@ class ElementAttributeConverter:
                 return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().{arg.value}()'
 
         elif len(args) == 2:
-            if isinstance(args[0], AndroidElementType):
-                return self.android_ui_automator_by_property_and_value_with_index(args[0], args[1])
-            elif isinstance(args[0], AndroidPropertyType):
-                return self.android_ui_automator_by_property_and_value_with_index(args[0], args[1])
-            elif isinstance(args[0], str) and isinstance(args[1], int):
-                return self.android_locator_with_index(*args)
+            if isinstance(args[0], AndroidElementType) and isinstance(args[1], str):
+                return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().className("{args[0].value}").text("{args[1]}")'
+            elif isinstance(args[0], AndroidPropertyType) and isinstance(args[1], str):
+                return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().{args[0].value}("{args[1]}")'
+            elif isinstance(args[0], AndroidElementType) and isinstance(args[1], int):
+                return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().className("{args[0].value}").instance({args[1]})'
             elif args[0] == "uiautomator":
                 return AppiumBy.ANDROID_UIAUTOMATOR, args[1]
 
+        elif len(args) == 3:
+            if isinstance(args[0], AndroidElementType) and isinstance(args[1], AndroidPropertyType) and isinstance(args[2], str):
+                return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().className("{args[0].value}").{args[1].value}("{args[2]}")'
+            elif isinstance(args[0], AndroidPropertyType) and isinstance(args[1], str) and isinstance(args[2], int):
+                return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().{args[0].value}("{args[1]}").instance({args[2]})'
+
+        elif len(args) == 4:
+            if isinstance(args[0], AndroidElementType) and isinstance(args[1], AndroidPropertyType) and isinstance(args[2], str) and isinstance(args[3], int):
+                return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().className("{args[0].value}").{args[1].value}("{args[2]}").instance({args[3]})'
+
         self.logger.error(f"올바르지 않은 값 입니다. : {args}")
         raise ValueError("올바르지 않은 값 입니다.")
-
-    def android_ui_automator_by_property_and_value_with_index(self, property_type, value, index=0):
-        if isinstance(property_type, AndroidElementType):
-            return AppiumBy.ANDROID_UIAUTOMATOR, (
-                f"new UiSelector().className('{property_type.value}').text('{value}').instance({index})" if property_type == AndroidElementType.TEXT else
-                f"new UiSelector().className('{property_type.value}').description('{value}').instance({index})"
-            )
-        return AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().{property_type.value}("{value}").instance({index})'
-
-    def android_locator_with_index(self, locator, index):
-        if locator.startswith("//"):
-            return AppiumBy.XPATH, f"({locator})[{index + 1}]"
-        elif ":" in locator:
-            return AppiumBy.ANDROID_UIAUTOMATOR, f"new UiSelector().resourceId('{locator}').instance({index})"
-        else:
-            return AppiumBy.ANDROID_UIAUTOMATOR, (
-                f"new UiSelector().text('{locator}').instance({index})" if locator else
-                f"new UiSelector().description('{locator}').instance({index})"
-            )

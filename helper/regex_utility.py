@@ -15,7 +15,6 @@ class RegexUtility:
         
         if isinstance(current_page_source, dict):
             current_page_source = str(current_page_source)
-      
         match = re.search(patterns, current_page_source)
         if match:
             matched_value = match.group(0)
