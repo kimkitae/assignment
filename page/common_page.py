@@ -1,3 +1,4 @@
+import time
 from helper.element_attribute_converter import AndroidElementType, AndroidPropertyType, ElementAttributeConverter, ElementType
 from helper.element_gesture_control import ElementGestureControl
 from helper.element_interaction_handle import ElementInteractionHandler
@@ -106,3 +107,18 @@ class CommonPage:
             bool: 여러 로케이터이면 True, 아니면 False
         """
         return isinstance(locator, tuple) and len(locator) > 1
+
+    def swtiching_context(self, context_name):
+
+        for _ in range(3):
+            contexts = self.driver.contexts
+            if any("WEBVIEW" in context for context in contexts) and context_name in contexts:
+                self.driver.switch_to.context(context_name)
+                return True
+            time.sleep(1)
+        
+        self.logger.warning(f"{context_name}이 10초 내에 나타나지 않았습니다.")
+        return False
+
+    def is_webview_context(self):
+        return "WEBVIEW" in self.driver.context

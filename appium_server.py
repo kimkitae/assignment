@@ -1,6 +1,7 @@
 import socket
 import time
 import requests
+import os
 import subprocess
 from appium.webdriver.appium_service import AppiumService
 

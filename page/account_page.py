@@ -146,7 +146,9 @@ class AccountPage:
             self.common_page.swipe_to_element(f"Setting_{title}")
             self.common_page.click_element(f"Setting_{title}")
         else:
+            time.sleep(1)
             self.common_page.swipe_to_element(AndroidPropertyType.TEXT, title)
+            time.sleep(1)
             self.common_page.click_element(AndroidPropertyType.TEXT, title)
             time.sleep(5)
 

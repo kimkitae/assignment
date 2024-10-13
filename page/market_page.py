@@ -1,4 +1,3 @@
-
 import re
 import time
 from helper.regex_utility import RegexUtility
@@ -6,6 +5,7 @@ from page.common_page import CommonPage
 from helper.element_attribute_converter import AndroidPropertyType, ElementType, PropertyType, StringType, AndroidElementType
 from helper.execute_method import ExecuteMethod
 from appium.webdriver.common.appiumby import AppiumBy
+from selenium.common.exceptions import NoSuchElementException
 
 class MarketPage:
     def __init__(self, driver, os_type, rp_logger):
@@ -33,18 +33,17 @@ class MarketPage:
 
     def see_all_button(self, title: str):
         title_name = title.replace(" ", "_").lower()
-        if self.os_type == "ios":
-            if title_name == "new_listings":
-                return "carousel_no2_see_all"
-            elif title_name == "top_movers":
-                return "carousel_no3_see_all"
-            elif title_name == "high_volume":
-                return "carousel_no5_see_all"
-            elif title_name == "high_funding_rates":
-                return "carousel_no6_see_all"
-            else:
-                self.logger.info(f"해당 카테고리는 존재하지 않습니다. : {title}")
-                raise ValueError(f"해당 카테고리는 존재하지 않습니다. : {title}")
+        if title_name == "new_listings":
+            return "carousel_no2_see_all"
+        elif title_name == "top_movers":
+            return "carousel_no3_see_all"
+        elif title_name == "high_volume":
+            return "carousel_no5_see_all"
+        elif title_name == "high_funding_rates":
+            return "carousel_no6_see_all"
+        else:
+            self.logger.info(f"해당 카테고리는 존재하지 않습니다. : {title}")
+            raise ValueError(f"해당 카테고리는 존재하지 않습니다. : {title}")
     
     def coin_list(self):
         if self.os_type == "ios":
@@ -142,7 +141,7 @@ class MarketPage:
         patterns = self.common_page.get_text_by_keyword("코인리스트정보") 
         
         # 데이터를 콤마로 분리한 후 각 항목의 공백을 제거
-        fields = [field.strip() for field in re.split(r',\s*(?!\d)', coin_data)]  # 콤마로 분리하되 숫자의 콤마는 유지
+        fields = [field.strip() for field in re.split(r',\s*(?!\d)', coin_data)]  # 콤마로 ��리하되 숫자의 콤마는 유지
 
         # # 패턴과 데이터 필드 수가 일치하는지 확인
         if len(fields) != len(patterns):
@@ -185,8 +184,146 @@ class MarketPage:
         down_count = int(coin_down_count.split()[0])
 
         return up_count, down_count 
-
+    """
+    ===============
+    """
         
+    def is_valid_deposit_crypto_list(self):
+        time.sleep(3)
+
+        coin_data = self.gather_information_assets_lists()
+        
+        assert len(coin_data) >= 20, "데이터가 20개 이상 노출 확인"
+        self.logger.info(f"{len(coin_data)} 개의 데이터가 노출되었습니다.")
+        
+        unique_coins = set()
+        for coin in coin_data[:20]:
+            if self.os_type == "ios":
+                fields = [field.strip() for field in re.split(r',\s*(?!\d)', coin)]
+                coin_name = fields[0]
+            else:
+                coin_name = coin['name']
+
+            if coin_name in unique_coins:
+                self.logger.info(f"{coin_name}은 중복되었습니다.")
+                return False
+            unique_coins.add(coin_name)
+            
+            is_valid = self.validate_assets_data(coin)
+            self.logger.info(f"coin 정보: {coin}, 일치 여부: {is_valid}")
+            if not is_valid:
+                return False
+        return True
+
+    def gather_information_assets_lists(self):
+        assets_data = []
+        unique_coins = set()
+        for _ in range(5):
+            current_assets = self.get_current_assets_data(self.coin_list())
+            for asset in current_assets:
+                if self.os_type == "ios":
+                    coin_name = asset.split(",")[0].strip()
+                else:
+                    coin_name = asset['name']
+
+                if coin_name not in unique_coins:
+                    assets_data.append(asset)
+                    unique_coins.add(coin_name)
+                    if len(assets_data) >= 20:
+                        return assets_data[:20]
+            
+            self.common_page.swipe("down")
+            time.sleep(1)  # 스와이프 후 화면 로딩 대기
+
+        return assets_data[:20]  # 20개 미만일 경우 수집된 모든 자산 반환
+
+    def get_current_assets_data(self, locator):
+        if self.os_type == "ios":
+            elements = self.common_page.find_elements(locator)
+            return [element.get_attribute('label') for element in elements]
+        else:
+            assets = []
+            ticker_elements = self.common_page.find_elements("uiautomator", 'new UiSelector().descriptionStartsWith("carousel_no5_ticker_")')
+            leverage_elements = self.common_page.find_elements("uiautomator", 'new UiSelector().descriptionStartsWith("carousel_no5_leverage_")')
+            price_elements = self.common_page.find_elements("uiautomator", 'new UiSelector().descriptionStartsWith("carousel_no5_price_")')
+            fluctuation_elements = self.common_page.find_elements("uiautomator", 'new UiSelector().descriptionStartsWith("carousel_no5_fluctuation_")')
 
 
 
+            self.logger.info(f"현재 화면에 {len(ticker_elements)}개의 코인이 있습니다.")
+
+            for index, element in enumerate(ticker_elements):
+                # 코인명 (BTC, ETH 등)
+                coin_name:str = element.get_attribute('text')
+                
+                # 레버리지 값 가져오기 (부모 요소에서 하위 요소 추출)
+                leverage_view = leverage_elements[index]
+                leverage_text = leverage_view.find_element(AppiumBy.CLASS_NAME, "android.widget.TextView").get_attribute('text')
+
+                # 가격 정보 가져오기
+                price_view = price_elements[index]
+                price_text = price_view.find_element(AppiumBy.CLASS_NAME, "android.widget.TextView").get_attribute('text')
+
+                # 변동률 정보 가져오기
+                fluctuation_view = fluctuation_elements[index]
+                fluctuation_text = fluctuation_view.find_element(AppiumBy.CLASS_NAME, "android.widget.TextView").get_attribute('text')
+
+                 # 부모 요소에서 추가 정보 가져오기 (필요시)
+                volume_element = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{coin_name}").fromParent(new UiSelector().className("android.widget.TextView").instance(2))')
+                volume_text = volume_element.get_attribute('text')
+
+                # 중복 제거를 위한 set 생성
+                unique_assets = set()
+
+                # 코인 정보를 문자열로 변환하여 set에 추가
+                asset_info = f"{coin_name},{leverage_text},{volume_text},{price_text},{fluctuation_text}"
+                if asset_info not in unique_assets:
+                    unique_assets.add(asset_info)
+                    assets.append({
+                        'name': coin_name,
+                        'leverage': leverage_text,
+                        'volume': volume_text,
+                        'price': price_text,
+                        'fluctuation': fluctuation_text
+                    })
+
+            return assets
+
+    def validate_assets_data(self, asset):
+        if self.os_type == "ios":
+            patterns = {
+                "coin_data": [
+                    r'^[A-Z0-9]+$',                        # 코인 이름 (BTC)
+                    r'^\d+x$',                             # 레버리지 (100x)
+                    r'^\d+(\.\d+)?[MK]$',                  # 시가총액 (202.89M)
+                    r'^\d{1,3}(,\d{3})*(\.\d+)?$',         # 가격 (60,995.3)
+                    r'^-?\d+(\.\d+)?%$'                    # 변동률 (1.99%)
+                ]}
+            fields = [field.strip() for field in re.split(r',\s*(?!\d)', asset)]
+        else:
+            patterns = {
+                "coin_data": [
+                    r'^[A-Z0-9]+$',                        # 코인 이름 (BTC)
+                    r'^\d+x$',                             # 레버리지 (100x)
+                    r'^\d+(\.\d+)?[MK]$',                  # 시가총액 (202.89M)
+                    r'^\d{1,3}(,\d{3})*(\.\d+)?$',         # 가격 (60,995.3)
+                    r'^-?\d+(\.\d+)?%$'                    # 변동률 (1.99%)
+                ]}
+            fields = [
+                asset['name'],
+                asset['leverage'],
+                asset['volume'],
+                asset['price'],
+                asset['fluctuation']
+            ]
+
+        if len(fields) != len(patterns["coin_data"]):
+            self.logger.info(f"패턴 수와, 실제 데이터 필드 수가 일치하지 않습니다. Patterns: {len(patterns['coin_data'])}, Fields: {len(fields)}")
+            return False
+
+        for pattern, field in zip(patterns["coin_data"], fields):
+            if not re.match(pattern, field):
+                self.logger.info(f"'{field}'와 '{pattern}'이 일치하지 않습니다.")
+                return False
+
+        return True

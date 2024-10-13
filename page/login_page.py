@@ -20,7 +20,7 @@ class LoginPage:
         if self.os_type == "ios":
             return "menu_icon"
         else:
-            return "prex_signin_menu"
+            return "menu_icon"
 
     def account_nickname_text(self):
         if self.os_type == "ios":
@@ -45,7 +45,7 @@ class LoginPage:
         if self.os_type == "ios":
             return "prex_signin_settings"
         else:
-            return "prex_signin_settings"
+            return "menu_icon"
 
     def back_icon(self):
         if self.os_type == "ios":
@@ -86,11 +86,6 @@ class LoginPage:
         locator = self.menu_icon()
         self.common_page.click_element(locator)
 
-    def click_support_menu(self, title):
-        if self.os_type == "ios":
-            self.common_page.click_element(f"Setting_{title}")
-        else:
-            self.common_page.click_element(f"Setting_{title}")
 
     def click_setting_icon(self):
         locator = self.signin_setting_button()

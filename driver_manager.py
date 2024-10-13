@@ -71,6 +71,8 @@ class DriverManager:
         options.automationName = "UiAutomator2"
         options.noReset = True
         options.fullReset = False
+        options.recreateChromeDriverSessions = True
+        options.chromedriver_executable = "./chromedriver/chromedriver"
 
         return options
 
