@@ -152,8 +152,11 @@ pytest test_case --os=<ios or android> --alluredir=./report
 ---
 
 # 테스트 리포팅 방법
-## 2개의 방법으로 리포팅이 가능하며, 모두 웹 서비스 형태로 구동되어 웹으로 확인 가능<br><br>
-## Report 폴더 내 기존 데이터들이 있어 즉시 확인 가능
+**2개의 방법으로 리포팅이 가능하며, 모두 웹 서비스 형태로 구동되어 웹으로 확인 가능**
+
+**Report 폴더 내 기존 데이터들이 있어 즉시 확인 가능**
+
+**logger에 의해 모든 리포트 시스템에서 Fail 항목 내 상세 Log 확인 가능**
 
 ## Allure
 - `brew install allure` 설치
