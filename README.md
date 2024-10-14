@@ -152,11 +152,10 @@ pytest test_case --os=<ios or android> --alluredir=./report
 ---
 
 # 테스트 리포팅 방법
-**2개의 방법으로 리포팅이 가능하며, 모두 웹 서비스 형태로 구동되어 웹으로 확인 가능**
-
-**Report 폴더 내 기존 데이터들이 있어 즉시 확인 가능**
-
+**2개의 방법으로 리포팅이 가능하며, 모두 웹 서비스 형태로 구동되어 웹으로 확인 가능**<br>
+**Report 폴더 내 기존 데이터들이 있어 즉시 확인 가능**<br>
 **logger에 의해 모든 리포트 시스템에서 Fail 항목 내 상세 Log 확인 가능**
+
 
 ## Allure
 - `brew install allure` 설치
@@ -172,6 +171,10 @@ allure generate <위 지정한 폴더> -o <결과 HTML 만들어질 폴더 경�
 # 생성된 HTML 실행
 allure open <결과 HTML 만들어진 경로>
 ```
+- Sample 리포트 확안하기 (프로젝트 root 위치에서 아래 커맨드 수행)
+  - `allure open ./report/allure/android/html`
+  - `allure open ./report/allure/ios/html`
+
 
 ## ReportPortal
 - `Docker for Desktop`설치
@@ -201,6 +204,8 @@ pytest -s --reportportal \
     --rp-endpoint="http://localhost:8080" \
     --rp-api-key="YOUR_API_KEY_HERE
 ```
+
+
 ---
 
 # UI 자동화 코드 구조

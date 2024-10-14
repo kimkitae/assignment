@@ -138,6 +138,7 @@ class AccountPage:
         """
         위클리 리더보드 내 카운트 노출 확인
         """
+        time.sleep(2)
         weekly_leaderboard_count = self.common_page.get_text(self.weekly_leaderboard_count())
         result = self.regex_utility.get_text_by_keyword("위클리리더보드카운트", weekly_leaderboard_count)
         self.logger.info(f"위클리 리더보드 카운트 확인: {result}")
