@@ -254,7 +254,7 @@ Q. Console를 통해 테스트 진행 상황, 테스트 결과를 볼 수 없나
   - A. `logger` 출력을 활성화하여 확인 가능합니다. 테스트 수행 커맨드 내 `--log-cli-level=INFO`를 입력해주세요.
 
 Q. `ReportPortal` 컨네이너 생성 후 기존 데이터들이 남아 있어요.
-  - A. 바로 테스트 수행없이도 기존 결과를 보여드리기 위해 `./report` 폴더를 바인딩 마운트하여 사용하고 있어 내 폴더의 데이터들을 삭제 해주시면 됩니다.
+  - A. `./report` 폴더 하위 `report` 폴더 경로들이 바인딩 마운트로 사용되고 있어 하위 `opensearch`, `postgres`, `rabbitmq`, `storage` 내 데이터들을 삭제 해주시면 됩니다.
 
 Q. Android Webview Context 전환이 실패 해요.
   - A. 테스트 하시는 단말의 버전과 호환되는 Chromedriver를 다운로드하여 프로젝트 내 chromedriver 폴더에 넣어주세요.
