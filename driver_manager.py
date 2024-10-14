@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 import os
 
 class DriverManager:
+    """
+    Appium Driver 설정
+    """
     def __init__(self, port, os_type):
         self.port = port
         self.os_type = os_type
@@ -27,7 +30,7 @@ class DriverManager:
         options.platformName = "iOS"
         options.deviceName = "iPhone"
         options.udid = os.getenv("IOS_UDID")
-        options.bundleId = os.getenv("APP_PACKAGE")
+        options.bundleId = os.getenv("APP_BUNDLE")
         options.platform_version = os.getenv("IOS_PLATFORM_VERSION")
         options.automationName = "XCUITest"
         options.noReset = True

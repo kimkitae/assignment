@@ -1,5 +1,3 @@
-
-
 import re
 import time
 from page.common_page import CommonPage
@@ -8,6 +6,10 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.common.exceptions import NoSuchElementException
 
 class AssetsPage:
+    """
+    AssetsPage 클래스는 Assets 화면 내 동작을 관리하는 클래스입니다.
+    """
+
     def __init__(self, driver, os_type, rp_logger):
         self.driver = driver
         self.os_type = os_type
@@ -16,100 +18,88 @@ class AssetsPage:
 
     
     """
-    ========== Element 변수 ==========
+    ========= 객체 반환 함수 =========
     """
+
+    # Assets 버튼
     def bottom_tab_assets_button(self):
         if self.os_type == "ios":
             return ElementType.STATIC_TEXT, PropertyType.LABEL, "Assets"
         else:
             return AndroidPropertyType.TEXT, "Assets"
-        
+
+    # Portfolio 제목
     def portfolio_balance_title(self):
-        if self.os_type == "ios":
-            return "assets_title_no1"
-        else:
             return "assets_title_no1"
 
+    # Portfolio 값
     def portfolio_balance_value(self):
-        if self.os_type == "ios":
             return "assets_title_no1_value_no2"
-        else:
-            return "assets_title_no1_value_no2"
-        
+
+    # Deposit Button
     def deposit_button(self):
         if self.os_type == "ios":
             return "tab_deposit"
         else:
             return AndroidPropertyType.TEXT, "Deposit crypto"
-        
+
+    # Deposit 내 코인 리스트
     def assets_list(self):
         if self.os_type == "ios":
             return ElementType.BUTTON, StringType.BEGINS, "prex_receive_full_"
         else:
             return "carousel_no5_image"
-        
+
+    # withdraw 버튼
     def withdraw_button(self):
-        if self.os_type == "ios":
             return "tab_withdraw"
-        else:
-            return "tab_withdraw"
-        
+
+    # Open position 버튼
     def open_positions_button(self):
         if self.os_type == "ios":
             return "tab_yp_open"
         else:
             return "tab_order_form_positions_open"
-        
+
+    # Pending position 버튼
     def pending_positions_button(self):
         if self.os_type == "ios":
             return "tab_yp_pending"
         else:
             return AndroidPropertyType.TEXT, "Pending"
 
+    # Open Position 설명문
     def positions_open_description(self):
-        if self.os_type == "ios":
             return "positions_open_description"
-        else:
-            return "positions_open_description"
-        
+
+    # Pending Position 설명문
     def positions_pending_description(self):
-        if self.os_type == "ios":
             return "positions_pending_description"
-        else:
-            return "positions_pending_description"
-        
-    
+
+    # your assets 제목
     def your_assets_title(self):
-        if self.os_type == "ios":
             return "assets_title_no3"
-        else:
-            return "assets_title_no3"
-        
+
+    # your asstes 보유양
     def your_assets_value(self):
-        if self.os_type == "ios":
             return "assets_ya_value_no1"
-        else:
-            return "assets_ya_value_no1"
-    
+
+    # assets 최 하단 USDT Bouns
     def bottom_usdt_bouns_value(self):
         if self.os_type == "ios":
             return ElementType.BUTTON, StringType.BEGINS,  "assets_ya_name_usdt_bonus"
         else:
             return AndroidPropertyType.TEXT, "0.00", 2
 
-
+    # portfolio 상세 타이틀
     def portfolio_detail_titles(self):
-        if self.os_type == "ios":
             return ["Unrealized P&L", "Net funding fee", "Funds invested", "Funds reserved", "Available funds"]
-        else:
-            return ["Unrealized P&L", "Net funding fee", "Funds invested", "Funds reserved", "Available funds"]
-    
+
+    #  portfolio 상세 값
     def portfolio_detail_values(self):
-        if self.os_type == "ios":
-            return ["assets_pb_value_no1", "assets_pb_value_no2", "assets_pb_value_no3", "assets_pb_value_no4", "assets_pb_value_no5"]
-        else:
             return ["assets_pb_value_no1", "assets_pb_value_no2", "assets_pb_value_no3", "assets_pb_value_no4", "assets_pb_value_no5"]
 
+    # withdraw 내 빈 리스트 이름
     def withdraw_no_list_content(self):
         if self.os_type == "ios":
             return "No available assets"
@@ -117,14 +107,20 @@ class AssetsPage:
             return AndroidPropertyType.TEXT, "No available assets"
 
     """
-    ========== 함수 변수 ==========
+    ========= 기능 함수 ===========
     """
      
     def click_assets_button(self):
+        """
+        assets 진입
+        """
         locator = self.bottom_tab_assets_button()
         self.common_page.click_element(locator)
 
     def is_portfolio_detail_lists(self):
+        """
+        portfolio 상세 리스트 노출 확인
+        """
         titles = self.portfolio_detail_titles()
         values = self.portfolio_detail_values()
 
@@ -152,29 +148,37 @@ class AssetsPage:
 
 
     def click_open_positions_button(self):
+        """
+        Open position 버튼 선택 후 설명문 반환
+        """
         self.common_page.click_element(self.open_positions_button())
         return self.common_page.get_text(self.positions_open_description())
     
     def click_pending_positions_button(self):
+        """
+        Pending position 버튼 선택 후 설명문 반환
+        """
         self.common_page.click_element(self.pending_positions_button())
         return self.common_page.get_text(self.positions_pending_description())
 
-    """
-    =====================
-    """ 
 
     def is_valid_deposit_crypto_list(self):
+        """
+        assets 내 Deposit crypto List들의 데이터 유효성 확인
+        """
         
         # 충분한 시간을 주기 위해 3초 대기
         time.sleep(3)
 
+        # 리스트 데이터 가져오기
         assets_data = self.gather_information_assets_lists()
-        
+
+
         assert len(assets_data) >= 5, "데이터가 5개 이상 노출 확인"
         self.logger.info(f"{len(assets_data)} 개의 데이터가 노출되었습니다.")
 
+        # 리스트 내 5개 데이터에 대해 iOS는 각 데이터 분할 필요
         for asset in assets_data[:5]:
-
             if self.os_type == "ios":
                 fields = [field.strip() for field in asset.split(",")]
 
@@ -198,9 +202,12 @@ class AssetsPage:
 
 
     def gather_information_assets_lists(self):
+        """
+        List 요소에서 5개의 데이터 반환
+        """
         assets_data = []
         current_assets = self.get_current_assets_data(self.assets_list())
-        # 중복 없는 자산 목록 수집
+        # assets_data 에 추가
         for assets in current_assets:
             assets_data.append(assets)
 
@@ -211,15 +218,16 @@ class AssetsPage:
 
     
     def get_current_assets_data(self, locator):
+        """
+        현재 리스트의 코인 데이터 정보 추출
+        """
 
         if self.os_type == "ios":
+            # element의 label 속성 반환
             elements = self.common_page.find_elements(locator)
             return [element.get_attribute('label') for element in elements]
 
         else:
-            """
-            현재 화면에 있는 자산 데이터를 수집합니다.
-            """
             assets = []
 
             # 'select_asset_name_'으로 시작하는 모든 자산 요소를 찾습니다.
@@ -243,7 +251,7 @@ class AssetsPage:
                     value = None  # 자산 가치가 없을 경우 None 처리
                     symbol = None
 
-                # 'earn_est_value_no5' 뷰에서 해당 자산의 APR과 USDT 값 가져오기
+                # 'earn_est_value_no5' 뷰에서 해당 자산의 APR값 가져오기
                 try:
                     parent_view = self.common_page.find_element("uiautomator", f'new UiSelector().description("earn_est_value_no5").instance({index})')
                     apr_element = parent_view.find_element(AppiumBy.CLASS_NAME, "android.widget.TextView")
@@ -252,7 +260,7 @@ class AssetsPage:
                     apr = ''
 
 
-                # USDT 값 가져오기 (유동적인 자산 값 처리)
+                # Symble명을 이용하여 coe 값 가져오기 (유동적인 자산 값 처리)
                 coin_code: str = symbol.split('_')[-1]  # 마지막 '_' 뒤의 값 추출 (예: 'eth')
                 code = coin_code.upper()
 
@@ -272,6 +280,9 @@ class AssetsPage:
 
 
     def validate_assets_data(self, asset):
+        """
+        각 코인 정보들이 패턴에 맞는지 검증
+        """
         if self.os_type == "ios":
             patterns = {
                 "assets_data": [r'^[A-Za-z\s]+$',           # 코인 이름 (예: Bitcoin, Tether USD)

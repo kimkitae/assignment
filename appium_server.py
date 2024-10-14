@@ -6,6 +6,9 @@ import subprocess
 from appium.webdriver.appium_service import AppiumService
 
 class AppiumServer:
+    """
+    appiumServer 구동을 위한 클래스
+    """
     def __init__(self):
         self.port = self.find_available_port()
         self.service = AppiumService()
@@ -13,20 +16,32 @@ class AppiumServer:
 
 
     def find_available_port(self, start_port=4723):
+        """
+        사용가능한 포트 찾기
+        """
         # 사용 가능한 포트를 찾음
         port = start_port
+        # 이미 사용중인 포트라면 +1 을 추가한다.
         while not self.is_port_available(port):
             port += 1
         return port
 
     def is_port_available(self, port):
+        """
+        현재 포트가 연결한 상태인지 확인
+        """
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             return sock.connect_ex(('localhost', port)) != 0
 
     def start(self):
+        """
+        Appium 서버 실행
+        """
         print("Appium 서버 실행 준비")
         try:
+            # Appium 경로 입력
             appium_path = "/opt/homebrew/bin/appium"
+            # 필요한 옵션은 추가 입력
             self.service.start(
                 args=[
                     '--address', '127.0.0.1',

@@ -34,7 +34,7 @@ class TestScenario:
         self.market_page.click_see_all_button("High volume")
         time.sleep(3)
 
-        assert self.market_page.is_valid_deposit_crypto_list(), "코인 데이터 유효성 검사"
+        assert self.market_page.is_valid_coin_list(), "코인 데이터 유효성 검사"
 
     # Test Case 2: Challenge 이벤트 데이터 유효성 검사
     def test_challenge_event(self):
