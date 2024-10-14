@@ -6,18 +6,20 @@ from enum import Enum
 from helper.execute_method import ExecuteMethod
 from appium.webdriver.common.appiumby import AppiumBy
 
-
+# Enum 클래스 정의: 스크롤 범위 유형을 나타냅니다.
 class ScrollSize(Enum):
     SMALL = 25
     MEDIUM = 50
     LARGE = 75
     XLARGE = 100
 
-
+# 제스처 관련 클래스 정의
 class ElementGestureControl:
+    # 최대 재시도 회수
     MAX_RETRIES = 10
 
     def __init__(self, driver, os_type, rp_logger):
+        # 드라이버, OS 타입, 로거, 화면 크기 및 스크롤 기본 설정 초기화
         self.driver = driver
         self.os_type = os_type
         self.logger = rp_logger
@@ -28,25 +30,29 @@ class ElementGestureControl:
         self.base_scroll_factor = ScrollSize.MEDIUM
 
     def scroll_to_text(self, element_text, size=None):
+        # 텍스트를 찾기 위해 스크롤, size는 스크롤 비율을 설정
         scroll_factor = size.value if size else self.base_scroll_factor.value
         return self.scroll_list_to_element_with_predicate(element_text, scroll_factor)
 
     def swipe_action(self, element, direction, swipe_percentage=50):
+        # 특정 요소에 대해 스와이프 액션 수행
         swipe_factor = swipe_percentage / 100.0
         center_x, center_y = self.calculate_element_center(element)
         start_x, start_y, end_x, end_y = self.swipe_action_f(direction, center_x, center_y, swipe_factor)
         self.execute_method.drag_from_to(start_x, start_y, end_x, end_y, 1500)
 
     def swipe_from_center_to(self, swipe_percentage=50, direction='up'):
+        # 화면 중앙에서 지정된 방향으로 스와이프
         swipe_factor = swipe_percentage / 100.0
         if direction.lower() in ['left', 'right']:
-            swipe_factor *= 1.5
+            swipe_factor *= 1.5 # 좌우로 스와이프 시, 더 긴 스와이프 수행
         
         start_x, start_y = self.screen_width // 2, self.screen_height // 2
         end_x, end_y = self.swipe_action_f(direction, start_x, start_y, swipe_factor)
         self.execute_method.drag_from_to(start_x, start_y, end_x, end_y, 1000)
 
     def swipe_by_percentage(self, start_x_percent, start_y_percent, end_x_percent, end_y_percent):
+        # 화면의 특정 비율로 스와이프 수행
         start_x = int(self.screen_width * (start_x_percent / 100.0))
         start_y = int(self.screen_height * (start_y_percent / 100.0))
         end_x = int(self.screen_width * (end_x_percent / 100.0))
@@ -55,6 +61,7 @@ class ElementGestureControl:
         self.execute_method.drag_from_to(start_x, start_y, end_x, end_y, 1000)
 
     def swipe_to_element(self, locator, duration_time=1000):
+        # 요소를 찾기 위해 스와이프
         start_x = self.screen_width // 2
         end_x = self.screen_width // 2
         start_y = int(self.screen_height * 2 / 3)
@@ -63,7 +70,7 @@ class ElementGestureControl:
         return self.swipe_to_find_element_f(locator, start_x, start_y, end_x, end_y, duration_time)
 
     def swipe_to_find_element_f(self, locator, start_x, start_y, end_x, end_y, duration_time):
-
+        # 요소를 찾을 때까지 여러 번 스와이프
         try:
             for _ in range(self.MAX_RETRIES):
                 try:
@@ -81,6 +88,7 @@ class ElementGestureControl:
             return False
 
     def scroll_list_to_element_with_predicate(self, element_text, scroll_size):
+        # 요소 텍스트가 나올 때까지 리스트를 스크롤
         if self.os_type == 'ios':
             predicate_string = f"type == 'XCUIElementTypeStaticText' AND visible == true AND label == '{element_text}'"
             
@@ -106,6 +114,7 @@ class ElementGestureControl:
             self.logger.info(f"{self.MAX_RETRIES}회 이상 Element를 찾지 못했습니다.")
             return False
     def scroll_entire_list(self):
+        # 리스트 전체 스크롤
         start_x = self.screen_width // 2
         start_y = int(self.screen_height * 0.8)
         end_y = int(self.screen_height * 0.2)
@@ -114,20 +123,24 @@ class ElementGestureControl:
         time.sleep(1)
 
     def swipe(self, direction):
+        # 스와이프 액션 수행
         self.swipe_from_center_to(50, direction)
 
     def drag_to_drop(self, from_element, to_element):
+        # 요소 간 드래그 앤 드롭 수행
         from_center_x, from_center_y = self.calculate_element_center(from_element)
         to_center_x, to_center_y = self.calculate_element_center(to_element)
 
         self.execute_method.drag_from_to(from_center_x, from_center_y, to_center_x, to_center_y, 2500)
 
     def calculate_element_center(self, element):
+        # 요소의 중앙 좌표 계산
         location = element.location
         size = element.size
         return location['x'] + size['width'] // 2, location['y'] + size['height'] // 2
 
     def swipe_action_f(self, direction, start_x, start_y, swipe_factor):
+        # 스와이프 방향에 따라 종료 좌표 계산
         end_x, end_y = start_x, start_y
         if direction.lower() == 'down':
             end_y = int(start_y - (start_y * swipe_factor))
@@ -142,6 +155,7 @@ class ElementGestureControl:
         return end_x, end_y
 
     def scroll_to_elements(self, element, max_scrolls=10):
+        # 최대 스크롤 횟수 내에서 요소를 찾음
         elements = []
         for _ in range(max_scrolls):
             try:
@@ -156,6 +170,7 @@ class ElementGestureControl:
         return elements[:20]
 
     def is_hidden_element(self, element):
+        # 요소가 화면에서 가려졌는지 확인 후 스크롤 수행
         location = element.location
         size = element.size
 
