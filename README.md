@@ -139,6 +139,9 @@ pytest test_case -s --os=android
 
 #logger 내용 콘솔 출력
 pytest test_case --log-cli-level=INFO
+
+#전체 테스트 수행 시 mandatory 시나리오는 가장 마지막에 진행 필요(로그아웃으로 인한 다른 케이스에 영향 발생)
+pytest test_case/test_account_management_scenario.py test_case/test_ui_ux_scenario.py test_case/test_balance_wallete_scenario_.py test_case/test_mandatory_scenarios.py
 ```
 - Report 시스템 사용 시 해당 패키지에 따라 아래 커맨드 사용 <선택옵션>
 ```
