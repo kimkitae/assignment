@@ -84,7 +84,7 @@ brew install ios-deploy
 """
 IOS_UDID=<단말 UDID>
 IOS_PLATFORM_VERSION=<단말 OS 버전>
-APP_PACKAGE=<실행 앱 Bundle ID>
+APP_BUNDLE=<실행 앱 Bundle ID>
 WEBDRIVERAGENT_PATH=<WebDriverAgent 빌드된 경로>
 
 """
