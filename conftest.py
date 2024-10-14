@@ -53,11 +53,20 @@ def rp_logger():
     """
     매 세션 마다 로그 서러정 및 reportPortal 로그 핸들 설정
     """
+    # 기본 로거 설정
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
+
+    # 이미 핸들러가 추가되었는지 확인
+    if not logger.handlers:
+        # ReportPortal 핸들러 추가 (핸들러가 없을 때만 추가)
+        rp_handler = RPLogHandler()
+        rp_handler.setLevel(logging.INFO)
+        logger.addHandler(rp_handler)
     
-    rp_handler = RPLogHandler()
-    rp_handler.setLevel(logging.INFO)
-    logger.addHandler(rp_handler)
-    
+    # python-dotenv의 WARNING 로그를 ERROR 이상으로만 출력되도록 설정
+    logging.getLogger("dotenv.main").setLevel(logging.ERROR)
+    # urllib3의 WARNING 로그를 ERROR 이상으로만 출력되도록 설정
+    logging.getLogger("urllib3.connectionpool").setLevel(logging.ERROR)
+
     return logger

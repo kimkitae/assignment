@@ -1,0 +1,23 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND label == 'Market'") 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'carousel_no5_see_all') 클릭
+[32mINFO    [0m conftest:market_page.py:170 20 개의 데이터가 노출되었습니다.
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: BTC, 100x, 236.93M, 64,504.8, 2.62%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: ETH, 100x, 73.45M, 2,528.18, 2.52%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: SOL, 50x, 7.37M, 152.656, 4.04%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: BNB, 50x, 511.24K, 579.663, 0.91%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: SUI, 25x, 13.39M, 2.2455, 0.05%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: 1000PEPE, 50x, 4.37M, 0.0103620, 5.04%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: XRP, 50x, 566.98K, 0.5382, 0.26%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: DOGE, 50x, 866.67K, 0.11203, 0.18%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: WIF, 25x, 1.82M, 2.8150, 1.11%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: BOME, 25x, 1.82M, 0.009004, 25.21%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: NEIRO, 10x, 2.56M, 0.0020312, 1.25%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: APT, 25x, 2.31M, 10.029, 0.91%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: WLD, 25x, 4.71M, 2.3301, 15.13%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: AVAX, 25x, 556.94K, 29.480, 1.18%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: TRX, 25x, 131.14K, 0.16010, 1.59%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: SEI, 25x, 690.08K, 0.4852, 0.15%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: 1000SHIB, 25x, 314.95K, 0.017998, 1.27%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: UNI, 25x, 1.48M, 7.814, 1.76%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: NEAR, 25x, 404.43K, 4.8218, 1.14%, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: ARB, 25x, 162.80K, 0.5395, 0.81%, 일치 여부: True

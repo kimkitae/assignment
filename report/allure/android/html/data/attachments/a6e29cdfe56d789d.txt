@@ -1,0 +1,5 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Assets")') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('accessibility id', 'assets_title_no3')의 텍스트: Your assets
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('accessibility id', 'assets_ya_value_no1')의 텍스트: 0.00
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-android uiautomator', 'new UiSelector().text("0.00").instance(2)')의 텍스트: 0.00
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:85 assets 타이틀 : Your assets / assets 값 : 0.00 / USDT 보너스 금액 : 0.00

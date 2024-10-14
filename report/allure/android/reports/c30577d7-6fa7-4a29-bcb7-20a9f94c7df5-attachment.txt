@@ -1,0 +1,19 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Assets")') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Deposit crypto")') 클릭
+[32mINFO    [0m conftest:assets_page.py:245 현재 화면에 9개의 자산이 있습니다.
+[32mINFO    [0m conftest:assets_page.py:249 현재 화면에 9개의 자산 가치 요소가 있습니다.
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: Tether, 0.00, 15% APR, USDT
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: Bitcoin, 0, 5% APR, BTC
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: Ethereum, 0, 5% APR, ETH
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: Algorand, 0, , ALGO
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: Arbitrum, 0, , ARB
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: Atom, 0, , ATOM
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: Avalanche, 0, , AVAX
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: Blast, 0, , BLAST
+[32mINFO    [0m conftest:assets_page.py:278 자산 정보: BinanceCoin, 0, , BNB
+[32mINFO    [0m conftest:assets_page.py:188 5 개의 데이터가 노출되었습니다.
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: {'name': 'Tether', 'apr': '15% APR', 'code_1': 'USDT', 'value': '0.00', 'code_2': 'USDT'}, 일치 여부: True
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: {'name': 'Bitcoin', 'apr': '5% APR', 'code_1': 'BTC', 'value': '0', 'code_2': 'BTC'}, 일치 여부: True
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: {'name': 'Ethereum', 'apr': '5% APR', 'code_1': 'ETH', 'value': '0', 'code_2': 'ETH'}, 일치 여부: True
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: {'name': 'Algorand', 'apr': '', 'code_1': 'ALGO', 'value': '0', 'code_2': 'ALGO'}, 일치 여부: True
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: {'name': 'Arbitrum', 'apr': '', 'code_1': 'ARB', 'value': '0', 'code_2': 'ARB'}, 일치 여부: True

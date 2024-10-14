@@ -117,6 +117,16 @@ class AssetsPage:
         locator = self.bottom_tab_assets_button()
         self.common_page.click_element(locator)
 
+    def click_setting_button(self):
+        """
+        assets 화면 내 설정 버튼 선택
+        """
+        if self.os_type == "ios":
+            self.common_page.click_element("prex_signin_settings")
+        else :
+            self.common_page.click_element("menu_icon")
+
+
     def is_portfolio_detail_lists(self):
         """
         portfolio 상세 리스트 노출 확인

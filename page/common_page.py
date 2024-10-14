@@ -169,6 +169,7 @@ class CommonPage:
             contexts = self.driver.contexts
             if any("WEBVIEW" in context for context in contexts) and context_name in contexts:
                 self.driver.switch_to.context(context_name)
+                self.logger.info(f"{context_name}으로 Context 변경")
                 return True
             time.sleep(1)
         
@@ -179,4 +180,6 @@ class CommonPage:
         """
         현재 WebView Context 여부 반환
         """
-        return "WEBVIEW" in self.driver.context
+        is_webview = "WEBVIEW" in self.driver.context
+        self.logger.info(f"현재 Context: {self.driver.context}")
+        return is_webview 

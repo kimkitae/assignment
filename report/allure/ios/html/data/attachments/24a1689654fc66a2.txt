@@ -1,0 +1,3 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND label == 'Assets'") 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'tab_withdraw') 클릭
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:51 No available assets 문구 확인 중

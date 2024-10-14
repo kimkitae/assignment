@@ -1,0 +1,39 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND label == 'Challenge'") 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-ios predicate string', "type == 'XCUIElementTypeButton' AND label == 'Launch Airdrop, Launch Airdrop'") 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'a1'")의 텍스트: 24.09.23 - 09.26 UTC
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'b1'")의 텍스트: Closed
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'a2'")의 텍스트: 24.08.23 - 08.26 UTC
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'b2'")의 텍스트: Closed
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'a3'")의 텍스트: 24.06.08 - 06.11 UTC
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'b3'")의 텍스트: Closed
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'a4'")의 텍스트: 24.06.03 - 06.06 UTC
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'b4'")의 텍스트: Closed
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'a5'")의 텍스트: 24.05.13 - 05.16 UTC
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'b5'")의 텍스트: Closed
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'a6'")의 텍스트: 24.05.10 - 05.13 UTC
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND name == 'b6'")의 텍스트: Closed
+[32mINFO    [0m conftest:challenge_page.py:129 전체 이벤트 일정: [('24.09.23 - 09.26 UTC', 'Closed'), ('24.08.23 - 08.26 UTC', 'Closed'), ('24.06.08 - 06.11 UTC', 'Closed'), ('24.06.03 - 06.06 UTC', 'Closed'), ('24.05.13 - 05.16 UTC', 'Closed'), ('24.05.10 - 05.13 UTC', 'Closed')]
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:142 이벤트 날짜 추출, 24.09.23 - 09.26 UTC, 날짜 24.09.23 - 09.26 UTC
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:160 시작 일 1900-09-23 00:00:00 - 종료 일 1900-09-26 00:00:00 / 현재 일 1900-10-14 00:00:00 - Closed
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:142 이벤트 날짜 추출, 24.08.23 - 08.26 UTC, 날짜 24.08.23 - 08.26 UTC
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:160 시작 일 1900-08-23 00:00:00 - 종료 일 1900-08-26 00:00:00 / 현재 일 1900-10-14 00:00:00 - Closed
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:142 이벤트 날짜 추출, 24.06.08 - 06.11 UTC, 날짜 24.06.08 - 06.11 UTC
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:160 시작 일 1900-06-08 00:00:00 - 종료 일 1900-06-11 00:00:00 / 현재 일 1900-10-14 00:00:00 - Closed
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:142 이벤트 날짜 추출, 24.06.03 - 06.06 UTC, 날짜 24.06.03 - 06.06 UTC
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:160 시작 일 1900-06-03 00:00:00 - 종료 일 1900-06-06 00:00:00 / 현재 일 1900-10-14 00:00:00 - Closed
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:142 이벤트 날짜 추출, 24.05.13 - 05.16 UTC, 날짜 24.05.13 - 05.16 UTC
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:160 시작 일 1900-05-13 00:00:00 - 종료 일 1900-05-16 00:00:00 / 현재 일 1900-10-14 00:00:00 - Closed
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:142 이벤트 날짜 추출, 24.05.10 - 05.13 UTC, 날짜 24.05.10 - 05.13 UTC
+[32mINFO    [0m conftest:regex_utility.py:106 이벤트날짜에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:challenge_page.py:160 시작 일 1900-05-10 00:00:00 - 종료 일 1900-05-13 00:00:00 / 현재 일 1900-10-14 00:00:00 - Closed

@@ -55,15 +55,15 @@ class EtcPage:
             time.sleep(2)
             # 웹뷰 컨텍스트 인 경우
             if self.common_page.is_webview_context():
-                element = self.driver.find_element(By.XPATH, "//button[@aria-label='Open messaging window']")
+                element = self.driver.find_element(By.XPATH, '//button[@aria-label="Open messaging window"]')
                 element.click()
-                self.logger.info("웹뷰에서 Open messaging window 버튼을 aria-label을 사용하여 클릭했습니다.")
+                self.logger.info("웹뷰에서 Open messaging window 버튼을 iframe id를 사용하여 클릭했습니다.")
             else:
                 is_webivew = self.common_page.swtiching_context("WEBVIEW_chrome")
                 if is_webivew:
-                    element = self.driver.find_element(By.XPATH, "//button[@aria-label='Open messaging window']")
+                    element = self.driver.find_element(By.XPATH, '//button[@aria-label="Open messaging window"]')
                     element.click()
-                    self.logger.info("웹뷰에서 Open messaging window 버튼을 aria-label을 사용하여 클릭했습니다.")
+                    self.logger.info("웹뷰에서 Open messaging window 버튼을 iframe id를 사용하여 클릭했습니다.")
                 else :
                     self.common_page.click_element('uiautomator', 'new UiSelector().text("Open messaging window")')
                     self.logger.info("네이티브에서 Open messaging window 버튼을 text를 사용하여 클릭했습니다.")
@@ -102,13 +102,13 @@ class EtcPage:
         if self.os_type == "ios":
             return self.common_page.is_visible(self.web_chatbot_text())
         else:
-            if self.common_page.is_webivew_context():
-                element = self.driver.find_element(By.XPATH, "//*[contains(text(), 'Hi there. Got a question? I'm here to help.')]")
+            if self.common_page.is_webview_context():
+                element = self.driver.find_element(By.XPATH, "//*[contains(text(), 'Hi there. Got a question?')]")
                 return element.is_displayed()
             else:
                 is_webivew = self.common_page.swtiching_context("WEBVIEW_chrome")
                 if is_webivew:
-                    element = self.driver.find_element(By.XPATH, "//*[contains(text(), 'Hi there. Got a question? I'm here to help.')]")
+                    element = self.driver.find_element(By.XPATH, "//*[contains(text(), 'Hi there. Got a question?)]")
                     return element.is_displayed()
                 else :
                     return self.common_page.is_visible('uiautomator', 'new UiSelector().textStartsWith("Hi there. Got a")')

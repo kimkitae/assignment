@@ -5,6 +5,8 @@ from page.common_page import CommonPage
 from helper.element_attribute_converter import ElementType, PropertyType, StringType, AndroidElementType
 from helper.execute_method import ExecuteMethod
 from appium.webdriver.common.appiumby import AppiumBy
+from selenium.common.exceptions import NoSuchElementException
+
 
 
 class MarketPage:
@@ -123,6 +125,7 @@ class MarketPage:
         """
         검색어 에 대한 결과 내 해당 코인 노출 확인
         """
+        time.sleep(1)
         locator = self.search_result_coin_name() + search_keyword
         self.logger.info(f"검색 결과 코인 이름 : {self.common_page.get_text(locator)}")
         return self.common_page.is_visible(locator)
@@ -142,6 +145,7 @@ class MarketPage:
             # 카운트와 문자가 분리되어있어, 문자의 부모요소에서 카운트 부분을 추출하여 0 Coins are up 과 같이 단어로 조립하여 검증
             coins_up_number_element = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Coins are up").fromParent(new UiSelector().className("android.widget.TextView"))')
             coins_up_number = coins_up_number_element.get_attribute('text')
+            # 카운트와 문자 조합 (0 Coins are up)
             coin_up_count = f"{coins_up_number} Coins are up"
 
             coins_down_number_element = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Coins are down").fromParent(new UiSelector().className("android.widget.TextView"))')            
@@ -150,6 +154,7 @@ class MarketPage:
 
             self.logger.info(f"UP: {coin_up_count}, DOWN: {coin_down_count}")
         
+        # 앞자리 숫자만 추출
         up_count = int(coin_up_count.split()[0])
         down_count = int(coin_down_count.split()[0])
 
@@ -186,19 +191,26 @@ class MarketPage:
         return True
 
     def gather_information_coin_lists(self):
+        """
+        코인 리스트 정보 수집
+        """
         coins_data = []
+
+        #데이터 중복을 방지하기 위한 set 생복
         unique_coins = set()
         for _ in range(5):
             current_coins = self.get_current_coin_data(self.coin_list())
             for asset in current_coins:
                 if self.os_type == "ios":
+                    # iOS는 리스트에 코인명, 레버리지, 가격, 변동률 정보가 한줄에 있어 , 단위로 자름
                     coin_name = asset.split(",")[0].strip()
                 else:
                     coin_name = asset['name']
-
+                # 중복 제거를 위해 unique_coins 없는 코인인 경우 추가
                 if coin_name not in unique_coins:
                     coins_data.append(asset)
                     unique_coins.add(coin_name)
+                    # 20개 이상 수집시 종료
                     if len(coins_data) >= 20:
                         return coins_data[:20]
             
@@ -208,56 +220,64 @@ class MarketPage:
         return coins_data[:20]  # 20개 미만일 경우 수집된 모든 자산 반환
 
     def get_current_coin_data(self, locator):
+        """
+        현재 화면에 노출된 코인 데이터 수집
+        """
         if self.os_type == "ios":
             elements = self.common_page.find_elements(locator)
             return [element.get_attribute('label') for element in elements]
         else:
             coins = []
+            # 코인명, 레버리지, 가격, 변동률 정보를 가져옴
             ticker_elements = self.common_page.find_elements("uiautomator", 'new UiSelector().descriptionStartsWith("carousel_no5_ticker_")')
             leverage_elements = self.common_page.find_elements("uiautomator", 'new UiSelector().descriptionStartsWith("carousel_no5_leverage_")')
             price_elements = self.common_page.find_elements("uiautomator", 'new UiSelector().descriptionStartsWith("carousel_no5_price_")')
             fluctuation_elements = self.common_page.find_elements("uiautomator", 'new UiSelector().descriptionStartsWith("carousel_no5_fluctuation_")')
 
-
-
+            
             self.logger.info(f"현재 화면에 {len(ticker_elements)}개의 코인이 있습니다.")
-
-            for index, element in enumerate(ticker_elements):
-                # 코인명 (BTC, ETH 등)
-                coin_name:str = element.get_attribute('text')
+            
+            # index 중 최소값을 기준으로 데이터 수집(일부 영역 화면가려짐으로 인한 index error 방지)
+            min_length = min(len(ticker_elements), len(leverage_elements), len(price_elements), len(fluctuation_elements))
+            for index in range(min_length):
+                coin_name = ticker_elements[index].get_attribute('text')
                 
-                # 레버리지 값 가져오기 (부모 요소에서 하위 요소 추출)
-                leverage_view = leverage_elements[index]
-                leverage_text = leverage_view.find_element(AppiumBy.CLASS_NAME, "android.widget.TextView").get_attribute('text')
+                leverage_text = self.get_element_text(leverage_elements[index], "레버리지", coin_name)
+                price_text = self.get_element_text(price_elements[index], "가격", coin_name)
+                fluctuation_text = self.get_element_text(fluctuation_elements[index], "변동률", coin_name)
+                
+                volume_text = self.get_volume_text(coin_name)
 
-                # 가격 정보 가져오기
-                price_view = price_elements[index]
-                price_text = price_view.find_element(AppiumBy.CLASS_NAME, "android.widget.TextView").get_attribute('text')
-
-                # 변동률 정보 가져오기
-                fluctuation_view = fluctuation_elements[index]
-                fluctuation_text = fluctuation_view.find_element(AppiumBy.CLASS_NAME, "android.widget.TextView").get_attribute('text')
-
-                 # 부모 요소에서 추가 정보 가져오기 (필요시)
-                volume_element = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{coin_name}").fromParent(new UiSelector().className("android.widget.TextView").instance(2))')
-                volume_text = volume_element.get_attribute('text')
-
-                # 중복 제거를 위한 set 생성
-                unique_coins = set()
-
-                # 코인 정보를 문자열로 변환하여 set에 추가
-                asset_info = f"{coin_name},{leverage_text},{volume_text},{price_text},{fluctuation_text}"
-                if asset_info not in unique_coins:
-                    unique_coins.add(asset_info)
-                    coins.append({
-                        'name': coin_name,
-                        'leverage': leverage_text,
-                        'volume': volume_text,
-                        'price': price_text,
-                        'fluctuation': fluctuation_text
-                    })
+                coins.append({
+                    'name': coin_name,
+                    'leverage': leverage_text,
+                    'volume': volume_text,
+                    'price': price_text,
+                    'fluctuation': fluctuation_text
+                })
 
             return coins
+
+    def get_element_text(self, element, info_type, coin_name):
+        """
+        코인 정보 요소에서 텍스트 추출
+        """
+        try:
+            return element.find_element(AppiumBy.CLASS_NAME, "android.widget.TextView").get_attribute('text')
+        except NoSuchElementException:
+            self.logger.info(f"{info_type} 정보가 없어 0 로 대체 합니다.: {coin_name}")
+            return "0"
+
+    def get_volume_text(self, coin_name):
+        """
+        코인 정보 요소에서 볼륨 정보 추출
+        """
+        try:
+            volume_element = self.driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{coin_name}").fromParent(new UiSelector().className("android.widget.TextView").instance(2))')
+            return volume_element.get_attribute('text')
+        except NoSuchElementException:
+            self.logger.info(f"볼륨 정보가 없어 0 로 대체 합니다.: {coin_name}")
+            return "0"
 
     def validate_coin_data(self, asset):
         """

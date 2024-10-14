@@ -1,0 +1,10 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND label == 'Assets'") 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('id', 'assets_title_no1')의 텍스트: Portfolio balance
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('id', 'assets_title_no1_value_no2')의 텍스트: 0.00%
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:37 Portfolio balance 타이틀 : Portfolio balance / Portfolio balance 값 : 0.00%
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'assets_title_no1_value_no2') 클릭
+[32mINFO    [0m conftest:assets_page.py:152 Unrealized P&L / assets_pb_value_no1 노출 확인
+[32mINFO    [0m conftest:assets_page.py:152 Net funding fee / assets_pb_value_no2 노출 확인
+[32mINFO    [0m conftest:assets_page.py:152 Funds invested / assets_pb_value_no3 노출 확인
+[32mINFO    [0m conftest:assets_page.py:152 Funds reserved / assets_pb_value_no4 노출 확인
+[32mINFO    [0m conftest:assets_page.py:152 Available funds / assets_pb_value_no5 노출 확인

@@ -226,8 +226,6 @@ class ElementAttributeConverter:
         return AppiumBy.IOS_PREDICATE, f"({predicate})[{index + 1}]"
 
 
-
-
     """
     # === Android 관련 메서드 ===
     """

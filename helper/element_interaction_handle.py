@@ -7,6 +7,8 @@ from selenium.webdriver.common.actions import interaction
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 
+from helper.execute_method import ExecuteMethod
+
 # 클릭, 좌표 클릭, 텍스트 가져오기, 입력 등 상호작용 관련 클래스 정의
 class ElementInteractionHandler:
     def __init__(self, driver, os_type, rp_logger):
@@ -15,6 +17,7 @@ class ElementInteractionHandler:
         self.logger = rp_logger
         self.driver = driver
         self.os_type = os_type
+        self.execute_method = ExecuteMethod(driver, os_type, rp_logger)
 
     def click_on(self, test_object, wait_time=5):
         # 주어진 오브젝트를 클릭
@@ -119,13 +122,16 @@ class ElementInteractionHandler:
         if self.os_type == "ios":
             try:
                 actions = ActionChains(self.driver)
-                actions.send_keys(key)
+                if key.lower() in ['search', 'enter']:
+                    pass
+                else:
+                    actions.send_keys(key)
                 actions.perform()
                 self.logger.info(f"{key} 키를 누름")
-            except TimeoutException:
-                self.logger.info(f"{key} 키를 찾지 못함")
-                raise Exception(f"{key} 키를 찾지 못함")
-        else :
+            except Exception as e:
+                self.logger.info(f"{key} 키 입력 중 오류 발생: {str(e)}")
+                raise Exception(f"{key} 키 입력 중 오류 발생: {str(e)}")
+        else:
             try:
                 if isinstance(key, str):
                     # 문자열로 키를 받을 때

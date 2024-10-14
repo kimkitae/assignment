@@ -112,10 +112,14 @@ class AccountPage:
         현재 닉네임하고 다른 랜덤으로 생성하여 닉네임 변경 및 변경 확인
         """
         self.common_page.click_element(self.account_nickname_edit_button())
+        time.sleep(1)
         self.common_page.clean_text_field("TEXT_FIELD")
+        time.sleep(1)
         self.common_page.set_text(nickname, self.nickname_text_field())
         self.logger.info(f"닉네임 입력: {nickname}")
+        time.sleep(1)
         self.common_page.click_element(self.nickname_confirm_button())
+        time.sleep(1)
         self.common_page.wait_for(self.account_nickname_text(), timeout=5)
         return self.common_page.get_text(self.account_nickname_text()) == nickname
 
@@ -144,13 +148,13 @@ class AccountPage:
         """
         지정한 Support 메뉴 찾아 클릭
         """
+        time.sleep(2)
         if self.os_type == "ios":
             self.common_page.swipe_to_element(f"Setting_{title}")
             self.common_page.click_element(f"Setting_{title}")
         else:
-            time.sleep(1)
             self.common_page.swipe_to_element(AndroidPropertyType.TEXT, title)
-            time.sleep(1)
+            time.sleep(2)
             self.common_page.click_element(AndroidPropertyType.TEXT, title)
             time.sleep(5)
 

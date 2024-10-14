@@ -153,6 +153,7 @@ pytest test_case --os=<ios or android> --alluredir=./report
 
 # 테스트 리포팅 방법
 ## 2개의 방법으로 리포팅이 가능하며, 모두 웹 서비스 형태로 구동되어 웹으로 확인 가능<br><br>
+## Report 폴더 내 기존 데이터들이 있어 즉시 확인 가능
 
 ## Allure
 - `brew install allure` 설치
@@ -248,5 +249,7 @@ Q. Console를 통해 테스트 진행 상황, 테스트 결과를 볼 수 없나
 Q. `ReportPortal` 컨네이너 생성 후 기존 데이터들이 남아 있어요.
   - A. 바로 테스트 수행없이도 기존 결과를 보여드리기 위해 `./report` 폴더를 바인딩 마운트하여 사용하고 있어 내 폴더의 데이터들을 삭제 해주시면 됩니다.
 
+Q. Android Webview Context 전환이 실패 해요.
+  - A. 테스트 하시는 단말의 버전과 호환되는 Chromedriver를 다운로드하여 프로젝트 내 chromedriver 폴더에 넣어주세요.
+
 ---
-간단한 문의는 [문의하기](https://qna.kimkitae.com/help/3691219236)를 통해 하실 수 있습니다.

@@ -1,0 +1,11 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'Earn') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-ios predicate string', "type == 'XCUIElementTypeButton' AND name BEGINSWITH 'earn_way_to_no'") 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'chevron-down') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'btms_select_network_no_1') 클릭
+[32mINFO    [0m conftest:earn_page.py:104 가장 첫번째 네트워크 선택 btms_select_network_no_1
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:97 주소 노출 확인 / 메모 노출 확인
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'chevron-down') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'btms_select_network_no_2') 클릭
+[32mINFO    [0m conftest:earn_page.py:94 네트워트 변경 : btms_select_network_no_2
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:102 메모 값 비노출 확인
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'deposit_copy_address') 클릭

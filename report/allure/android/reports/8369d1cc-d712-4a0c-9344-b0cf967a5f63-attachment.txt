@@ -1,0 +1,5 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'menu_icon') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Password / Authentication")') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Hide Info")') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Hide Info")') 클릭
+[32mINFO    [0m conftest:test_account_management_scenario.py:52 email: da, phone: +82***06, name: ki***im

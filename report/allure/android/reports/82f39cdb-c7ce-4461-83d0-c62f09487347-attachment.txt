@@ -1,0 +1,28 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'tab_market') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'carousel_no5_see_all') 클릭
+[32mINFO    [0m conftest:market_page.py:236 현재 화면에 8개의 코인이 있습니다.
+[32mINFO    [0m conftest:market_page.py:236 현재 화면에 8개의 코인이 있습니다.
+[32mINFO    [0m conftest:market_page.py:236 현재 화면에 8개의 코인이 있습니다.
+[32mINFO    [0m conftest:market_page.py:236 현재 화면에 8개의 코인이 있습니다.
+[32mINFO    [0m conftest:market_page.py:236 현재 화면에 9개의 코인이 있습니다.
+[32mINFO    [0m conftest:market_page.py:170 20 개의 데이터가 노출되었습니다.
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'BTC', 'leverage': '100x', 'volume': '233.98M', 'price': '64,546.0', 'fluctuation': '2.69%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'ETH', 'leverage': '100x', 'volume': '73.45M', 'price': '2,529.16', 'fluctuation': '2.56%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'SOL', 'leverage': '50x', 'volume': '7.37M', 'price': '152.837', 'fluctuation': '4.17%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'BNB', 'leverage': '50x', 'volume': '511.17K', 'price': '579.806', 'fluctuation': '0.90%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'SUI', 'leverage': '25x', 'volume': '13.40M', 'price': '2.2454', 'fluctuation': '0.06%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': '1000PEPE', 'leverage': '50x', 'volume': '4.37M', 'price': '0.0103718', 'fluctuation': '5.09%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'XRP', 'leverage': '50x', 'volume': '566.94K', 'price': '0.5385', 'fluctuation': '0.26%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'DOGE', 'leverage': '50x', 'volume': '866.31K', 'price': '0.11219', 'fluctuation': '0.28%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'WIF', 'leverage': '50x', 'volume': '1.82M', 'price': '2.8182', 'fluctuation': '0.28%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'BOME', 'leverage': '25x', 'volume': '1.82M', 'price': '0.009002', 'fluctuation': '1.07%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'NEIRO', 'leverage': '25x', 'volume': '2.56M', 'price': '0.0020308', 'fluctuation': '25.21%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'APT', 'leverage': '10x', 'volume': '2.32M', 'price': '10.041', 'fluctuation': '1.19%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'WLD', 'leverage': '25x', 'volume': '4.71M', 'price': '2.3241', 'fluctuation': '0.70%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'AVAX', 'leverage': '25x', 'volume': '556.19K', 'price': '29.528', 'fluctuation': '14.71%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'TRX', 'leverage': '25x', 'volume': '131.14K', 'price': '0.16010', 'fluctuation': '1.60%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'SEI', 'leverage': '25x', 'volume': '690.04K', 'price': '0.4861', 'fluctuation': '0.34%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': '1000SHIB', 'leverage': '25x', 'volume': '314.85K', 'price': '0.018024', 'fluctuation': '1.41%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'UNI', 'leverage': '25x', 'volume': '1.49M', 'price': '7.826', 'fluctuation': '1.62%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'NEAR', 'leverage': '25x', 'volume': '404.34K', 'price': '4.8283', 'fluctuation': '1.23%'}, 일치 여부: True
+[32mINFO    [0m conftest:market_page.py:186 coin 정보: {'name': 'ARB', 'leverage': '25x', 'volume': '162.73K', 'price': '0.5404', 'fluctuation': '0.95%'}, 일치 여부: True

@@ -1,0 +1,4 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'search_icon') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:71 ('-android uiautomator', 'new UiSelector().className("android.widget.EditText")')에 btc 입력
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('accessibility id', 'searched_product_ticker_btc')의 텍스트: BTC
+[32mINFO    [0m conftest:market_page.py:130 검색 결과 코인 이름 : BTC

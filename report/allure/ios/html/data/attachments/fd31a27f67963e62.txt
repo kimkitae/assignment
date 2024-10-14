@@ -1,0 +1,5 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND label == 'Assets'") 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('id', 'assets_title_no3')의 텍스트: Your assets
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('id', 'assets_ya_value_no1')의 텍스트: 0.00
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('-ios predicate string', "type == 'XCUIElementTypeButton' AND name BEGINSWITH 'assets_ya_name_usdt_bonus'")의 텍스트: 0,  USDT
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:85 assets 타이틀 : Your assets / assets 값 : 0.00 / USDT 보너스 금액 : 0,  USDT

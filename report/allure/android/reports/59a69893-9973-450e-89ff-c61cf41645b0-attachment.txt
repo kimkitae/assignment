@@ -1,0 +1,7 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Assets")') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'tab_order_form_positions_open') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('accessibility id', 'positions_open_description')의 텍스트: All effective orders and contracts you possess show here.
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:61 positions open 설명 문구 노출 : All effective orders and contracts you possess show here.
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Pending")') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('accessibility id', 'positions_pending_description')의 텍스트: When you place a trigger order, orders that are still awaiting execution show here.
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:68 positions pending 설명 문구 노출 : When you place a trigger order, orders that are still awaiting execution show here.

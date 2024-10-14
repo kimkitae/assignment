@@ -1,0 +1,3 @@
+[32mINFO    [0m conftest:regex_utility.py:111 코인up에 해당하는 패턴을 찾지 못했습니다.
+[32mINFO    [0m conftest:regex_utility.py:111 코인down에 해당하는 패턴을 찾지 못했습니다.
+[32mINFO    [0m conftest:market_page.py:143 UP: null, DOWN: null

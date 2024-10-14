@@ -88,3 +88,7 @@ class ExecuteMethod:
             "predicateString": predicate_string,
             "toVisible": True
         })
+
+    def press_button(self, button_name):
+        # 특정 버튼을 누르는 메서드
+        self.driver.execute_script("mobile: pressButton", {"name": button_name})

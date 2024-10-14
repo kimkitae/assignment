@@ -1,0 +1,9 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'menu_icon') 클릭
+[32mINFO    [0m conftest:account_page.py:134 생성된 랜덤 닉네임: Automation_4PE
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'tab_account_nick_edit') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:115 TEXT_FIELD 텍스트 필드 클리어
+[32mINFO    [0m conftest:element_interaction_handle.py:71 ('id', 'account_set_nick_text_field')에 Automation_4PE 입력
+[32mINFO    [0m conftest:account_page.py:119 닉네임 입력: Automation_4PE
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'account_set_nick_confirm') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:83 ('id', 'account_nick_value_01')의 텍스트: Automation_4PE
+[32mINFO    [0m conftest:test_account_management_scenario.py:26 닉네임 변경 확인

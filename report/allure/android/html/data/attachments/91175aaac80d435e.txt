@@ -1,0 +1,3 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'notification_icon') 클릭
+[32mINFO    [0m conftest:regex_utility.py:106 알림종류에 해당하는 패턴을 찾았습니다.
+[32mINFO    [0m conftest:test_ui_ux_scenario.py:46 알림 종류 : Promotions

@@ -1,0 +1,11 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-ios predicate string', "type == 'XCUIElementTypeStaticText' AND label == 'Assets'") 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('id', 'tab_deposit') 클릭
+[32mINFO    [0m conftest:assets_page.py:188 5 개의 데이터가 노출되었습니다.
+[32mINFO    [0m conftest:assets_page.py:202 필드 수가 5개로 부족합니다. 기본값으로 채웁니다. 원래 필드: ['Tether', '15% APR', 'USDT', '0.00000000', 'USDT']
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: Tether, 15% APR, USDT, 0.00000000, USDT, 0.00, 일치 여부: True
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: Bitcoin, 5% APR, BTC, 0.00000000, BTC, 0.00, 일치 여부: True
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: Ethereum, 5% APR, ETH, 0.00000000, ETH, 0.00, 일치 여부: True
+[32mINFO    [0m conftest:assets_page.py:197 APR 필드가 없거나 유효하지 않으므로 빈 문자열로 채웁니다. 원래 필드: ['Algorand', 'ALGO', '0.00000000', 'ALGO', '0.00']
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: Algorand, , ALGO, 0.00000000, ALGO, 0.00, 일치 여부: True
+[32mINFO    [0m conftest:assets_page.py:197 APR 필드가 없거나 유효하지 않으므로 빈 문자열로 채웁니다. 원래 필드: ['Arbitrum', 'ARB', '0.00000000', 'ARB', '0.00']
+[32mINFO    [0m conftest:assets_page.py:208 assets 정보: Arbitrum, , ARB, 0.00000000, ARB, 0.00, 일치 여부: True

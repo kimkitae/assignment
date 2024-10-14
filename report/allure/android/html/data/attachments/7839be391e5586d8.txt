@@ -1,0 +1,14 @@
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('-android uiautomator', 'new UiSelector().text("Earn")') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'non_usdt_deposit_no0') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'depositnetwortno1') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'btms_select_network_no0') 클릭
+[32mINFO    [0m conftest:earn_page.py:104 가장 첫번째 네트워크 선택 btms_select_network_no0
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:97 주소 노출 확인 / 메모 노출 확인
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'depositnetwortno1') 클릭
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'btms_select_network_no1') 클릭
+[32mINFO    [0m conftest:earn_page.py:94 네트워트 변경 : btms_select_network_no1
+[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:102 메모 값 비노출 확인
+[32mINFO    [0m conftest:element_interaction_handle.py:30 ('accessibility id', 'deposit_copy_address') 클릭
+[32mINFO    [0m conftest:regex_utility.py:25 패턴과 일치하는 값: Copied to clipboard 0x971B2E354ee4CBa304FD23Ccf6b1dA637357Ba5A" displayed="true" />
+[32mINFO    [0m conftest:regex_utility.py:28 패턴과 일치하는 값이 없습니다.
+[32mINFO    [0m conftest:earn_page.py:117 toast_message_1: Copied to clipboard 0x971B2E354ee4CBa304FD23Ccf6b1dA637357Ba5A" displayed="true" />, toast_message_2: null
