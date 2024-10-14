@@ -164,3 +164,4 @@ cython_debug/
 /allure-reports/
 .cursorignore
 failures
+.*pytest.ini
