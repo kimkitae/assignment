@@ -1,1 +1,0 @@
-[32mINFO    [0m conftest:market_page.py:160 검색 결과 코인 이름 : BTC

@@ -1,1 +1,0 @@
-[32mINFO    [0m conftest:test_ui_ux_scenario.py:34 코인 상승 카운트 : 102 Coins are up / 코인 하락 카운트 : 162 Coins are down

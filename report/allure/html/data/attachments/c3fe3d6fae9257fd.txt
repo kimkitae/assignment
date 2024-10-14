@@ -1,2 +1,0 @@
-[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:86 주소 노출 확인 / 메모 노출 확인
-[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:91 메모 값 비노출 확인

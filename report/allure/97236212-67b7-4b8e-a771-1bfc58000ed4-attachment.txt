@@ -1,1 +1,0 @@
-[32mINFO    [0m conftest:element_interaction_handle.py:62 ('id', 'text_field') 오브젝트를 찾지 못함

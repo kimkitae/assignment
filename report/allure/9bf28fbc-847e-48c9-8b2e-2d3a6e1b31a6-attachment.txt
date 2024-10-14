@@ -1,3 +1,0 @@
-[32mINFO    [0m conftest:account_page.py:114 생성된 랜덤 닉네임: Automation_T3F
-[32mINFO    [0m conftest:account_page.py:103 닉네임 입력: Automation_T3F
-[32mINFO    [0m conftest:test_account_management_scenario.py:26 닉네임 변경 확인

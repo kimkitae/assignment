@@ -1,1 +1,0 @@
-[32mINFO    [0m conftest:test_balance_wallete_scenario_.py:74 assets 타이틀 : Your assets / assets 값 : 0.00 / USDT 보너스 금액 : 0,  USDT
