@@ -48,8 +48,10 @@ def driver(appium_server, os_type, rp_logger):
     driver_manager = DriverManager(appium_server.port, os_type)
     driver = driver_manager.init_driver()
     execute_method = ExecuteMethod(driver, os_type, rp_logger)
+    driver.start_recording_screen(timeLimit=300, video_quality="low")
     execute_method.launch_app()
     yield driver
+    save_video(driver.stop_recording_screen(), rp_logger)
     execute_method.terminate_app()
     driver_manager.quit_driver()
 
@@ -69,8 +71,6 @@ def rp_logger(request):
     logging.getLogger("urllib3.connectionpool").setLevel(logging.ERROR)
 
     return logger
-    return logger
-
 
 
 def take_screenshot_and_log(driver, os_type, rp_logger, item):
@@ -88,6 +88,8 @@ def take_screenshot_and_log(driver, os_type, rp_logger, item):
 
 
 
+
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call): 
     outcome = yield
@@ -102,3 +104,16 @@ def pytest_runtest_makereport(item, call):
         except Exception as e:
             if "rp_logger" in item.funcargs:
                 item.funcargs["rp_logger"].info(f"Failed to take screenshot: {e}")
+
+
+def save_video(stop_recording_screen, rp_logger):
+    """
+    화면 녹화 종료 및 ReportPortal로 전송
+    """
+
+    video_data = base64.b64decode(stop_recording_screen)
+    rp_logger.info("테스트 영상:", attachment={
+        'name': "temp.mp4",
+        'data': video_data,
+        'mime': 'video/mpeg'
+    })
