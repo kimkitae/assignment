@@ -206,7 +206,7 @@ pytest -s --reportportal \
     --rp-endpoint="http://localhost:8080" \
     --rp-api-key="YOUR_API_KEY_HERE
 ```
-- [Test Sample 리포트 보기](https://report.kimkitae.com/ui/#daearcdo_personal/launches/all/1)
+- [Test Sample 리포트 보기](https://report.kimkitae.com/ui/#daearcdo_personal/launches/3)
   - 로그인 정보 : `default`/ `1q2w3e`
 ---
 

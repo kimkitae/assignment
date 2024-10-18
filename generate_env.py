@@ -14,7 +14,7 @@ def update_env_value(key, new_value):
 
 # 명령줄 인자로 값을 받음
 if len(sys.argv) != 4:
-    print("사용법: python generate_env.py <UDID> <PLATFORM_VERSION> <OS_TYPE>")
+    print(f" .env 파일 내 값을 업데이트 합니다 / UDID - {sys.argv[1]}, PLATFORM_VERSION - {sys.argv[2]}")
     sys.exit(1)
 
 udid_input = sys.argv[1]
