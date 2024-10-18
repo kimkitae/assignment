@@ -32,7 +32,7 @@ class TestScenario:
         Android는 카운트 영역, coins are up&down 영역이 별도이기 때문에 각각의 데이터를 가져와
         iOS와 동잉한 문자열로 조합 후 정규식을 이용하여 검사
         """
-
+        self.market_page.click_market_button()
         up_coin_count, coin_down_count = self.market_page.get_text_coin_up_and_down()
 
         # 추출한 카운트 들이 0보다 같거나 높은지 확인
